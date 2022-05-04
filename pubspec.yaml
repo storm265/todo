@@ -1,0 +1,64 @@
+name: todo
+description: A new Flutter project.
+
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  scrollable_positioned_list: 
+  cupertino_icons: ^1.0.2
+  intl:
+  image_picker: ^0.8.4+10
+  hive_flutter:
+  hive:
+  path_provider:
+  timelines:
+  flutter_platform_widgets: ^1.20.0
+  flutter_slidable: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner:
+  hive_generator:
+  
+  flutter_lints: ^1.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/defaultCategoryIcons/
+    - assets/
+
+
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/Ubuntu/Ubuntu-Bold.ttf
+        - asset: assets/fonts/Ubuntu/Ubuntu-Light.ttf     
+        - asset: assets/fonts/Ubuntu/Ubuntu-Medium.ttf      
+        - asset: assets/fonts/Ubuntu/Ubuntu-Regular.ttf
+     
+    
+        # - asset: fonts/Schyler-Italic.ttf
+        #   style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+
