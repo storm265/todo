@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/model/archieve_db/archieve_db.dart';
 import 'package:todo/repository/archieve_repository.dart';
 import 'package:todo/widgets/archieve/body.dart';
@@ -15,7 +16,7 @@ class ArchievePage extends StatefulWidget {
 
 class _ArchievePageState extends State<ArchievePage> {
   final Box<ArchieveModel> _categoryBox = ArchieveRepository().getDatabase();
-
+  final _formatter = StringTimeFormatter();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,19 +34,16 @@ class _ArchievePageState extends State<ArchievePage> {
             String text = box!.text;
             String category = box.category;
             String deadlineDay =
-                box.deadlineDateTime!.day.toString().length == 1
-                    ? '0${box.deadlineDateTime!.day}'
-                    : '${box.deadlineDateTime!.day}';
+                _formatter.formatTime(box.deadlineDateTime!.day);
 
             String deadlineMonth =
-                box.deadlineDateTime!.month.toString().length == 1
-                    ? '0${box.deadlineDateTime!.month}'
-                    : '${box.deadlineDateTime!.month}';
+                _formatter.formatTime(box.deadlineDateTime!.month);
             String deadlineYear = '${box.deadlineDateTime!.year}';
 
             return Dismissible(
               onDismissed: (direction) {
                 if (direction == DismissDirection.endToStart) {
+                  /// not a problem. https://api.flutter.dev/flutter/widgets/Dismissible-class.html
                   setState(() {
                     _categoryBox.deleteAt(index);
                   });

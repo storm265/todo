@@ -93,7 +93,7 @@ class AddEditTaskController {
           isDone: false,
           category: selectedCategory,
           creationDate: DateTime.now(),
-          text: titleTextController.text,
+          text: titleTextController.text + "$i",
           deadlineDateTime: DateTime.parse(convertedDateTime.value),
         ));
       }
