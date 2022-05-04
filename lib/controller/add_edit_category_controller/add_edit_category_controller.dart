@@ -42,7 +42,11 @@ class AddEditCategoryController extends ChangeNotifier {
 
   bool findDublicates(BuildContext context) {
     for (int i = 0; i < _categoryRepository.length; i++) {
-      if (_categoryRepository.getAt(i)!.title.compareTo(titleController.text) ==
+      if (_categoryRepository
+              .getAt(i)!
+              .title
+              .toLowerCase()
+              .compareTo(titleController.text.toLowerCase()) ==
           0) {
         showMessage(context, 'This category  is already exists!');
         return true;

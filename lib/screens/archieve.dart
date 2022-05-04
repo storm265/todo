@@ -51,7 +51,7 @@ class _ArchievePageState extends State<ArchievePage> {
                   });
                 }
               },
-              key: Key(_categoryBox.getAt(index)!.text),
+              key: UniqueKey(),
               background: const DismissStyleWidget(),
               child: ArchieveBodyWidget(
                 category: category,

@@ -87,15 +87,16 @@ class AddEditTaskController {
       {required String selectedCategory, required BuildContext context}) async {
     try {
       repository = TasksRepository();
-
-      await repository.save(TaskModel(
-        id: _categoryIndexer.getCategoryIndex(selectedCategory),
-        isDone: false,
-        category: selectedCategory,
-        creationDate: DateTime.now(),
-        text: titleTextController.text,
-        deadlineDateTime: DateTime.parse(convertedDateTime.value),
-      ));
+      for (int i = 0; i < 10; i++) {
+        await repository.save(TaskModel(
+          id: _categoryIndexer.getCategoryIndex(selectedCategory),
+          isDone: false,
+          category: selectedCategory,
+          creationDate: DateTime.now(),
+          text: titleTextController.text,
+          deadlineDateTime: DateTime.parse(convertedDateTime.value),
+        ));
+      }
     } catch (e) {
       debugPrint('Null exception in _saveData()!');
       showMessage(context, '$e');
