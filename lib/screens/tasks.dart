@@ -10,8 +10,8 @@ import 'package:todo/widgets/task_list_page/schedule_appbar_widget.dart';
 import 'package:todo/widgets/task_list_page/task_list.dart';
 
 class TaskListPage extends StatelessWidget {
-   TaskListPage({Key? key}) : super(key: key);
-   
+  TaskListPage({Key? key}) : super(key: key);
+
   final taskListCtller = TaskListController();
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class TaskListPage extends StatelessWidget {
                 return Column(
                   children: [
                     Container(
-                      height: 250, //250
+                      height: 250,
                       decoration: BodyColors.schreduleBody,
                       child: Column(
                         children: <Widget>[
@@ -38,7 +38,6 @@ class TaskListPage extends StatelessWidget {
                             changeDay: (value) {
                               setState(() {
                                 taskListCtller.selectedDate.value = value;
-                                
                               });
                             },
                           ),

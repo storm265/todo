@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/repository/category_repository.dart';
 import 'package:todo/repository/config_repository.dart';
@@ -12,7 +12,6 @@ class DefaultCategoryController {
     'Sport',
     'Work'
   ];
-// TODO fix it
   Future<void> fillDefaultCategory() async {
     final _configRepository = ConfigurationRepository();
     await _configRepository.openConfigBox();

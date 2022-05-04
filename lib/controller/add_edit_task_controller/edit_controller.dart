@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/controller/global_variables.dart';
 import 'package:todo/repository/category_repository.dart';
 import 'package:todo/repository/tasks_repository.dart';
@@ -13,8 +14,10 @@ class EditTaskController {
     var task = TasksRepository().getDatabase().getAt(index)!;
     var time = TimeOfDay.fromDateTime(task.deadlineDateTime ?? DateTime.now());
 
-    addEditCtller.hour = time.hour.toString();
-    addEditCtller.min = time.minute.toString();
+    final _formatter = StringTimeFormatter();
+    addEditCtller.hour = _formatter.formatTime(time.hour);
+    addEditCtller.min = _formatter.formatTime(time.minute);
+
     addEditCtller.timeTextController.text =
         '${addEditCtller.hour}:${addEditCtller.min}';
 
@@ -23,19 +26,10 @@ class EditTaskController {
     addEditCtller.pickedTime.value =
         TimeOfDay(hour: time.hour, minute: time.minute);
 
-    // String _hour = (task.deadlineDateTime!.hour.toString().length == 1)
-    //     ? '0${task.deadlineDateTime!.hour}'
-    //     : addEditCtller.pickedTime.value.hour.toString();
-    // String _min = (task.deadlineDateTime!.minute.toString().length == 1)
-    //     ? '0${task.deadlineDateTime!.minute}'
-    //     : addEditCtller.pickedTime.value.minute.toString();
-
-    addEditCtller.convertedDateTime.value =
-        '${addEditCtller.stringDate.value} ${addEditCtller.hour}:${addEditCtller.min}:00.000000';
     addEditCtller.convertedDateTime.value = task.deadlineDateTime.toString();
 
     addEditCtller.dateTextController.text =
-        '${task.deadlineDateTime!.day}/${task.deadlineDateTime!.month}/${task.deadlineDateTime!.year}';
+        '${_formatter.formatTime(task.deadlineDateTime!.day)}.${_formatter.formatTime(task.deadlineDateTime!.month)}.${task.deadlineDateTime!.year}';
 
     addEditCtller.titleTextController.text = task.text;
 

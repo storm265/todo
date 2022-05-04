@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/controller/common/category_index_controller.dart';
+import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/model/archieve_db/archieve_db.dart';
-import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/model/tasks_db/task_model.dart';
 import 'package:todo/repository/archieve_repository.dart';
 import 'package:todo/repository/category_repository.dart';
@@ -13,7 +12,6 @@ import 'package:todo/repository/tasks_repository.dart';
 import 'package:todo/routes/my_routes.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
-// TODO reduce too much dots - Andrey advice
 // reduce if else
 // use String interpolation
 // try reduce context by observer
@@ -31,6 +29,8 @@ class AddEditTaskController {
   var pickedTime =
       ValueNotifier<TimeOfDay>(const TimeOfDay(hour: 1, minute: 11));
 
+  final _formatter = StringTimeFormatter();
+
   late Repository repository;
   final _categoryIndexer = CategoryIndexController();
   String? hour, min;
@@ -42,9 +42,6 @@ class AddEditTaskController {
   bool get isTextValid => titleTextController.text.length < 4;
   bool get isDatePicked => dateTextController.value.text.isEmpty;
   bool get isTimePicked => timeTextController.value.text.isEmpty;
-
-  void showMessage(BuildContext context, String message) =>
-      CustomSnackbarWidget().showCustomSnackbar(context, message);
 
   Future<void> validate(
       {required BuildContext context,
@@ -159,6 +156,7 @@ class AddEditTaskController {
       {required BuildContext buildContext,
       required TextEditingController timeTextController}) async {
     try {
+      unFocusTextField(buildContext);
       final TimeOfDay? picked = await showTimePicker(
           builder: (BuildContext buildContext, Widget? child) {
             return MediaQuery(
@@ -173,12 +171,9 @@ class AddEditTaskController {
 
       pickedTime.value = picked!;
 
-      hour = (pickedTime.value.hour.toString().length == 1)
-          ? '0${pickedTime.value.hour}'
-          : pickedTime.value.hour.toString();
-      min = (pickedTime.value.minute.toString().length == 1)
-          ? '0${pickedTime.value.minute}'
-          : pickedTime.value.minute.toString();
+      hour = _formatter.formatTime(pickedTime.value.hour);
+      min = _formatter.formatTime(pickedTime.value.minute);
+
       timeTextController.text = '$hour:$min';
     } on Exception {
       debugPrint('Null exception in pickTime()!');
@@ -189,6 +184,7 @@ class AddEditTaskController {
       {required TextEditingController dateTextController,
       required BuildContext context}) async {
     try {
+      unFocusTextField(context);
       final DateTime picked = (await showPlatformDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -199,15 +195,18 @@ class AddEditTaskController {
       pickedDate.value = picked;
 
       dateTextController.text = DateFormat.yMd().format(pickedDate.value);
-      String _month = (pickedDate.value.month.toString().length == 1)
-          ? '0${pickedDate.value.month}'
-          : pickedDate.value.month.toString();
-      String _day = (pickedDate.value.day.toString().length == 1)
-          ? '0${pickedDate.value.day}'
-          : pickedDate.value.day.toString();
+      String _month = _formatter.formatTime(pickedDate.value.month);
+      String _day = _formatter.formatTime(pickedDate.value.day);
       stringDate.value = '${pickedDate.value.year}-$_month-$_day';
     } on Exception {
       debugPrint('Null exception in pickTime()!');
     }
   }
+
+  void unFocusTextField(BuildContext context) {
+    FocusScope.of(context).unfocus();
+  }
+
+  void showMessage(BuildContext context, String message) =>
+      CustomSnackbarWidget().showCustomSnackbar(context, message);
 }

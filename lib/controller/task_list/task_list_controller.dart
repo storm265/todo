@@ -26,8 +26,6 @@ class TaskListController extends ChangeNotifier {
       // start of the page
       if (pageController.position.minScrollExtent ==
           pageController.position.pixels) {
-        print('min');
-
         var _firstElement = calendar.value.first;
 
         List<DateTime> _first = List.generate(
@@ -45,8 +43,6 @@ class TaskListController extends ChangeNotifier {
       // end of the page
       if (pageController.position.maxScrollExtent ==
           pageController.position.pixels) {
-        print('max');
-
         var _lastElement = calendar.value.last;
         log(calendar.value.length.toString());
         List<DateTime> _last = List.generate(

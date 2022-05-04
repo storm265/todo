@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -8,10 +8,7 @@ import 'package:todo/controller/common/category_index_controller.dart';
 import 'package:todo/model/archieve_db/archieve_db.dart';
 import 'package:todo/model/tasks_db/task_model.dart';
 import 'package:todo/repository/archieve_repository.dart';
-import 'package:todo/repository/category_repository.dart';
 import 'package:todo/repository/tasks_repository.dart';
-import 'package:todo/routes/my_routes.dart';
-import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 import 'package:todo/widgets/task_list_page/task_body/connectors/connector_done_widget.dart';
 import 'package:todo/widgets/task_list_page/task_body/connectors/connector_not_done_widget.dart';
 import 'package:todo/widgets/task_list_page/task_body/body/gradient_task_body.dart';
@@ -41,7 +38,8 @@ class TaskList extends StatelessWidget {
                   TaskModel? taskBox = box.getAt(i);
                   DateTime? deadline = taskBox!.deadlineDateTime;
 
-                  if (deadline!.day == selectedDate.day) {
+                  if (deadline!.toString().substring(0, 11) ==
+                      selectedDate.toString().substring(0, 11)) {
                     return Slidable(
                       startActionPane: ActionPane(
                         motion: const ScrollMotion(),

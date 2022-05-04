@@ -36,54 +36,59 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
         ),
         body: SingleChildScrollView(
           child: Builder(builder: (context) {
-            return Column(
-              children: [
-                const SizedBox(
-                  height: 100,
-                ),
-                AddEditTaskTextfieldWidget().textField(
-                    addEditCtller.titleTextController, 'Text:', true),
-                AddEditTaskTextfieldWidget().textField(
-                    addEditCtller.dateTextController, 'Deadline date:'),
-                OutlinedButton.icon(
-                    onPressed: () => addEditCtller.pickDate(
-                          context: context,
-                          dateTextController: addEditCtller.dateTextController,
-                        ),
-                    icon: const Icon(
-                      Icons.date_range_outlined,
-                    ),
-                    label: const Text('Pick date')),
-                AddEditTaskTextfieldWidget().textField(
-                    addEditCtller.timeTextController, 'Deadline time:'),
-                OutlinedButton.icon(
-                    onPressed: () => addEditCtller.pickTime(
-                        timeTextController: addEditCtller.timeTextController,
-                        buildContext: context),
-                    icon: const Icon(
-                      Icons.schedule_outlined,
-                    ),
-                    label: const Text('Pick time')),
-                const CategoryListWidget(),
-                ValueListenableBuilder(
-                  valueListenable: addEditCtller.isButtonDisabled,
-                  builder: (context, value, _) {
-                    return OutlinedButton.icon(
-                        onPressed: addEditCtller.isButtonDisabled.value
-                            ? null
-                            : () {
-                                addEditCtller.validate(
-                                    index: widget.index,
-                                    isEdit: widget.isEdit,
-                                    context: context);
-                              },
-                        icon: Icon((widget.isEdit) ? Icons.save : Icons.add),
-                        label: (widget.isEdit)
-                            ? const Text('Update task')
-                            : const Text('Add task'));
-                  },
-                ),
-              ],
+            return InkWell(
+              splashColor: Colors.white,
+              onTap: () => addEditCtller.unFocusTextField(context),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  AddEditTaskTextfieldWidget().textField(
+                      addEditCtller.titleTextController, 'Text:', true),
+                  AddEditTaskTextfieldWidget().textField(
+                      addEditCtller.dateTextController, 'Deadline date:'),
+                  OutlinedButton.icon(
+                      onPressed: () => addEditCtller.pickDate(
+                            context: context,
+                            dateTextController:
+                                addEditCtller.dateTextController,
+                          ),
+                      icon: const Icon(
+                        Icons.date_range_outlined,
+                      ),
+                      label: const Text('Pick date')),
+                  AddEditTaskTextfieldWidget().textField(
+                      addEditCtller.timeTextController, 'Deadline time:'),
+                  OutlinedButton.icon(
+                      onPressed: () => addEditCtller.pickTime(
+                          timeTextController: addEditCtller.timeTextController,
+                          buildContext: context),
+                      icon: const Icon(
+                        Icons.schedule_outlined,
+                      ),
+                      label: const Text('Pick time')),
+                  const CategoryListWidget(),
+                  ValueListenableBuilder(
+                    valueListenable: addEditCtller.isButtonDisabled,
+                    builder: (context, value, _) {
+                      return OutlinedButton.icon(
+                          onPressed: addEditCtller.isButtonDisabled.value
+                              ? null
+                              : () {
+                                  addEditCtller.validate(
+                                      index: widget.index,
+                                      isEdit: widget.isEdit,
+                                      context: context);
+                                },
+                          icon: Icon((widget.isEdit) ? Icons.save : Icons.add),
+                          label: (widget.isEdit)
+                              ? const Text('Update task')
+                              : const Text('Add task'));
+                    },
+                  ),
+                ],
+              ),
             );
           }),
         ));
