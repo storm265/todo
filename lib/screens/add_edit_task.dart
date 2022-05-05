@@ -38,31 +38,31 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
           child: Builder(builder: (context) {
             return InkWell(
               splashColor: Colors.white,
-              onTap: () => addEditCtller.unFocusTextField(context),
+              onTap: () => addEditController.unFocusTextField(context),
               child: Column(
                 children: [
                   const SizedBox(
                     height: 100,
                   ),
                   AddEditTaskTextfieldWidget().textField(
-                      addEditCtller.titleTextController, 'Text:', true),
+                      addEditController.titleTextController, 'Text:', true),
                   AddEditTaskTextfieldWidget().textField(
-                      addEditCtller.dateTextController, 'Deadline date:'),
+                      addEditController.dateTextController, 'Deadline date:'),
                   OutlinedButton.icon(
-                      onPressed: () => addEditCtller.pickDate(
+                      onPressed: () => addEditController.pickDate(
                             context: context,
                             dateTextController:
-                                addEditCtller.dateTextController,
+                                addEditController.dateTextController,
                           ),
                       icon: const Icon(
                         Icons.date_range_outlined,
                       ),
                       label: const Text('Pick date')),
                   AddEditTaskTextfieldWidget().textField(
-                      addEditCtller.timeTextController, 'Deadline time:'),
+                      addEditController.timeTextController, 'Deadline time:'),
                   OutlinedButton.icon(
-                      onPressed: () => addEditCtller.pickTime(
-                          timeTextController: addEditCtller.timeTextController,
+                      onPressed: () => addEditController.pickTime(
+                          timeTextController: addEditController.timeTextController,
                           buildContext: context),
                       icon: const Icon(
                         Icons.schedule_outlined,
@@ -70,13 +70,13 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                       label: const Text('Pick time')),
                   const CategoryListWidget(),
                   ValueListenableBuilder(
-                    valueListenable: addEditCtller.isButtonDisabled,
+                    valueListenable: addEditController.isButtonDisabled,
                     builder: (context, value, _) {
                       return OutlinedButton.icon(
-                          onPressed: addEditCtller.isButtonDisabled.value
+                          onPressed: addEditController.isButtonDisabled.value
                               ? null
                               : () {
-                                  addEditCtller.validate(
+                                  addEditController.validate(
                                       index: widget.index,
                                       isEdit: widget.isEdit,
                                       context: context);

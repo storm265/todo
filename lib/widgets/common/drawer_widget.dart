@@ -1,8 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:todo/controller/task_list/drawer_items.dart';
-import 'package:todo/routes/my_routes.dart';
+import 'package:todo/routes/routers.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
   const CustomDrawerWidget({Key? key}) : super(key: key);
@@ -30,7 +28,7 @@ class CustomDrawerWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 40, top: 20, bottom: 20),
                 child: Text(
-                  DrawerItems().drawerItems[index],
+                  DrawerItems.drawerItems[index],
                   style: const TextStyle(fontSize: 25),
                 ),
               ),
@@ -39,7 +37,7 @@ class CustomDrawerWidget extends StatelessWidget {
           separatorBuilder: (context, index) => const Divider(
                 color: Colors.black,
               ),
-          itemCount: DrawerItems().drawerItems.length),
+          itemCount: DrawerItems.drawerItems.length),
     );
   }
 }

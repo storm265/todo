@@ -12,7 +12,7 @@ import 'package:todo/widgets/task_list_page/task_list.dart';
 class TaskListPage extends StatelessWidget {
   TaskListPage({Key? key}) : super(key: key);
 
-  final taskListCtller = TaskListController();
+  final _taskListCtller = TaskListController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +20,8 @@ class TaskListPage extends StatelessWidget {
         drawer: const CustomDrawerWidget(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Builder(builder: (context) {
-            return StatefulBuilder(
-              builder: (context, setState) {
+          child:StatefulBuilder(
+              builder: (_, setState) {
                 return Column(
                   children: [
                     Container(
@@ -32,12 +31,12 @@ class TaskListPage extends StatelessWidget {
                         children: <Widget>[
                           const ScheduleAppBarWidget(),
                           CurrentDateWidget(
-                            selectedDay: taskListCtller.selectedDate.value,
+                            selectedDay: _taskListCtller.selectedDate.value,
                           ),
                           DayLineWidget(
                             changeDay: (value) {
                               setState(() {
-                                taskListCtller.selectedDate.value = value;
+                                _taskListCtller.selectedDate.value = value;
                               });
                             },
                           ),
@@ -45,13 +44,12 @@ class TaskListPage extends StatelessWidget {
                       ),
                     ),
                     TaskList(
-                      selectedDate: taskListCtller.selectedDate.value,
+                      selectedDate: _taskListCtller.selectedDate.value,
                     ),
                   ],
                 );
               },
-            );
-          }),
+            )
         ));
   }
 }

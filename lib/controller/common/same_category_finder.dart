@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:todo/controller/task_list/dialog_pusher_controller.dart';
+
 import 'package:todo/repository/category_repository.dart';
-import 'package:todo/routes/my_routes.dart';
+import 'package:todo/controller/task_list/dialog_close_controller.dart';
+import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
-class CategoryChecker {
+class SameCategoryFinder {
   final _snackBar = CustomSnackbarWidget();
   final _categoryIsNotEmpty = CategoryRepository().getDatabase().isNotEmpty;
   void checkCategoryIsNotEmpty(BuildContext context, int i) {
@@ -12,22 +13,24 @@ class CategoryChecker {
       Routers().toAddEditTaskPage(context, i, true);
     } else {
       _snackBar.showCustomSnackbar(
+        context: 
         context,
-        'No categories! Add category at first!',
+     message:    'No categories! Add category at first!',
       );
     }
   }
 
   void checkCategoryIsNotEmptyDialog(BuildContext context) {
     if (_categoryIsNotEmpty) {
-      DialogPusherController().rush(
+      DialogDelayedWrapper().delayedPush(
         context,
         () => Routers().toAddEditTaskPage(context, 0, false),
       );
     } else {
       _snackBar.showCustomSnackbar(
+        context: 
         context,
-        'No categories! Add category at first!',
+      message:   'No categories! Add category at first!',
       );
     }
   }

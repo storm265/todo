@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:todo/controller/common/category_index_controller.dart';
 import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/repository/category_repository.dart';
-import 'package:todo/routes/my_routes.dart';
+import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 // use consts for numbers
@@ -106,5 +106,6 @@ class AddEditCategoryController extends ChangeNotifier {
   }
 
   void showMessage(BuildContext context, String message) =>
-      CustomSnackbarWidget().showCustomSnackbar(context, message);
+      CustomSnackbarWidget()
+          .showCustomSnackbar(context: context, message: message);
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:todo/controller/common/category_blocker.dart';
-import 'package:todo/routes/my_routes.dart';
-import 'package:todo/controller/task_list/dialog_pusher_controller.dart';
+import 'package:todo/controller/common/same_category_finder.dart';
+import 'package:todo/controller/task_list/dialog_close_controller.dart';
+import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/task_list_page/task_body/dialog/dialog_button.dart';
 
 class TaskListDialog {
@@ -17,12 +17,12 @@ class TaskListDialog {
                 TaskListDialogButton(
                     icon: Icons.add_task_outlined,
                     text: 'Add task',
-                    method: () => CategoryChecker()
+                    method: () => SameCategoryFinder()
                         .checkCategoryIsNotEmptyDialog(context)),
                 TaskListDialogButton(
                     icon: Icons.post_add_outlined,
                     text: 'Add category',
-                    method: () => DialogPusherController().rush(
+                    method: () => DialogDelayedWrapper().delayedPush(
                           context,
                           () => Routers()
                               .toAddEditCategoryPage(context, 0, false),

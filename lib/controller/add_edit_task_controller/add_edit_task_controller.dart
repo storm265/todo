@@ -9,7 +9,7 @@ import 'package:todo/repository/archieve_repository.dart';
 import 'package:todo/repository/category_repository.dart';
 import 'package:todo/repository/repository.dart';
 import 'package:todo/repository/tasks_repository.dart';
-import 'package:todo/routes/my_routes.dart';
+import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 // reduce if else
@@ -31,12 +31,13 @@ class AddEditTaskController {
 
   final _formatter = StringTimeFormatter();
 
-  late Repository repository;
+  late Repository _repository;
   final _categoryIndexer = CategoryIndexController();
+
   String? hour, min;
 
   AddEditTaskController() {
-    repository = ArchieveRepository();
+    _repository = TasksRepository();
   }
 
   bool get isTextValid => titleTextController.text.length < 4;
@@ -47,6 +48,7 @@ class AddEditTaskController {
       {required BuildContext context,
       required int index,
       required bool isEdit}) async {
+    final _categoryBox = CategoryRepository().getDatabase();
     try {
       convertedDateTime.value = '${stringDate.value} $hour:$min:00.000000';
 
@@ -61,18 +63,14 @@ class AddEditTaskController {
         if (isEdit) {
           await editData(
               context: context,
-              selectedCategory: CategoryRepository()
-                  .getDatabase()
-                  .getAt(selectedCategory.value)!
-                  .title,
+              selectedCategory:
+                  _categoryBox.getAt(selectedCategory.value)!.title,
               index: index);
         } else {
           await saveData(
               context: context,
-              selectedCategory: CategoryRepository()
-                  .getDatabase()
-                  .getAt(selectedCategory.value)!
-                  .title);
+              selectedCategory:
+                  _categoryBox.getAt(selectedCategory.value)!.title);
         }
       } else {
         showMessage(context, 'You cant create task is past!');
@@ -86,17 +84,14 @@ class AddEditTaskController {
   Future<void> saveData(
       {required String selectedCategory, required BuildContext context}) async {
     try {
-      repository = TasksRepository();
-      for (int i = 0; i < 10; i++) {
-        await repository.save(TaskModel(
-          id: _categoryIndexer.getCategoryIndex(selectedCategory),
-          isDone: false,
-          category: selectedCategory,
-          creationDate: DateTime.now(),
-          text: titleTextController.text + "$i",
-          deadlineDateTime: DateTime.parse(convertedDateTime.value),
-        ));
-      }
+      await _repository.save(TaskModel(
+        id: _categoryIndexer.getCategoryIndex(selectedCategory),
+        isDone: false,
+        category: selectedCategory,
+        creationDate: DateTime.now(),
+        text: titleTextController.text,
+        deadlineDateTime: DateTime.parse(convertedDateTime.value),
+      ));
     } catch (e) {
       debugPrint('Null exception in _saveData()!');
       showMessage(context, '$e');
@@ -186,6 +181,7 @@ class AddEditTaskController {
       required BuildContext context}) async {
     try {
       unFocusTextField(context);
+
       final DateTime picked = (await showPlatformDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -209,5 +205,6 @@ class AddEditTaskController {
   }
 
   void showMessage(BuildContext context, String message) =>
-      CustomSnackbarWidget().showCustomSnackbar(context, message);
+      CustomSnackbarWidget()
+          .showCustomSnackbar(context: context, message: message);
 }

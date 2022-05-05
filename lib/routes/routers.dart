@@ -17,23 +17,21 @@ class Routers {
   Future<void> toAddEditTaskPage(
       BuildContext buildContext, int index, bool isEdit) async {
     await Navigator.of(buildContext).push(MaterialPageRoute(
-        builder: (buildContext) => AddEditTaskPage(
-              index: index,
-              isEdit: isEdit,
-            )));
+        builder: (buildContext) =>
+            AddEditTaskPage(index: index, isEdit: isEdit)));
   }
 
   Future<void> toAddEditCategoryPage(
       BuildContext context, int index, bool isEdit) async {
     await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => AddCategoryPage(
-              index: index,
-              isEdit: isEdit,
-            )));
+        builder: (context) => AddCategoryPage(index: index, isEdit: isEdit)));
   }
 
   Future<void> toAddArchievePage(BuildContext context) async {
     await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const ArchievePage()));
+      
   }
 }
+
+

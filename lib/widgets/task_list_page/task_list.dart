@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timelines/timelines.dart';
-import 'package:todo/controller/common/category_blocker.dart';
+import 'package:todo/controller/common/same_category_finder.dart';
 import 'package:todo/controller/common/category_index_controller.dart';
 import 'package:todo/model/archieve_db/archieve_db.dart';
 import 'package:todo/model/tasks_db/task_model.dart';
@@ -47,7 +46,7 @@ class TaskList extends StatelessWidget {
                           //edit
                           SlidableAction(
                             flex: 2,
-                            onPressed: (_) => CategoryChecker()
+                            onPressed: (_) => SameCategoryFinder()
                                 .checkCategoryIsNotEmpty(context, i),
                             backgroundColor: Colors.orange,
                             foregroundColor: Colors.white,

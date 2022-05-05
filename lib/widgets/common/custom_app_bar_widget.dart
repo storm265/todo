@@ -30,7 +30,7 @@ class CustomAppBarWidget extends StatelessWidget
       leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            addEditCtller.cleanFields();
+            addEditController.cleanFields();
             //    addEditCtller.isDisabled.value = false;
           },
           icon: const Icon(Icons.arrow_back_ios_new)),

@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 
 import 'package:todo/controller/task_list/task_list_controller.dart';
 import 'package:todo/widgets/task_list_page/date_line_fonts.dart';
@@ -39,10 +37,10 @@ class _DayLineWidgetState extends State<DayLineWidget> {
         height: 150,
         child: PageView.builder(
           controller: _taskListController.pageController,
-          itemCount: _taskListController.calendar.value.length,
+          itemCount: _taskListController.calendar.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            final _calendar = _taskListController.calendar.value;
+            final _calendar = _taskListController.calendar;
             return GestureDetector(
                 onTap: () {
                   widget.changeDay(_taskListController.selectedDate.value =
@@ -56,11 +54,13 @@ class _DayLineWidgetState extends State<DayLineWidget> {
                     ),
                     child: Column(
                       children: [
-                        Text(DateFormat('d').format(_calendar[index]),
-                            style: (_taskListController.selectedDate.value ==
-                                    _calendar[index])
-                                ? DateLineFonts.t1
-                                : DateLineFonts().t2),
+                        FittedBox(
+                          child: Text(DateFormat('d').format(_calendar[index]),
+                              style: (_taskListController.selectedDate.value ==
+                                      _calendar[index])
+                                  ? DateLineFonts.t1
+                                  : DateLineFonts().t2),
+                        ),
                         Text(
                           DateFormat('EEEE')
                               .format(_calendar[index])

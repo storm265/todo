@@ -15,25 +15,25 @@ class EditTaskController {
     var time = TimeOfDay.fromDateTime(task.deadlineDateTime ?? DateTime.now());
 
     final _formatter = StringTimeFormatter();
-    addEditCtller.hour = _formatter.formatTime(time.hour);
-    addEditCtller.min = _formatter.formatTime(time.minute);
+    addEditController.hour = _formatter.formatTime(time.hour);
+    addEditController.min = _formatter.formatTime(time.minute);
 
-    addEditCtller.timeTextController.text =
-        '${addEditCtller.hour}:${addEditCtller.min}';
+    addEditController.timeTextController.text =
+        '${addEditController.hour}:${addEditController.min}';
 
-    addEditCtller.stringDate.value =
+    addEditController.stringDate.value =
         task.deadlineDateTime.toString().substring(0, 10);
-    addEditCtller.pickedTime.value =
+    addEditController.pickedTime.value =
         TimeOfDay(hour: time.hour, minute: time.minute);
 
-    addEditCtller.convertedDateTime.value = task.deadlineDateTime.toString();
+    addEditController.convertedDateTime.value = task.deadlineDateTime.toString();
 
-    addEditCtller.dateTextController.text =
+    addEditController.dateTextController.text =
         '${_formatter.formatTime(task.deadlineDateTime!.day)}.${_formatter.formatTime(task.deadlineDateTime!.month)}.${task.deadlineDateTime!.year}';
 
-    addEditCtller.titleTextController.text = task.text;
+    addEditController.titleTextController.text = task.text;
 
-    addEditCtller.selectedCategory.value = getCategoryIndex(index);
+    addEditController.selectedCategory.value = getCategoryIndex(index);
   }
 
   int getCategoryIndex(int index) {
@@ -41,7 +41,7 @@ class EditTaskController {
     for (int i = 0; i < categoryBox.length; i++) {
       if (categoryBox.getAt(i)!.title ==
           TasksRepository().getDatabase().getAt(index)!.category) {
-        return addEditCtller.selectedCategory.value = i;
+        return addEditController.selectedCategory.value = i;
       }
     }
     return 0;

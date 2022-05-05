@@ -17,6 +17,7 @@ class ArchievePage extends StatefulWidget {
 class _ArchievePageState extends State<ArchievePage> {
   final Box<ArchieveModel> _categoryBox = ArchieveRepository().getDatabase();
   final _formatter = StringTimeFormatter();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +42,9 @@ class _ArchievePageState extends State<ArchievePage> {
             String deadlineYear = '${box.deadlineDateTime!.year}';
 
             return Dismissible(
-              onDismissed: (direction) {
+              onDismissed: (direction) async {
                 if (direction == DismissDirection.endToStart) {
-                  /// not a problem. https://api.flutter.dev/flutter/widgets/Dismissible-class.html
-                  setState(() {
-                    _categoryBox.deleteAt(index);
-                  });
+                  await _categoryBox.deleteAt(index);
                 }
               },
               key: UniqueKey(),

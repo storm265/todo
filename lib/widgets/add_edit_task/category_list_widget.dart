@@ -32,7 +32,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                 return GestureDetector(
                     onTap: () {
                       setState(() {
-                        addEditCtller.selectedCategory.value = index;
+                        addEditController.selectedCategory.value = index;
                       });
                     },
                     child: Padding(
@@ -52,7 +52,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                                           File(_categoryModel.imgPath))),
                               border: Border.all(
                                   color:
-                                      (addEditCtller.selectedCategory.value ==
+                                      (addEditController.selectedCategory.value ==
                                               index)
                                           ? Colors.red
                                           : Colors.white,
