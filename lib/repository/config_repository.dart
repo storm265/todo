@@ -1,19 +1,18 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-class ConfigurationRepository {
-  Future<void> getBox() async {
-     Hive.box('config');
-  }
+class FirstTimeVisitRepository {
+  String get _boxName => 'config';
+  String get _boxField => 'isFirstTime';
 
   Future<Box> openConfigBox() async {
-    return await Hive.openBox('config');
+    return await Hive.openBox(_boxName);
   }
 
-  Future<bool> getBoxValue() async {
-    return Hive.box('config').get('isFirstTime') ?? true;
+  Future<bool> getIsFirstTime() async {
+    return await Hive.box(_boxName).get(_boxField) ?? true;
   }
 
-  Future<void> putInBox(bool value) async {
-    return Hive.box('config').put('isFirstTime', value);
+  Future<void> putIsFirstTime(bool value) async {
+    return await Hive.box(_boxName).put(_boxField, value);
   }
 }

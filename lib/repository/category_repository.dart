@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo/controller/error_controller/error_service.dart';
 import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/repository/repository.dart';
 
@@ -7,30 +8,23 @@ class CategoryRepository implements Repository<CategoryModel> {
   final _categoryDatabase = Hive.box<CategoryModel>('categories');
 
   @override
+  Box<CategoryModel> get database => _categoryDatabase;
+
+  @override
   Future<void> save(CategoryModel model) async {
     try {
       await _categoryDatabase.add(model);
     } catch (e) {
-      debugPrint('CategoryRepository save error!');
+      ErrorService.printError('$e');
     }
   }
 
   @override
-  Box<CategoryModel> getDatabase() {
+  Future<void> delete(int index) async {
     try {
-      return _categoryDatabase;
+      await _categoryDatabase.deleteAt(index);
     } catch (e) {
-      debugPrint('CategoryRepository getDatabase error!');
-    }
-    return _categoryDatabase;
-  }
-
-  @override
-  void delete(int index) {
-    try {
-      _categoryDatabase.deleteAt(index);
-    } catch (e) {
-      debugPrint('CategoryRepository delete error!');
+        ErrorService.printError('$e');
     }
   }
 }

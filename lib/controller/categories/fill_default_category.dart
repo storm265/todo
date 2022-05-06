@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-
 import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/repository/category_repository.dart';
 import 'package:todo/repository/config_repository.dart';
 
 class DefaultCategoryController {
+  String get _assetsPath => 'assets/defaultCategoryIcons/';
+
   static const List<String> _categoryTitles = [
     'Event',
     'Personal',
@@ -12,23 +12,19 @@ class DefaultCategoryController {
     'Sport',
     'Work'
   ];
+
   Future<void> fillDefaultCategory() async {
-    final _configRepository = ConfigurationRepository();
+    final _configRepository = FirstTimeVisitRepository();
     await _configRepository.openConfigBox();
-    await _configRepository.getBox();
-    final _categoryRepository = CategoryRepository().getDatabase();
 
-    bool _isFirstTime = await _configRepository.getBoxValue();
-    if (_isFirstTime) {
-      debugPrint('filling category by default ');
-
+    if (await _configRepository.getIsFirstTime()) {
       for (int i = 0; i < _categoryTitles.length; i++) {
-        await _categoryRepository.add(CategoryModel(
+        await CategoryRepository().database.add(CategoryModel(
             id: i,
             title: _categoryTitles[i],
-            imgPath: 'assets/defaultCategoryIcons/${_categoryTitles[i]}.png'));
+            imgPath: '$_assetsPath${_categoryTitles[i]}.png'));
       }
     }
-    await _configRepository.putInBox(false);
+    await _configRepository.putIsFirstTime(false);
   }
 }

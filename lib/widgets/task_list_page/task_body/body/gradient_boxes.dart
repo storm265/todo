@@ -15,7 +15,7 @@ class BodyColors {
     ),
     boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
     gradient: LinearGradient(
-      colors: GradientColor.gradient,
+      colors: Gradients.gradient,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),
@@ -24,7 +24,7 @@ class BodyColors {
   static const schreduleBody = BoxDecoration(
     boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
     gradient: LinearGradient(
-      colors: GradientColor.gradient,
+      colors: Gradients.gradient,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),

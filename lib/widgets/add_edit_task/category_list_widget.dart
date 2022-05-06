@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo/controller/global_variables.dart';
+import 'package:todo/controller/global_controller.dart';
 import 'package:todo/model/category_bd/category_model.dart';
 import 'package:todo/repository/category_repository.dart';
 
@@ -13,11 +13,10 @@ class CategoryListWidget extends StatefulWidget {
 }
 
 class _CategoryListWidgetState extends State<CategoryListWidget> {
- 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: CategoryRepository().getDatabase().listenable(),
+      valueListenable: CategoryRepository().database.listenable(),
       builder: (context, Box<CategoryModel> box, _) {
         return SizedBox(
           width: double.infinity,
@@ -30,11 +29,8 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                 CategoryModel _categoryModel = box.getAt(index)!;
 
                 return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        addEditController.selectedCategory.value = index;
-                      });
-                    },
+                    onTap: () => setState(
+                        () => addEditController.selectedCategory.value = index),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
@@ -43,24 +39,23 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: (_categoryModel.imgPath
-                                          .startsWith('assets'))
-                                      ? AssetImage(_categoryModel.imgPath)
-                                          as ImageProvider
-                                      : FileImage(
-                                          File(_categoryModel.imgPath))),
-                              border: Border.all(
-                                  color:
-                                      (addEditController.selectedCategory.value ==
-                                              index)
-                                          ? Colors.red
-                                          : Colors.white,
-                                  width: 5),
-                              shape: BoxShape.circle,
-                            ),
+                                image: DecorationImage(
+                                    image: (_categoryModel.imgPath
+                                            .startsWith('assets'))
+                                        ? AssetImage(_categoryModel.imgPath)
+                                            as ImageProvider
+                                        : FileImage(
+                                            File(_categoryModel.imgPath))),
+                                border: Border.all(
+                                    color: (addEditController
+                                                .selectedCategory.value ==
+                                            index)
+                                        ? Colors.red
+                                        : Colors.white,
+                                    width: 5),
+                                shape: BoxShape.circle),
                           ),
-                          Text(_categoryModel.title),
+                          Text(_categoryModel.title)
                         ],
                       ),
                     ));

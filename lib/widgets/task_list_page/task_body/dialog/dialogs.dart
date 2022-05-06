@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:todo/controller/common/same_category_finder.dart';
-import 'package:todo/controller/task_list/dialog_close_controller.dart';
+import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/task_list_page/task_body/dialog/dialog_button.dart';
 
@@ -22,11 +22,8 @@ class TaskListDialog {
                 TaskListDialogButton(
                     icon: Icons.post_add_outlined,
                     text: 'Add category',
-                    method: () => DialogDelayedWrapper().delayedPush(
-                          context,
-                          () => Routers()
-                              .toAddEditCategoryPage(context, 0, false),
-                        )),
+                    method: () => DelayedNavigator.delayedPush(context,
+                        () => Routers.toAddEditCategoryPage(context, 0, false)))
               ],
             );
           });

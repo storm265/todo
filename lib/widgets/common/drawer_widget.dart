@@ -16,27 +16,24 @@ class CustomDrawerWidget extends StatelessWidget {
                 switch (index) {
                   case 0:
                     Navigator.pop(context);
-                    Routers().toCategoryPage(context);
+                    Routers.toCategoryPage(context);
 
                     break;
                   case 1:
                     Navigator.pop(context);
-                    Routers().toAddArchievePage(context);
+                    Routers.toAddArchievePage(context);
                     break;
                 }
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 40, top: 20, bottom: 20),
-                child: Text(
-                  DrawerItems.drawerItems[index],
-                  style: const TextStyle(fontSize: 25),
-                ),
+                child: Text(DrawerItems.drawerItems[index],
+                    style: const TextStyle(fontSize: 25)),
               ),
             );
           },
-          separatorBuilder: (context, index) => const Divider(
-                color: Colors.black,
-              ),
+          separatorBuilder: (context, index) =>
+              const Divider(color: Colors.black),
           itemCount: DrawerItems.drawerItems.length),
     );
   }

@@ -14,7 +14,7 @@ class PopupButtonsWidget extends StatelessWidget {
           onSelected: (int value) {
             switch (value) {
               case 0:
-                Routers().toAddEditCategoryPage(context, index, true);
+                Routers.toAddEditCategoryPage(context, index, true);
                 break;
               case 1:
                 CategoryRepository().delete(index);

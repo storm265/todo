@@ -17,16 +17,13 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  final _categoryBox = CategoryRepository().getDatabase();
+  final _categoryBox = CategoryRepository().database;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        buildContext: context,
-        title: 'Caterogy',
-        showActions: false,
-      ),
+          context: context, title: 'Caterogy', showActions: false),
       body: ValueListenableBuilder<Box<CategoryModel>>(
           valueListenable: _categoryBox.listenable(),
           builder: (context, Box<CategoryModel> box, _) {

@@ -23,7 +23,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: TasksRepository().getDatabase().listenable(),
+        valueListenable: TasksRepository().database.listenable(),
         builder: (_, Box<TaskModel> box, __) {
           if (box.values.isEmpty) {
             return NoTasksWidget.noTasks;
@@ -85,9 +85,7 @@ class TaskList extends StatelessWidget {
                             flex: 2,
                             onPressed: (_) {
                               // remove
-                              ArchieveRepository()
-                                  .getDatabase()
-                                  .add(ArchieveModel(
+                              ArchieveRepository().database.add(ArchieveModel(
                                     category: taskBox.category,
                                     text: taskBox.text,
                                     deadlineDateTime: taskBox.deadlineDateTime,

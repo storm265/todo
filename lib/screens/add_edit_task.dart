@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/controller/add_edit_task_controller/edit_controller.dart';
-import 'package:todo/controller/global_variables.dart';
+import 'package:todo/controller/global_controller.dart';
+import 'package:todo/controller/task_controller/edit_controller.dart';
 import 'package:todo/widgets/add_edit_task/category_list_widget.dart';
 import 'package:todo/widgets/add_edit_task/textfield.dart';
 import 'package:todo/widgets/common/custom_app_bar_widget.dart';
@@ -18,11 +18,10 @@ class AddEditTaskPage extends StatefulWidget {
 class _AddEditTaskPageState extends State<AddEditTaskPage> {
   @override
   void initState() {
-    super.initState();
-
     if (widget.isEdit) {
       EditTaskController().getEditData(widget.index);
     }
+    super.initState();
   }
 
   @override
@@ -30,46 +29,40 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: CustomAppBarWidget(
-          buildContext: context,
-          showActions: false,
-          title: (widget.isEdit) ? 'Edit task' : 'Add task',
-        ),
+            context: context,
+            showActions: false,
+            title: (widget.isEdit) ? 'Edit task' : 'Add task'),
         body: SingleChildScrollView(
           child: Builder(builder: (context) {
             return InkWell(
+              highlightColor: Colors.white,
               splashColor: Colors.white,
               onTap: () => addEditController.unFocusTextField(context),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 100,
-                  ),
+                  const SizedBox(height: 100),
                   AddEditTaskTextfieldWidget().textField(
                       addEditController.titleTextController, 'Text:', true),
                   AddEditTaskTextfieldWidget().textField(
                       addEditController.dateTextController, 'Deadline date:'),
                   OutlinedButton.icon(
                       onPressed: () => addEditController.pickDate(
-                            context: context,
-                            dateTextController:
-                                addEditController.dateTextController,
-                          ),
-                      icon: const Icon(
-                        Icons.date_range_outlined,
-                      ),
+                          context: context,
+                          dateTextController:
+                              addEditController.dateTextController),
+                      icon: const Icon(Icons.date_range_outlined),
                       label: const Text('Pick date')),
                   AddEditTaskTextfieldWidget().textField(
                       addEditController.timeTextController, 'Deadline time:'),
                   OutlinedButton.icon(
                       onPressed: () => addEditController.pickTime(
-                          timeTextController: addEditController.timeTextController,
-                          buildContext: context),
-                      icon: const Icon(
-                        Icons.schedule_outlined,
-                      ),
+                          timeTextController:
+                              addEditController.timeTextController,
+                          context: context),
+                      icon: const Icon(Icons.schedule_outlined),
                       label: const Text('Pick time')),
                   const CategoryListWidget(),
-                  ValueListenableBuilder(
+                  ValueListenableBuilder<bool>(
                     valueListenable: addEditController.isButtonDisabled,
                     builder: (context, value, _) {
                       return OutlinedButton.icon(

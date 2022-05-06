@@ -1,36 +1,29 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo/controller/error_controller/error_service.dart';
 import 'package:todo/model/tasks_db/task_model.dart';
 import 'package:todo/repository/repository.dart';
 
 class TasksRepository implements Repository<TaskModel> {
-  final taskDatabase = Hive.box<TaskModel>('tasks');
+  final _taskDatabase = Hive.box<TaskModel>('tasks');
+
+  @override
+  Box<TaskModel> get database => _taskDatabase;
 
   @override
   Future<void> save(TaskModel model) async {
     try {
-      await taskDatabase.add(model);
+      await _taskDatabase.add(model);
     } catch (e) {
-      debugPrint('TasksRepository save error!');
+     ErrorService.printError('$e');
     }
-  }
-
-  @override  
-  Box<TaskModel> getDatabase() {
-    try {
-      return taskDatabase;
-    } catch (e) {
-      debugPrint('TasksRepository save error!');
-    }
-    return taskDatabase;
   }
 
   @override
-  void delete(int index) {
+  Future<void> delete(int index) async{
     try {
-      taskDatabase.deleteAt(index);
+      await _taskDatabase.deleteAt(index);
     } catch (e) {
-      debugPrint('TasksRepository delete error!');
+     ErrorService.printError('$e');
     }
   }
 }
