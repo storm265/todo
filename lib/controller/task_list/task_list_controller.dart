@@ -38,7 +38,7 @@ class TaskListController extends ChangeNotifier {
   }
 
   void _scrollToElement(int index) {
-    SchedulerBinding.instance!.addPostFrameCallback((_) async {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       await pageController.animateToPage(index,
           duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
     });
@@ -51,10 +51,13 @@ class TaskListController extends ChangeNotifier {
       var _firstElement = calendar.first;
 
       List<DateTime> _first = List.generate(
-          20,
-          (index) => DateTime.parse(DateTime.utc(_firstElement.year,
-                  _firstElement.month, _firstElement.day - index)
-              .toString()));
+        20,
+        (index) => DateTime.parse(
+          DateTime.utc(_firstElement.year, _firstElement.month,
+                  _firstElement.day - index)
+              .toString(),
+        ),
+      );
 
       calendar.insertAll(0, _first);
     }
