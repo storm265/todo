@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
-import 'package:todo/repository/archieve_repository.dart';
+import 'package:todo/data/repository/archieve_repository.dart';
 import 'package:todo/widgets/archieve/body.dart';
 import 'package:todo/widgets/archieve/dismiss_style_widget.dart';
 import 'package:todo/widgets/common/custom_app_bar_widget.dart';
@@ -13,7 +13,7 @@ class ArchievePage extends StatefulWidget {
 }
 
 class _ArchievePageState extends State<ArchievePage> {
-  final _categoryBox = ArchieveRepository().database;
+  final _categoryBox = ArchieveRepositoryImpl().database;
   final _formatter = StringTimeFormatter();
 
   @override

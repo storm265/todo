@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo/controller/common/category_index_controller.dart';
 import 'package:todo/controller/error_controller/error_service.dart';
-import 'package:todo/model/category_bd/category_model.dart';
-import 'package:todo/repository/category_repository.dart';
+import 'package:todo/data/model/category_bd/category_model.dart';
+import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
@@ -17,8 +16,8 @@ class CategoryController extends ChangeNotifier {
   final picker = ImagePicker();
   final titleController = TextEditingController();
 
-  final _categoryRepository = CategoryRepository().database;
-  final _categoryIndexController = CategoryIndexController();
+  final _categoryRepository = CategoryRepositoryImpl().database;
+  final _categoryIndexController = CategoryIndexProvider();
 
   bool get _isImagePicked => imageFile.value.path.isNotEmpty;
   bool get _isTextValid => titleController.text.length >= 2;

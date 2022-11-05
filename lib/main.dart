@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/categories/fill_default_category.dart';
-import 'package:todo/controller/main_controller/hive_init.dart';
+import 'package:todo/data/database/hive_init.dart';
 import 'package:todo/controller/main_controller/system_chrome_controller.dart';
 import 'package:todo/screens/tasks.dart';
 

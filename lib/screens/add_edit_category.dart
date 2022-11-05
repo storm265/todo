@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:todo/controller/category_controller/category_controller.dart';
-import 'package:todo/repository/category_repository.dart';
+import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/widgets/add_edit_category/textfield_widget.dart';
 import 'package:todo/widgets/common/custom_app_bar_widget.dart';
 
@@ -19,7 +19,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   @override
   void initState() {
     if (widget.isEdit) {
-      var categoryBox = CategoryRepository().database.getAt(widget.index);
+      final categoryBox = CategoryRepositoryImpl().database.getAt(widget.index);
       _categoryController.imageFile.value = File(categoryBox!.imgPath);
       _categoryController.titleController.text = categoryBox.title;
     }
@@ -38,7 +38,10 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-          context: context, title: 'Add category', showActions: false),
+        context: context,
+        title: 'Add category',
+        showActions: false,
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,13 +78,18 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                           icon: const Icon(Icons.file_download_outlined),
                           label: const Text('Upload photo')),
                       OutlinedButton.icon(
-                          icon: const Icon(Icons.add),
-                          label: Text(
-                              '${(widget.isEdit) ? 'Edit' : 'Add'} category'),
-                          onPressed: (isDisabled)
-                              ? null
-                              : () => _categoryController.validate(
-                                  widget.isEdit, context, widget.index)),
+                        icon: const Icon(Icons.add),
+                        label: Text(
+                          '${(widget.isEdit) ? 'Edit' : 'Add'} category',
+                        ),
+                        onPressed: (isDisabled)
+                            ? null
+                            : () => _categoryController.validate(
+                                  widget.isEdit,
+                                  context,
+                                  widget.index,
+                                ),
+                      ),
                     ],
                   );
                 }),

@@ -1,11 +1,7 @@
-
-// replace with enums
-class DrawerItems {
-  static const  List<String> drawerItems = ['Categories', 'Archive'];
-}
-/*
 enum DrawerItems {
-  categories,
-  archive,
+  categories('Categories'),
+  archive('Archive');
+
+  const DrawerItems(this.type);
+  final String type;
 }
-*/

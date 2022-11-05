@@ -1,34 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/controller/close_keyboard.dart';
 import 'package:todo/controller/common/category_index_controller.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/controller/error_controller/error_service.dart';
-import 'package:todo/model/archieve_db/archieve_db.dart';
-import 'package:todo/model/tasks_db/task_model.dart';
-import 'package:todo/repository/archieve_repository.dart';
-import 'package:todo/repository/category_repository.dart';
-import 'package:todo/repository/tasks_repository.dart';
+import 'package:todo/data/model/archieve_db/archieve_db.dart';
+import 'package:todo/data/model/tasks_db/task_model.dart';
+import 'package:todo/data/repository/repository.dart';
+import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 class TaskController {
-  var titleTextController = TextEditingController();
-  var dateTextController = TextEditingController();
-  var timeTextController = TextEditingController();
+  final Repository _tasksRepository;
+  final StringTimeFormatter _stringTimeFormatter;
+  final CategoryIndexProvider _categoryIndexerProvider;
+  final Repository _archieveRepository;
 
-  var isButtonDisabled = ValueNotifier<bool>(false);
-  var selectedCategory = ValueNotifier<int>(0);
+  TaskController({
+    required Repository tasksRepository,
+    required StringTimeFormatter stringTimeFormatter,
+    required CategoryIndexProvider categoryIndexerProvider,
+    required Repository archieveRepository,
+  })  : _tasksRepository = tasksRepository,
+        _stringTimeFormatter = stringTimeFormatter,
+        _categoryIndexerProvider = categoryIndexerProvider,
+        _archieveRepository = archieveRepository;
 
-  var stringDate = ValueNotifier<String>('');
-  var convertedDateTime = ValueNotifier<String>('');
-  var pickedDate = ValueNotifier<DateTime>(DateTime.now());
-  var pickedTime =
+  final titleTextController = TextEditingController();
+  final dateTextController = TextEditingController();
+  final timeTextController = TextEditingController();
+
+  final isButtonDisabled = ValueNotifier<bool>(false);
+  final selectedCategory = ValueNotifier<int>(0);
+
+  final stringDate = ValueNotifier<String>('');
+  final convertedDateTime = ValueNotifier<String>('');
+  final pickedDate = ValueNotifier<DateTime>(DateTime.now());
+  final pickedTime =
       ValueNotifier<TimeOfDay>(const TimeOfDay(hour: 1, minute: 11));
-
-  final _formatter = StringTimeFormatter();
-
-  final _categoryIndexer = CategoryIndexController();
 
   String? hour, min;
 
@@ -36,40 +47,35 @@ class TaskController {
   bool get _isDatePicked => dateTextController.value.text.isEmpty;
   bool get _isTimePicked => timeTextController.value.text.isEmpty;
 
-  Future<void> validate({
+  Future<void> tryValidate({
     required BuildContext context,
     required int index,
     required bool isEdit,
   }) async {
-    try {
-      final _categoryBox = CategoryRepository().database;
-      convertedDateTime.value = '${stringDate.value} $hour:$min:00.000000';
+    final _categoryBox = CategoryRepositoryImpl().database;
+    convertedDateTime.value = '${stringDate.value} $hour:$min:00.000000';
 
-      if (_isTextValid) {
-        showMessage(context, 'Text title must be more then 4 characters. 😑');
-      } else if (_isDatePicked) {
-        showMessage(context, 'Pick date. 😑');
-      } else if (_isTimePicked) {
-        showMessage(context, 'Pick time. 😑');
-      } else if (DateTime.now()
-          .isBefore(DateTime.parse(convertedDateTime.value))) {
-        if (isEdit) {
-          await editData(
-              context: context,
-              selectedCategory:
-                  _categoryBox.getAt(selectedCategory.value)!.title,
-              index: index);
-        } else {
-          await saveData(
-              context: context,
-              selectedCategory:
-                  _categoryBox.getAt(selectedCategory.value)!.title);
-        }
+    if (_isTextValid) {
+      showMessage(context, 'Text title must be more then 4 characters. 😑');
+    } else if (_isDatePicked) {
+      showMessage(context, 'Pick date. 😑');
+    } else if (_isTimePicked) {
+      showMessage(context, 'Pick time. 😑');
+    } else if (DateTime.now()
+        .isBefore(DateTime.parse(convertedDateTime.value))) {
+      if (isEdit) {
+        await editData(
+            context: context,
+            selectedCategory: _categoryBox.getAt(selectedCategory.value)!.title,
+            index: index);
       } else {
-        showMessage(context, 'You cant create task is past!');
+        await saveData(
+            context: context,
+            selectedCategory:
+                _categoryBox.getAt(selectedCategory.value)!.title);
       }
-    } catch (e) {
-      ErrorService.printError('$e');
+    } else {
+      showMessage(context, 'You cant create task is past!');
     }
   }
 
@@ -78,8 +84,8 @@ class TaskController {
     required BuildContext context,
   }) async {
     try {
-      await TasksRepository().save(TaskModel(
-          id: _categoryIndexer.getCategoryIndex(selectedCategory),
+      await _tasksRepository.save(TaskModel(
+          id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
           isDone: false,
           category: selectedCategory,
           creationDate: DateTime.now(),
@@ -98,41 +104,41 @@ class TaskController {
   Future<void> addToArchieve({
     required String selectedCategory,
     required BuildContext context,
-  }) async {
-    try {
-      await ArchieveRepository().save(ArchieveModel(
+  }) async =>
+      await _archieveRepository.save(
+        ArchieveModel(
           category: selectedCategory,
           text: titleTextController.text,
-          deadlineDateTime: DateTime.parse(convertedDateTime.value)));
-    } catch (e) {
-      ErrorService.printError('$e');
-    }
-  }
+          deadlineDateTime: DateTime.parse(convertedDateTime.value),
+        ),
+      );
 
   Future<void> editData({
     required String selectedCategory,
     required int index,
     required BuildContext context,
   }) async {
-    try {
-      await TasksRepository().database.putAt(
+    await _tasksRepository.database
+        .putAt(
           index,
           TaskModel(
-              id: _categoryIndexer.getCategoryIndex(selectedCategory),
-              isDone: false,
-              category: selectedCategory,
-              creationDate: DateTime.now(),
-              text: titleTextController.text,
-              deadlineDateTime: DateTime.parse(convertedDateTime.value)));
+            id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
+            isDone: false,
+            category: selectedCategory,
+            creationDate: DateTime.now(),
+            text: titleTextController.text,
+            deadlineDateTime: DateTime.parse(convertedDateTime.value),
+          ),
+        )
+        .then(
+          (_) => showMessage(context, 'Task updated 😊 🚀.'),
+        );
 
-      isButtonDisabled.value = true;
-      showMessage(context, 'Task updated 😊 🚀.');
-      cleanFields();
-      await Routers.popDeyaled(context);
-      isButtonDisabled.value = false;
-    } catch (e) {
-      ErrorService.printError('$e');
-    }
+    isButtonDisabled.value = true;
+
+    cleanFields();
+    await Routers.popDeyaled(context);
+    isButtonDisabled.value = false;
   }
 
   void cleanFields() {
@@ -146,61 +152,56 @@ class TaskController {
     required BuildContext context,
     required TextEditingController timeTextController,
   }) async {
-    try {
-      unFocusTextField(context);
-      final TimeOfDay? picked = await showTimePicker(
-          builder: (BuildContext buildContext, Widget? child) {
-            return MediaQuery(
-                data: MediaQuery.of(buildContext)
-                    .copyWith(alwaysUse24HourFormat: true),
-                child: child!);
-          },
-          context: context,
-          initialTime: TimeOfDay(
-              // +2 min for convinience
-              hour: TimeOfDay.now().hour,
-              minute: TimeOfDay.now().minute + 2));
+    closeKeyboard(context);
+    final TimeOfDay? picked = await showTimePicker(
+      builder: (BuildContext buildContext, Widget? child) {
+        return MediaQuery(
+            data: MediaQuery.of(buildContext)
+                .copyWith(alwaysUse24HourFormat: true),
+            child: child!);
+      },
+      context: context,
+      initialTime: TimeOfDay(
+          // +2 min for convinience
+          hour: TimeOfDay.now().hour,
+          minute: TimeOfDay.now().minute + 2),
+    );
 
-      pickedTime.value = picked!;
+    pickedTime.value = picked!;
 
-      hour = _formatter.formatTime(pickedTime.value.hour);
-      min = _formatter.formatTime(pickedTime.value.minute);
+    hour = _stringTimeFormatter.formatTime(pickedTime.value.hour);
+    min = _stringTimeFormatter.formatTime(pickedTime.value.minute);
 
-      timeTextController.text = '$hour:$min';
-    } catch (e) {
-      ErrorService.printError('$e');
-    }
+    timeTextController.text = '$hour:$min';
   }
 
   Future<void> pickDate({
     required TextEditingController dateTextController,
     required BuildContext context,
   }) async {
-    try {
-      unFocusTextField(context);
+    closeKeyboard(context);
 
-      final DateTime picked = (await showPlatformDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(DateTime.now().year),
-          lastDate: DateTime(DateTime.now().year + 50)))!;
+    final DateTime picked = (await showPlatformDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime(DateTime.now().year + 50),
+    ))!;
 
-      pickedDate.value = picked;
+    pickedDate.value = picked;
 
-      dateTextController.text = DateFormat.yMd().format(pickedDate.value);
-      String _month = _formatter.formatTime(pickedDate.value.month);
-      String _day = _formatter.formatTime(pickedDate.value.day);
-      stringDate.value = '${pickedDate.value.year}-$_month-$_day';
-    } catch (e) {
-      ErrorService.printError('$e');
-    }
+    dateTextController.text = DateFormat.yMd().format(pickedDate.value);
+    String _month = _stringTimeFormatter.formatTime(pickedDate.value.month);
+    String _day = _stringTimeFormatter.formatTime(pickedDate.value.day);
+    stringDate.value = '${pickedDate.value.year}-$_month-$_day';
   }
 
-  void unFocusTextField(BuildContext context) {
-    FocusScope.of(context).unfocus();
-  }
-
-  void showMessage(BuildContext context, String message) =>
+  void showMessage(
+    BuildContext context,
+    String message,
+  ) =>
       CustomSnackbarWidget.showCustomSnackbar(
-          context: context, message: message);
+        context: context,
+        message: message,
+      );
 }

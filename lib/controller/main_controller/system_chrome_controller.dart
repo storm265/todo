@@ -7,6 +7,8 @@ class SystemChromeProvider {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.black, systemNavigationBarColor: Colors.black));
+      statusBarColor: Colors.black,
+      systemNavigationBarColor: Colors.black,
+    ));
   }
 }

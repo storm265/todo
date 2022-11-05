@@ -1,20 +1,25 @@
-// ignore_for_file: unnecessary_brace_in_string_interps
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/controller/global_controller.dart';
-import 'package:todo/repository/category_repository.dart';
-import 'package:todo/repository/tasks_repository.dart';
-
-import '../../model/category_bd/category_model.dart';
+import 'package:todo/data/model/category_bd/category_model.dart';
+import 'package:todo/data/repository/category_repository.dart';
+import 'package:todo/data/repository/tasks_repository.dart';
 
 class EditTaskController {
-  void getEditData(
-    int index,
-  ) {
-    var _taskBox = TasksRepository().database.getAt(index)!;
-    var _time = TimeOfDay.fromDateTime(_taskBox.deadlineDateTime ?? DateTime.now());
+  final CategoryRepositoryImpl _categoryRepositoryImpl;
+  final TasksRepositoryImpl _tasksRepositoryImpl;
+
+  EditTaskController({
+    required CategoryRepositoryImpl categoryRepositoryImpl,
+    required TasksRepositoryImpl tasksRepositoryImpl,
+  })  : _categoryRepositoryImpl = categoryRepositoryImpl,
+        _tasksRepositoryImpl = tasksRepositoryImpl;
+
+  void getEditData(int index) {
+    final _taskBox = TasksRepositoryImpl().database.getAt(index)!;
+    final _time =
+        TimeOfDay.fromDateTime(_taskBox.deadlineDateTime ?? DateTime.now());
 
     final _formatter = StringTimeFormatter();
     addEditController.hour = _formatter.formatTime(_time.hour);
@@ -39,13 +44,11 @@ class EditTaskController {
     addEditController.selectedCategory.value = getCategoryIndex(index);
   }
 
-  int getCategoryIndex(
-    int index,
-  ) {
-    Box<CategoryModel> _categoryBox = CategoryRepository().database;
+  int getCategoryIndex(int index) {
+    Box<CategoryModel> _categoryBox = _categoryRepositoryImpl.database;
     for (int i = 0; i < _categoryBox.length; i++) {
       if (_categoryBox.getAt(i)!.title ==
-          TasksRepository().database.getAt(index)!.category) {
+          _tasksRepositoryImpl.database.getAt(index)!.category) {
         return addEditController.selectedCategory.value = i;
       }
     }

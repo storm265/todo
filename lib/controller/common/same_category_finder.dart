@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:todo/repository/category_repository.dart';
+import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 class SameCategoryFinder {
-  final _categoryIsNotEmpty = CategoryRepository().database.isNotEmpty;
+  final _categoryIsNotEmpty = CategoryRepositoryImpl().database.isNotEmpty;
   void checkCategoryIsNotEmpty(BuildContext context, int i) {
     if (_categoryIsNotEmpty) {
       Routers.toAddEditTaskPage(context, i, true);

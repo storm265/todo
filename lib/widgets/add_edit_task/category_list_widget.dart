@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/controller/global_controller.dart';
-import 'package:todo/model/category_bd/category_model.dart';
-import 'package:todo/repository/category_repository.dart';
+import 'package:todo/data/model/category_bd/category_model.dart';
+import 'package:todo/data/repository/category_repository.dart';
 
 class CategoryListWidget extends StatefulWidget {
   const CategoryListWidget({Key? key}) : super(key: key);
@@ -13,10 +13,11 @@ class CategoryListWidget extends StatefulWidget {
 }
 
 class _CategoryListWidgetState extends State<CategoryListWidget> {
+  final _categoryRepository = CategoryRepositoryImpl();
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: CategoryRepository().database.listenable(),
+      valueListenable: _categoryRepository.database.listenable(),
       builder: (context, Box<CategoryModel> box, _) {
         return SizedBox(
           width: double.infinity,

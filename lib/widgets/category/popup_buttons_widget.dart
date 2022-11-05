@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/repository/category_repository.dart';
+import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/routes/routers.dart';
 
 class PopupButtonsWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class PopupButtonsWidget extends StatelessWidget {
                 Routers.toAddEditCategoryPage(context, index, true);
                 break;
               case 1:
-                CategoryRepository().delete(index);
+                CategoryRepositoryImpl().delete(index);
                 break;
             }
           },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/global_controller.dart';
 import 'package:todo/controller/task_controller/edit_controller.dart';
+import 'package:todo/data/repository/category_repository.dart';
+import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/main.dart';
 import 'package:todo/widgets/add_edit_task/category_list_widget.dart';
 import 'package:todo/widgets/add_edit_task/textfield.dart';
@@ -9,18 +11,26 @@ import 'package:todo/widgets/common/custom_app_bar_widget.dart';
 class AddEditTaskPage extends StatefulWidget {
   final int index;
   final bool isEdit;
-  const AddEditTaskPage({Key? key, required this.isEdit, required this.index})
-      : super(key: key);
+  const AddEditTaskPage({
+    Key? key,
+    required this.isEdit,
+    required this.index,
+  }) : super(key: key);
 
   @override
   _AddEditTaskPageState createState() => _AddEditTaskPageState();
 }
 
 class _AddEditTaskPageState extends State<AddEditTaskPage> {
+  final _editTaskController = EditTaskController(
+    categoryRepositoryImpl: CategoryRepositoryImpl(),
+    tasksRepositoryImpl: TasksRepositoryImpl(),
+  );
+
   @override
   void initState() {
     if (widget.isEdit) {
-      EditTaskController().getEditData(widget.index);
+      _editTaskController.getEditData(widget.index);
     }
     super.initState();
   }
@@ -74,7 +84,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                     onPressed: addEditController.isButtonDisabled.value
                         ? null
                         : () {
-                            addEditController.validate(
+                            addEditController.tryValidate(
                                 index: widget.index,
                                 isEdit: widget.isEdit,
                                 context: context);
