@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/controller/task_list/task_list_controller.dart';
-import 'package:todo/widgets/common/drawer_widget.dart';
+import 'package:todo/screens/task/controller/task_list_controller.dart';
+import 'package:todo/screens/common_widgets/drawer_widget.dart';
 import 'package:todo/screens/task/widgets/current_date_widget.dart';
 import 'package:todo/screens/task/widgets/dateline_lib.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';

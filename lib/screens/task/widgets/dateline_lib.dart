@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/controller/task_list/task_list_controller.dart';
+import 'package:todo/screens/task/controller/task_list_controller.dart';
 import 'package:todo/screens/task/widgets/date_line_fonts.dart';
 
 class DayLineWidget extends StatefulWidget {

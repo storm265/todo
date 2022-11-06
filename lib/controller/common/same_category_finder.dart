@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
-import 'package:todo/widgets/common/custom_snackbar_widget.dart';
+import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
 class SameCategoryFinder {
   final _categoryIsNotEmpty = CategoryRepositoryImpl().database.isNotEmpty;

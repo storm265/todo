@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/widgets/common/gradient_color.dart';
+import 'package:todo/screens/common_widgets/gradient_color.dart';
 
 class BodyColors {
   static const emptyTaskBody = BoxDecoration(

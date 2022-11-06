@@ -4,10 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:todo/controller/common/category_index_provider.dart';
 import 'package:todo/data/model/category_bd/category_model.dart';
 import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/widgets/common/custom_snackbar_widget.dart';
+import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
-class AddCategoryController extends ChangeNotifier {
-  final isDisabledButton = ValueNotifier<bool>(true);
+class AddEditCategoryController extends ChangeNotifier {
+  final isDisabledAddCategoryButton = ValueNotifier<bool>(false);
   final imageFile = ValueNotifier(File(''));
   final _imagePicker = ImagePicker();
   final titleController = TextEditingController();
@@ -19,8 +19,8 @@ class AddCategoryController extends ChangeNotifier {
   bool get _isTextValid => titleController.text.length >= 2;
 
   void changeButtonIsActive(bool newValue) {
-    isDisabledButton.value = newValue;
-    isDisabledButton.notifyListeners();
+    isDisabledAddCategoryButton.value = newValue;
+    isDisabledAddCategoryButton.notifyListeners();
   }
 
   Future<void> tryValidate(
@@ -85,7 +85,7 @@ class AddCategoryController extends ChangeNotifier {
               imgPath: imageFile.value.path));
       changeButtonIsActive(true);
       showSnackBar(context, 'Category is updated');
-        Navigator.pop(context);
+      Navigator.pop(context);
     }
   }
 

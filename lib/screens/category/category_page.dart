@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo/controller/category_list_controller.dart';
+import 'package:todo/screens/category/controller/category_list_controller.dart';
 import 'package:todo/data/model/category_bd/category_model.dart';
-import 'package:todo/widgets/category/body.dart';
-import 'package:todo/widgets/category/circle_avatar_widget.dart';
-import 'package:todo/widgets/category/popup_buttons_widget.dart';
-import 'package:todo/widgets/category/text_widget.dart';
-import 'package:todo/widgets/common/custom_app_bar_widget.dart';
+import 'package:todo/screens/category/widgets/body.dart';
+import 'package:todo/screens/category/widgets/circle_avatar_widget.dart';
+import 'package:todo/screens/category/widgets/popup_buttons_widget.dart';
+import 'package:todo/screens/category/widgets/text_widget.dart';
+import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);

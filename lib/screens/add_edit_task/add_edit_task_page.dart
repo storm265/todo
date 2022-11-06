@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/global_controller.dart';
-import 'package:todo/screens/task/controller/edit_controller.dart';
+import 'package:todo/screens/add_edit_task/controller/edit_controller.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
-import 'package:todo/widgets/add_edit_task/category_list_widget.dart';
-import 'package:todo/widgets/add_edit_task/textfield.dart';
-import 'package:todo/widgets/common/custom_app_bar_widget.dart';
-import 'package:todo/widgets/common/unfocus_widget.dart';
+import 'package:todo/screens/add_edit_task/widgets/category_list_widget.dart';
+import 'package:todo/screens/add_edit_task/widgets/textfield.dart';
+import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
+import 'package:todo/screens/common_widgets/unfocus_widget.dart';
 
 class AddEditTaskPage extends StatefulWidget {
   final int index;
@@ -78,17 +78,18 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               ),
               const CategoryListWidget(),
               ValueListenableBuilder<bool>(
-                valueListenable: addEditController.isButtonDisabled,
+                valueListenable: addEditController.isAddButtonActive,
                 builder: (context, value, _) {
                   return OutlinedButton.icon(
-                    onPressed: addEditController.isButtonDisabled.value
-                        ? null
-                        : () {
+                    onPressed: addEditController.isAddButtonActive.value
+                        ? () {
                             addEditController.tryValidate(
-                                index: widget.index,
-                                isEdit: widget.isEdit,
-                                context: context);
-                          },
+                              index: widget.index,
+                              isEdit: widget.isEdit,
+                              context: context,
+                            );
+                          }
+                        : null,
                     icon: Icon((widget.isEdit) ? Icons.save : Icons.add),
                     label: (widget.isEdit)
                         ? const Text('Update task')

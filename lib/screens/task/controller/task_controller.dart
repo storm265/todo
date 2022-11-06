@@ -4,20 +4,23 @@ import 'package:intl/intl.dart';
 import 'package:todo/controller/close_keyboard.dart';
 import 'package:todo/controller/common/category_index_provider.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
-import 'package:todo/controller/error_controller/error_service.dart';
 import 'package:todo/data/model/archieve_db/archieve_db.dart';
 import 'package:todo/data/model/tasks_db/task_model.dart';
 import 'package:todo/data/repository/repository.dart';
 import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/widgets/common/custom_snackbar_widget.dart';
+import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
-class TaskController {
+
+class TaskValidator{
+
+}
+class AddEditTaskController extends ChangeNotifier {
   final Repository _tasksRepository;
   final StringTimeFormatter _stringTimeFormatter;
   final CategoryIndexProvider _categoryIndexerProvider;
   final Repository _archieveRepository;
 
-  TaskController({
+  AddEditTaskController({
     required Repository tasksRepository,
     required StringTimeFormatter stringTimeFormatter,
     required CategoryIndexProvider categoryIndexerProvider,
@@ -31,11 +34,13 @@ class TaskController {
   final dateTextController = TextEditingController();
   final timeTextController = TextEditingController();
 
-  final isButtonDisabled = ValueNotifier<bool>(false);
+  final isAddButtonActive = ValueNotifier<bool>(true);
+
   final selectedCategory = ValueNotifier<int>(0);
+  final _categoryBox = CategoryRepositoryImpl().database;
 
   final stringDate = ValueNotifier<String>('');
-  final convertedDateTime = ValueNotifier<String>('');
+  String convertedDateTime ='';
   final pickedDate = ValueNotifier<DateTime>(DateTime.now());
   final pickedTime =
       ValueNotifier<TimeOfDay>(const TimeOfDay(hour: 1, minute: 11));
@@ -46,13 +51,17 @@ class TaskController {
   bool get _isDatePicked => dateTextController.value.text.isEmpty;
   bool get _isTimePicked => timeTextController.value.text.isEmpty;
 
+  void changeIsDisabledButton(bool newValue) {
+    isAddButtonActive.value = newValue;
+    isAddButtonActive.notifyListeners();
+  }
+
   Future<void> tryValidate({
     required BuildContext context,
     required int index,
     required bool isEdit,
   }) async {
-    final _categoryBox = CategoryRepositoryImpl().database;
-    convertedDateTime.value = '${stringDate.value} $hour:$min:00.000000';
+    convertedDateTime = '${stringDate.value} $hour:$min:00.000000';
 
     if (_isTextValid) {
       showMessage(context, 'Text title must be more then 4 characters. 😑');
@@ -61,7 +70,7 @@ class TaskController {
     } else if (_isTimePicked) {
       showMessage(context, 'Pick time. 😑');
     } else if (DateTime.now()
-        .isBefore(DateTime.parse(convertedDateTime.value))) {
+        .isBefore(DateTime.parse(convertedDateTime))) {
       if (isEdit) {
         await editData(
             context: context,
@@ -82,22 +91,22 @@ class TaskController {
     required String selectedCategory,
     required BuildContext context,
   }) async {
-    try {
-      await _tasksRepository.save(TaskModel(
-          id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
-          isDone: false,
-          category: selectedCategory,
-          creationDate: DateTime.now(),
-          text: titleTextController.text,
-          deadlineDateTime: DateTime.parse(convertedDateTime.value)));
-    } catch (e) {
-      ErrorService.printError('$e');
-    }
-    isButtonDisabled.value = true;
+    changeIsDisabledButton(false);
+    await _tasksRepository.save(
+      TaskModel(
+        id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
+        isDone: false,
+        category: selectedCategory,
+        creationDate: DateTime.now(),
+        text: titleTextController.text,
+        deadlineDateTime: DateTime.parse(convertedDateTime),
+      ),
+    );
+
+    changeIsDisabledButton(true);
     showMessage(context, 'Task added😊 🚀.');
     cleanFields();
     Navigator.pop(context);
-    isButtonDisabled.value = false;
   }
 
   Future<void> addToArchieve({
@@ -108,7 +117,7 @@ class TaskController {
         ArchieveModel(
           category: selectedCategory,
           text: titleTextController.text,
-          deadlineDateTime: DateTime.parse(convertedDateTime.value),
+          deadlineDateTime: DateTime.parse(convertedDateTime),
         ),
       );
 
@@ -117,6 +126,7 @@ class TaskController {
     required int index,
     required BuildContext context,
   }) async {
+    changeIsDisabledButton(false);
     await _tasksRepository.database
         .putAt(
           index,
@@ -126,18 +136,16 @@ class TaskController {
             category: selectedCategory,
             creationDate: DateTime.now(),
             text: titleTextController.text,
-            deadlineDateTime: DateTime.parse(convertedDateTime.value),
+            deadlineDateTime: DateTime.parse(convertedDateTime),
           ),
         )
         .then(
           (_) => showMessage(context, 'Task updated 😊 🚀.'),
         );
 
-    isButtonDisabled.value = true;
-
+    changeIsDisabledButton(true);
     cleanFields();
     Navigator.pop(context);
-    isButtonDisabled.value = false;
   }
 
   void cleanFields() {

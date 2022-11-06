@@ -33,7 +33,7 @@ class EditTaskController {
     addEditController.pickedTime.value =
         TimeOfDay(hour: _time.hour, minute: _time.minute);
 
-    addEditController.convertedDateTime.value =
+    addEditController.convertedDateTime =
         _taskBox.deadlineDateTime.toString();
 
     addEditController.dateTextController.text =

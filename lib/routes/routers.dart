@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/archieve.dart';
-import 'package:todo/screens/add_edit_category.dart';
-import 'package:todo/screens/add_edit_task.dart';
-import 'package:todo/screens/category_list.dart';
+import 'package:todo/screens/archieve/archieve_page.dart';
+import 'package:todo/screens/add_edit_category/add_edit_category_page.dart';
+import 'package:todo/screens/add_edit_task/add_edit_task_page.dart';
+import 'package:todo/screens/category/category_page.dart';
 
 class Routers {
 
