@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo/controller/categories/get_category_len.dart';
+import 'package:todo/controller/category_list_controller.dart';
 import 'package:todo/data/model/category_bd/category_model.dart';
-import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/widgets/category/body.dart';
 import 'package:todo/widgets/category/circle_avatar_widget.dart';
 import 'package:todo/widgets/category/popup_buttons_widget.dart';
@@ -17,7 +16,7 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  final _categoryBox = CategoryRepositoryImpl().database;
+  final _categoryController = CategoryListController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class _CategoryPageState extends State<CategoryPage> {
         showActions: false,
       ),
       body: ValueListenableBuilder<Box<CategoryModel>>(
-          valueListenable: _categoryBox.listenable(),
+          valueListenable: _categoryController.categoryBox.listenable(),
           builder: (__, Box<CategoryModel> box, _) {
             return ListView.builder(
                 itemCount: box.length,
@@ -38,7 +37,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     widgets: [
                       CircleAvatarWidget(imgPath: _categoryModel.imgPath),
                       TextWidget(
-                        event: CategoryLength().getCategoriesLength(i),
+                        event: _categoryController.getCategoriesLength(i),
                         title: _categoryModel.title,
                       ),
                       PopupButtonsWidget(index: i)

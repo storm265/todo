@@ -7,22 +7,26 @@ import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 class SameCategoryFinder {
   final _categoryIsNotEmpty = CategoryRepositoryImpl().database.isNotEmpty;
-  void checkCategoryIsNotEmpty(BuildContext context, int i) {
+  void checkCategoryIsNotEmpty(BuildContext context, int i) async {
     if (_categoryIsNotEmpty) {
-      Routers.toAddEditTaskPage(context, i, true);
+      await Routers.toAddEditTaskPage(context, i, true);
     } else {
       CustomSnackbarWidget.showCustomSnackbar(
-          context: context, message: 'No categories! Add category at first!');
+        context: context,
+        message: 'No categories! Add category at first!',
+      );
     }
   }
 
   void checkCategoryIsNotEmptyDialog(BuildContext context) {
     if (_categoryIsNotEmpty) {
-      DelayedNavigator.delayedPush(
-          context, () => Routers.toAddEditTaskPage(context, 0, false));
+      DelayedNavigator.delayedPush(context,
+          () async => await Routers.toAddEditTaskPage(context, 0, false));
     } else {
       CustomSnackbarWidget.showCustomSnackbar(
-          context: context, message: 'No categories! Add category at first!');
+        context: context,
+        message: 'No categories! Add category at first!',
+      );
     }
   }
 }

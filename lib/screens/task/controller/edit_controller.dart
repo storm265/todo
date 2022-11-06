@@ -17,7 +17,7 @@ class EditTaskController {
         _tasksRepositoryImpl = tasksRepositoryImpl;
 
   void getEditData(int index) {
-    final _taskBox = TasksRepositoryImpl().database.getAt(index)!;
+    final _taskBox = _tasksRepositoryImpl.database.getAt(index)!;
     final _time =
         TimeOfDay.fromDateTime(_taskBox.deadlineDateTime ?? DateTime.now());
 

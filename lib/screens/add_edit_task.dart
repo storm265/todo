@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/global_controller.dart';
-import 'package:todo/controller/task_controller/edit_controller.dart';
+import 'package:todo/screens/task/controller/edit_controller.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
-import 'package:todo/main.dart';
 import 'package:todo/widgets/add_edit_task/category_list_widget.dart';
 import 'package:todo/widgets/add_edit_task/textfield.dart';
 import 'package:todo/widgets/common/custom_app_bar_widget.dart';
+import 'package:todo/widgets/common/unfocus_widget.dart';
 
 class AddEditTaskPage extends StatefulWidget {
   final int index;

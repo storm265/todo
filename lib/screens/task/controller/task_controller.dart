@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/controller/close_keyboard.dart';
-import 'package:todo/controller/common/category_index_controller.dart';
+import 'package:todo/controller/common/category_index_provider.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/controller/error_controller/error_service.dart';
 import 'package:todo/data/model/archieve_db/archieve_db.dart';
 import 'package:todo/data/model/tasks_db/task_model.dart';
 import 'package:todo/data/repository/repository.dart';
 import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/routes/routers.dart';
 import 'package:todo/widgets/common/custom_snackbar_widget.dart';
 
 class TaskController {
@@ -97,7 +96,7 @@ class TaskController {
     isButtonDisabled.value = true;
     showMessage(context, 'Task added😊 🚀.');
     cleanFields();
-    await Routers.popDeyaled(context);
+    Navigator.pop(context);
     isButtonDisabled.value = false;
   }
 
@@ -137,7 +136,7 @@ class TaskController {
     isButtonDisabled.value = true;
 
     cleanFields();
-    await Routers.popDeyaled(context);
+    Navigator.pop(context);
     isButtonDisabled.value = false;
   }
 
@@ -162,9 +161,9 @@ class TaskController {
       },
       context: context,
       initialTime: TimeOfDay(
-          // +2 min for convinience
-          hour: TimeOfDay.now().hour,
-          minute: TimeOfDay.now().minute + 2),
+        hour: TimeOfDay.now().hour,
+        minute: TimeOfDay.now().minute + 2,
+      ),
     );
 
     pickedTime.value = picked!;

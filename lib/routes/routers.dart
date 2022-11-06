@@ -5,12 +5,6 @@ import 'package:todo/screens/add_edit_task.dart';
 import 'package:todo/screens/category_list.dart';
 
 class Routers {
-  static Future<void> popDeyaled(BuildContext context, [int sec = 1]) async =>
-      await Future.delayed(
-        Duration(seconds: sec),
-      ).then(
-        (_) => Navigator.pop(context),
-      );
 
   static Future<void> toCategoryPage(BuildContext context) async {
     await Navigator.of(context).push(

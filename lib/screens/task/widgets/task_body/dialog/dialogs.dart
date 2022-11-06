@@ -3,7 +3,7 @@ import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:todo/controller/common/same_category_finder.dart';
 import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
-import 'package:todo/widgets/task_list_page/task_body/dialog/dialog_button.dart';
+import 'package:todo/screens/task/widgets/task_body/dialog/dialog_button.dart';
 
 class TaskListDialog {
   Future<void> showAddDialog(BuildContext buildContext) async =>

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 
-import 'package:todo/widgets/task_list_page/task_body/body/gradient_boxes.dart';
-
-class GradientDoneTaskBodyWidget extends StatelessWidget {
-  final String text, category;
-
-  const GradientDoneTaskBodyWidget(
+class WhiteNotDoneTaskBodyWidget extends StatelessWidget {
+ final String text, category;
+ const  WhiteNotDoneTaskBodyWidget(
       {Key? key, required this.text, required this.category})
       : super(key: key);
 
@@ -25,19 +23,19 @@ class GradientDoneTaskBodyWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Text(
                   text,
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                  style: const TextStyle(color: Colors.black87, fontSize: 18),
                 ),
               ),
               Text(
                 category,
                 style: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.black87,
                     fontWeight: FontWeight.w300,
                     fontSize: 20),
               ),
             ],
           ),
         ),
-        decoration: BodyColors.gradientTaskBody);
+        decoration: BodyColors.emptyTaskBody);
   }
 }

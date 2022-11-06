@@ -7,24 +7,28 @@ class TaskListController extends ChangeNotifier {
   final pageController = PageController(viewportFraction: 0.18);
   List<DateTime> calendar = [];
 
-  void generateCalendar() {
+  void generateCalendarElements() {
     calendar = List.generate(
-        120, // 120 days = 100 days before now and 20 after now
-        (index) => DateTime.parse(DateTime.utc(DateTime.now().year,
-                DateTime.now().month, DateTime.now().day - 100 + index)
-            .toString()));
+      120, // 120 days = 100 days before now and 20 after now
+      (index) => DateTime.parse(
+        DateTime.utc(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day - 100 + index,
+        ).toString(),
+      ),
+    );
   }
 
-  void updateCalendar(Function update) {
+  void updateCalendarElements(Function callback) {
     pageController.addListener(() {
       generateLastCalendarElements();
-      update();
       generateFirstCalendarElements();
-      update();
+      callback();
     });
   }
 
-  void findIndexThenScroll() {
+  void scrollToSelectedIndex() {
     for (int i = 0; i < calendar.length; i++) {
       String selectedDayString = selectedDate.value.toString().substring(0, 11);
       String calendarList = calendar[i].toString().substring(0, 11);
@@ -45,7 +49,6 @@ class TaskListController extends ChangeNotifier {
   }
 
   void generateFirstCalendarElements() {
-    // start of the page
     if (pageController.position.minScrollExtent ==
         pageController.position.pixels) {
       var _firstElement = calendar.first;
@@ -64,16 +67,20 @@ class TaskListController extends ChangeNotifier {
   }
 
   void generateLastCalendarElements() {
-    // end of the page
     if (pageController.position.maxScrollExtent ==
         pageController.position.pixels) {
-      var _lastElement = calendar.last;
+      final _lastElement = calendar.last;
 
       List<DateTime> _last = List.generate(
-          20,
-          (index) => DateTime.parse(DateTime.utc(_lastElement.year,
-                  _lastElement.month, _lastElement.day + 1 + index)
-              .toString()));
+        20,
+        (index) => DateTime.parse(
+          DateTime.utc(
+            _lastElement.year,
+            _lastElement.month,
+            _lastElement.day + 1 + index,
+          ).toString(),
+        ),
+      );
 
       calendar.addAll(_last);
     }

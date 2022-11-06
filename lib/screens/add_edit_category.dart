@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:todo/controller/category_controller/category_controller.dart';
+import 'package:todo/controller/add_category_controller/add_category_controller.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/widgets/add_edit_category/textfield_widget.dart';
 import 'package:todo/widgets/common/custom_app_bar_widget.dart';
@@ -33,7 +33,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     super.dispose();
   }
 
-  final _categoryController = CategoryController();
+  final _categoryController = AddCategoryController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,34 +65,33 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
             ),
             TextFieldWidget(
                 textEditingController: _categoryController.titleController),
-            ValueListenableBuilder<bool>(
-                valueListenable: _categoryController.isDisabledButton,
-                builder: (context, isDisabled, _) {
-                  return Column(
-                    children: [
-                      OutlinedButton.icon(
-                          onPressed: (isDisabled)
-                              ? null
-                              : () =>
-                                  _categoryController.pickImageFromGallery(),
-                          icon: const Icon(Icons.file_download_outlined),
-                          label: const Text('Upload photo')),
-                      OutlinedButton.icon(
+            Column(
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () async =>
+                      await _categoryController.pickImageFromGallery(),
+                  icon: const Icon(Icons.file_download_outlined),
+                  label: const Text('Upload photo'),
+                ),
+                ValueListenableBuilder<bool>(
+                    valueListenable: _categoryController.isDisabledButton,
+                    builder: (context, isDisabled, _) {
+                      return OutlinedButton.icon(
                         icon: const Icon(Icons.add),
                         label: Text(
                           '${(widget.isEdit) ? 'Edit' : 'Add'} category',
                         ),
                         onPressed: (isDisabled)
                             ? null
-                            : () => _categoryController.validate(
+                            : () => _categoryController.tryValidate(
                                   widget.isEdit,
                                   context,
                                   widget.index,
                                 ),
-                      ),
-                    ],
-                  );
-                }),
+                      );
+                    }),
+              ],
+            ),
           ],
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:todo/data/repository/config_repository.dart';
 
 String get _assetsPath => 'assets/defaultCategoryIcons/';
 
-class DefaultCategoryController {
+class DefaultCategoryProvider {
   static const List<String> _categoryTitles = [
     'Event',
     'Personal',
@@ -21,9 +21,10 @@ class DefaultCategoryController {
       for (int i = 0; i < _categoryTitles.length; i++) {
         await CategoryRepositoryImpl().database.add(
               CategoryModel(
-                  id: i,
-                  title: _categoryTitles[i],
-                  imgPath: '$_assetsPath${_categoryTitles[i]}.png'),
+                id: i,
+                title: _categoryTitles[i],
+                imgPath: '$_assetsPath${_categoryTitles[i]}.png',
+              ),
             );
       }
     }

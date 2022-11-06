@@ -8,12 +8,18 @@ class CustomDrawerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 250,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.horizontal(
+          right: Radius.circular(12),
+        ),
+      ),
       backgroundColor: Colors.white,
       child: ListView.separated(
-        itemBuilder: (context, index) {
+        itemBuilder: (context, i) {
           return InkWell(
             onTap: () {
-              switch (index) {
+              switch (i) {
                 case 0:
                   Navigator.pop(context);
                   Routers.toCategoryPage(context);
@@ -26,14 +32,21 @@ class CustomDrawerWidget extends StatelessWidget {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 40, top: 20, bottom: 20),
-              child: Text(DrawerItems.values[index].type,
-                  style: const TextStyle(fontSize: 25)),
+              padding: const EdgeInsets.only(
+                left: 40,
+                top: 20,
+                bottom: 20,
+              ),
+              child: Text(
+                DrawerItems.values[i].type,
+                style: const TextStyle(fontSize: 25),
+              ),
             ),
           );
         },
-        separatorBuilder: (context, index) =>
-            const Divider(color: Colors.black),
+        separatorBuilder: (context, index) => const Divider(
+          color: Colors.black,
+        ),
         itemCount: DrawerItems.values.length,
       ),
     );

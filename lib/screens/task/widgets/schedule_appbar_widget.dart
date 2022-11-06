@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/widgets/task_list_page/task_body/dialog/dialogs.dart';
+import 'package:todo/screens/task/widgets/task_body/dialog/dialogs.dart';
 
 class ScheduleAppBarWidget extends StatelessWidget {
   const ScheduleAppBarWidget({Key? key}) : super(key: key);
