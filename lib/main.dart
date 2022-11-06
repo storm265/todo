@@ -6,10 +6,10 @@ import 'package:todo/screens/tasks.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChromeProvider().setSystemChrome();
-  await DatabaseProvider().registerAdapters();
-  await DatabaseProvider().openAllBoxes();
-  await DefaultCategoryController().fillDefaultCategory();
+  await SystemChromeProvider.setSystemChrome();
+  await DatabaseProvider.registerAdapters();
+  await DatabaseProvider.openAllBoxes();
+  await DefaultCategoryController.fillDefaultCategory();
 
   runApp(const MyApp());
 }

@@ -34,11 +34,11 @@ class CategoryController extends ChangeNotifier {
         await saveCategory(context);
       }
     } else if (!_isImagePicked && !_isTextValid) {
-      showMessage(context, 'Pick image and fill text!');
+      showSnackBar(context, 'Pick image and fill text!');
     } else if (!_isImagePicked) {
-      showMessage(context, 'Pick image!');
+      showSnackBar(context, 'Pick image!');
     } else if (!_isTextValid) {
-      showMessage(context, 'Text length must be >2');
+      showSnackBar(context, 'Text length must be >2');
     }
   }
 
@@ -48,7 +48,7 @@ class CategoryController extends ChangeNotifier {
     for (int i = 0; i < _categoryRepository.length; i++) {
       if (_categoryRepository.getAt(i)!.title.toLowerCase() ==
           titleController.text.toLowerCase()) {
-        showMessage(context, 'This category  is already exists!');
+        showSnackBar(context, 'This category  is already exists!');
         return true;
       }
     }
@@ -58,18 +58,14 @@ class CategoryController extends ChangeNotifier {
   Future<void> saveCategory(
     BuildContext context,
   ) async {
-    try {
-      if (!isSameCategoryFound(context)) {
-        await _categoryRepository.add(CategoryModel(
-            id: _categoryIndexController.getCategoryIndex(titleController.text),
-            title: titleController.text,
-            imgPath: imageFile.value.path));
-        isDisabledButton.value = true;
-        showMessage(context, 'Category is saved');
-        await Routers.popDeyaled(context);
-      }
-    } catch (e) {
-      ErrorService.printError('$e');
+    if (!isSameCategoryFound(context)) {
+      await _categoryRepository.add(CategoryModel(
+          id: _categoryIndexController.getCategoryIndex(titleController.text),
+          title: titleController.text,
+          imgPath: imageFile.value.path));
+      isDisabledButton.value = true;
+      showSnackBar(context, 'Category is saved');
+      await Routers.popDeyaled(context);
     }
   }
 
@@ -77,38 +73,34 @@ class CategoryController extends ChangeNotifier {
     int index,
     BuildContext context,
   ) async {
-    try {
-      if (!isSameCategoryFound(context)) {
-        await _categoryRepository.putAt(
-            index,
-            CategoryModel(
-                id: _categoryIndexController
-                    .getCategoryIndex(titleController.text),
-                title: titleController.text,
-                imgPath: imageFile.value.path));
-        isDisabledButton.value = true;
-        showMessage(context, 'Category is updated');
-        await Routers.popDeyaled(context);
-      }
-    } catch (e) {
-      ErrorService.printError('$e');
+    if (!isSameCategoryFound(context)) {
+      await _categoryRepository.putAt(
+          index,
+          CategoryModel(
+              id: _categoryIndexController
+                  .getCategoryIndex(titleController.text),
+              title: titleController.text,
+              imgPath: imageFile.value.path));
+      isDisabledButton.value = true;
+      showSnackBar(context, 'Category is updated');
+      await Routers.popDeyaled(context);
     }
   }
 
   Future<void> pickImageFromGallery() async {
-    try {
-      XFile? file = await picker.pickImage(source: ImageSource.gallery);
-      imageFile.value = File(file!.path);
-      notifyListeners();
-    } catch (e) {
-      ErrorService.printError('$e');
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      imageFile.value = File(file.path);
+      imageFile.notifyListeners();
     }
   }
 
-  void showMessage(
+  void showSnackBar(
     BuildContext context,
     String message,
   ) =>
       CustomSnackbarWidget.showCustomSnackbar(
-          context: context, message: message);
+        context: context,
+        message: message,
+      );
 }

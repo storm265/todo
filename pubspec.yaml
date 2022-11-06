@@ -17,7 +17,7 @@ dependencies:
   scrollable_positioned_list: 
   cupertino_icons: ^1.0.2
   intl:
-  image_picker:
+  image_picker: ^0.8.6
   hive_flutter:
   hive:
   path_provider:

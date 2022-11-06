@@ -2,9 +2,9 @@ import 'package:todo/data/model/category_bd/category_model.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/config_repository.dart';
 
-class DefaultCategoryController {
-  String get _assetsPath => 'assets/defaultCategoryIcons/';
+String get _assetsPath => 'assets/defaultCategoryIcons/';
 
+class DefaultCategoryController {
   static const List<String> _categoryTitles = [
     'Event',
     'Personal',
@@ -13,7 +13,7 @@ class DefaultCategoryController {
     'Work'
   ];
 
-  Future<void> fillDefaultCategory() async {
+  static Future<void> fillDefaultCategory() async {
     final _configRepository = FirstTimeVisitRepositoryImpl();
     await _configRepository.openConfigBox();
 

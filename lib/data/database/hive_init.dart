@@ -6,7 +6,7 @@ import 'package:todo/data/model/category_bd/category_model.dart';
 import 'package:todo/data/model/tasks_db/task_model.dart';
 
 class DatabaseProvider {
-  Future<void> registerAdapters() async {
+ static Future<void> registerAdapters() async {
     final appDocDir = await getApplicationDocumentsDirectory();
     await Hive.initFlutter(appDocDir.path);
     Hive.registerAdapter(TaskModelAdapter());
@@ -14,7 +14,7 @@ class DatabaseProvider {
     Hive.registerAdapter(ArchieveModelAdapter());
   }
 
-  Future<void> openAllBoxes() async {
+ static Future<void> openAllBoxes() async {
     await Hive.openBox<TaskModel>(DbScheme.tasks);
     await Hive.openBox<CategoryModel>(DbScheme.categories);
     await Hive.openBox<ArchieveModel>(DbScheme.archieve);

@@ -21,7 +21,10 @@ class Routers {
   }
 
   static Future<void> toAddEditTaskPage(
-      BuildContext buildContext, int index, bool isEdit) async {
+    BuildContext buildContext,
+    int index,
+    bool isEdit,
+  ) async {
     await Navigator.of(buildContext).push(
       MaterialPageRoute(
         builder: (buildContext) =>
@@ -34,7 +37,10 @@ class Routers {
       BuildContext context, int index, bool isEdit) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AddCategoryPage(index: index, isEdit: isEdit),
+        builder: (context) => AddCategoryPage(
+          index: index,
+          isEdit: isEdit,
+        ),
       ),
     );
   }
