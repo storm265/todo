@@ -55,7 +55,7 @@ class CustomAppBarWidget extends StatelessWidget
             )
           ],
           gradient: LinearGradient(
-            colors: Gradients.gradient,
+            colors: Gradients.classicGradient,
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),

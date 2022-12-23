@@ -22,11 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Demo ToDo',
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'Ubuntu',
-        primarySwatch: Colors.blue,
-      ),
+      theme: classicTheme,
       home: const SafeArea(
         maintainBottomViewPadding: true,
         bottom: false,
@@ -35,3 +31,17 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+final classicTheme = ThemeData(
+  useMaterial3: true,
+  fontFamily: 'Ubuntu',
+  primarySwatch: Colors.blue,
+  scaffoldBackgroundColor: Colors.white,
+);
+
+final darkTheme = ThemeData(
+  useMaterial3: true,
+  fontFamily: 'Ubuntu',
+  primarySwatch: Colors.blue,
+  scaffoldBackgroundColor: Colors.black,
+);

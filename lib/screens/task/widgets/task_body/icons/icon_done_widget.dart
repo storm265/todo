@@ -15,7 +15,7 @@ class IconDoneWidget extends StatelessWidget {
       decoration: const BoxDecoration(
           shape: BoxShape.circle,
           gradient: LinearGradient(
-              colors: Gradients.gradient,
+              colors: Gradients.classicGradient,
               begin: Alignment.centerLeft,
               end: Alignment.centerRight)),
     );

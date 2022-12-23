@@ -17,12 +17,12 @@ dependencies:
   scrollable_positioned_list: 
   cupertino_icons: ^1.0.2
   intl:
-  image_picker: ^0.8.6
+  image_picker: 
   hive_flutter:
   hive:
   path_provider:
   timelines:
-  flutter_platform_widgets: ^2.0.0
+  flutter_platform_widgets: 
   flutter_slidable: 
 
 dev_dependencies:
@@ -30,16 +30,12 @@ dev_dependencies:
     sdk: flutter
   build_runner:
   hive_generator:
-  
-  flutter_lints: ^1.0.0
+  flutter_lints: 
 
 
 flutter:
-
-
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/defaultCategoryIcons/
     - assets/

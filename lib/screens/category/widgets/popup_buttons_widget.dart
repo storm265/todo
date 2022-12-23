@@ -4,20 +4,23 @@ import 'package:todo/routes/routers.dart';
 
 class PopupButtonsWidget extends StatelessWidget {
   final int index;
-  const PopupButtonsWidget({Key? key, required this.index}) : super(key: key);
+  const PopupButtonsWidget({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 60),
       child: PopupMenuButton(
-          onSelected: (int value) {
+          onSelected: (int value) async {
             switch (value) {
               case 0:
-                Routers.toAddEditCategoryPage(context, index, true);
+                await Routers.toAddEditCategoryPage(context, index, true);
                 break;
               case 1:
-                CategoryRepositoryImpl().delete(index);
+                await CategoryRepositoryImpl().delete(index);
                 break;
             }
           },
@@ -27,13 +30,25 @@ class PopupButtonsWidget extends StatelessWidget {
             size: 35,
           ),
           itemBuilder: (_) => [
-                const PopupMenuItem(
-                  child: Text("Edit"),
+                PopupMenuItem(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.edit),
+                      Text("Edit"),
+                    ],
+                  ),
                   value: 0,
                 ),
-                const PopupMenuItem(
-                  child: Text('Remove'),
-                  value: 1,
+                PopupMenuItem(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.delete),
+                      Text("Remove"),
+                    ],
+                  ),
+                  value: 0,
                 ),
               ]),
     );

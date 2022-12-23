@@ -4,8 +4,14 @@ import 'package:todo/screens/common_widgets/gradient_color.dart';
 class BodyColors {
   static const emptyTaskBody = BoxDecoration(
     borderRadius: BorderRadius.all(
-        Radius.circular(20)), // BorderRadius.circular(20), // not available
-    boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+      Radius.circular(20),
+    ),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+      )
+    ],
     color: Colors.white,
   );
 
@@ -13,18 +19,28 @@ class BodyColors {
     borderRadius: BorderRadius.all(
       Radius.circular(20),
     ),
-    boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+      )
+    ],
     gradient: LinearGradient(
-      colors: Gradients.gradient,
+      colors: Gradients.classicGradient,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),
   );
 
   static const schreduleBody = BoxDecoration(
-    boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black26,
+        blurRadius: 10,
+      )
+    ],
     gradient: LinearGradient(
-      colors: Gradients.gradient,
+      colors: Gradients.classicGradient,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),
