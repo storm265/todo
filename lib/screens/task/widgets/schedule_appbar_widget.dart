@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/task/widgets/task_body/dialog/dialogs.dart';
 
 class ScheduleAppBarWidget extends StatelessWidget {
   const ScheduleAppBarWidget({Key? key}) : super(key: key);
@@ -9,7 +8,6 @@ class ScheduleAppBarWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Drawer icon
         IconButton(
           icon: const Icon(Icons.menu),
           color: Colors.white,
@@ -19,11 +17,10 @@ class ScheduleAppBarWidget extends StatelessWidget {
           'Schredule',
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-        // Add button
         IconButton(
-          icon: const Icon(Icons.control_point),
-          color: Colors.white,
-          onPressed: () => TaskListDialog().showAddDialog(context),
+          icon: const Icon(Icons.menu),
+          color: Colors.transparent,
+          onPressed: () {},
         ),
       ],
     );

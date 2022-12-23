@@ -5,6 +5,7 @@ import 'package:todo/screens/task/widgets/current_date_widget.dart';
 import 'package:todo/screens/task/widgets/dateline_lib.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 import 'package:todo/screens/task/widgets/schedule_appbar_widget.dart';
+import 'package:todo/screens/task/widgets/task_body/dialog/dialogs.dart';
 import 'package:todo/screens/task/widgets/task_list.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -26,6 +27,10 @@ class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => TaskListDialog().showAddDialog(context),
+        child: const Icon(Icons.add),
+      ),
       appBar: PreferredSize(
         preferredSize: Size.zero,
         child: AppBar(backgroundColor: Colors.black),

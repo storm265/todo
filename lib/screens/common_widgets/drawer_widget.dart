@@ -32,16 +32,21 @@ class CustomDrawerWidget extends StatelessWidget {
               }
             },
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: 40,
-                top: 20,
-                bottom: 20,
-              ),
-              child: Text(
-                DrawerItems.values[i].type,
-                style: const TextStyle(fontSize: 25),
-              ),
-            ),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: Row(
+                  children: [
+                    Icon(drawerIcons[i]),
+                    const SizedBox(width: 20),
+                    Text(
+                      DrawerItems.values[i].type,
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                  ],
+                )),
           );
         },
         separatorBuilder: (context, index) => const Divider(
