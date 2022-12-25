@@ -15,7 +15,7 @@ class GradientDoneTaskBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 100,
+      height: 85,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -37,6 +37,7 @@ class GradientDoneTaskBodyWidget extends StatelessWidget {
               category,
               style: const TextStyle(
                 fontWeight: FontWeight.w300,
+                color: Colors.white,
                 fontSize: 20,
               ),
             ),
