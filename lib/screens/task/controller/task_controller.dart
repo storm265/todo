@@ -39,9 +39,9 @@ class AddEditTaskController extends ChangeNotifier {
 
   final stringDate = ValueNotifier<String>('');
   String convertedDateTime = '';
-  final pickedDate = ValueNotifier<DateTime>(DateTime.now());
+  final pickedDate = ValueNotifier<DateTime?>(DateTime.now());
   final pickedTime =
-      ValueNotifier<TimeOfDay>(const TimeOfDay(hour: 1, minute: 11));
+      ValueNotifier<TimeOfDay?>(const TimeOfDay(hour: 1, minute: 11));
 
   String? hour, min;
 
@@ -158,12 +158,6 @@ class AddEditTaskController extends ChangeNotifier {
   }) async {
     closeKeyboard(context);
     final TimeOfDay? picked = await showTimePicker(
-      builder: (BuildContext buildContext, Widget? child) {
-        return MediaQuery(
-            data: MediaQuery.of(buildContext)
-                .copyWith(alwaysUse24HourFormat: true),
-            child: child!);
-      },
       context: context,
       initialTime: TimeOfDay(
         hour: TimeOfDay.now().hour,
@@ -173,10 +167,11 @@ class AddEditTaskController extends ChangeNotifier {
 
     pickedTime.value = picked!;
 
-    hour = _stringTimeFormatter.formatTime(pickedTime.value.hour);
-    min = _stringTimeFormatter.formatTime(pickedTime.value.minute);
-
-    timeTextController.text = '$hour:$min';
+    if (pickedTime.value != null) {
+      hour = _stringTimeFormatter.formatTime(pickedTime.value!.hour);
+      min = _stringTimeFormatter.formatTime(pickedTime.value!.minute);
+      timeTextController.text = '$hour:$min';
+    }
   }
 
   Future<void> pickDate({
@@ -185,19 +180,21 @@ class AddEditTaskController extends ChangeNotifier {
   }) async {
     closeKeyboard(context);
 
-    final DateTime picked = (await showPlatformDatePicker(
+    final DateTime? picked = await showPlatformDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(DateTime.now().year),
       lastDate: DateTime(DateTime.now().year + 50),
-    ))!;
+    );
 
     pickedDate.value = picked;
 
-    dateTextController.text = DateFormat.yMd().format(pickedDate.value);
-    String month = _stringTimeFormatter.formatTime(pickedDate.value.month);
-    String day = _stringTimeFormatter.formatTime(pickedDate.value.day);
-    stringDate.value = '${pickedDate.value.year}-$month-$day';
+    if (pickedDate.value != null) {
+      dateTextController.text = DateFormat.yMd().format(pickedDate.value!);
+      String month = _stringTimeFormatter.formatTime(pickedDate.value!.month);
+      String day = _stringTimeFormatter.formatTime(pickedDate.value!.day);
+      stringDate.value = '${pickedDate.value!.year}-$month-$day';
+    }
   }
 
   void showMessage(

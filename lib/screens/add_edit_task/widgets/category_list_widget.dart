@@ -35,28 +35,36 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 50,
-                            height: 50,
+                            width: 60,
+                            height: 60,
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: (categoryModel.imgPath
-                                            .startsWith('assets'))
-                                        ? AssetImage(categoryModel.imgPath)
-                                            as ImageProvider
-                                        : FileImage(
-                                            File(categoryModel.imgPath))),
-                                border: Border.all(
-                                    color: (addEditController
-                                                .selectedCategory.value ==
-                                            index)
-                                        ? Colors.red
-                                        : Colors.white,
-                                    width: 5),
-                                shape: BoxShape.circle),
+                              image: DecorationImage(
+                                  image: (categoryModel.imgPath
+                                          .startsWith('assets'))
+                                      ? AssetImage(categoryModel.imgPath)
+                                          as ImageProvider
+                                      : FileImage(File(categoryModel.imgPath))),
+                              border: Border.all(
+                                  color: (addEditController
+                                              .selectedCategory.value ==
+                                          index)
+                                      ? Colors.red
+                                      : Colors.white,
+                                  width: 5),
+                              shape: BoxShape.circle,
+                            ),
                           ),
-                          Text(categoryModel.title)
+                          SizedBox(
+                            width: 80,
+                            child: Text(
+                              categoryModel.title,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          )
                         ],
                       ),
                     ));

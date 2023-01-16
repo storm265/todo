@@ -7,7 +7,7 @@ class DismissStyleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: Colors.red,
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
           Icon(
@@ -17,7 +17,8 @@ class DismissStyleWidget extends StatelessWidget {
           Text(
             "Remove",
             style: TextStyle(color: Colors.white),
-          )
+          ),
+          SizedBox(width: 20),
         ],
       ),
     );

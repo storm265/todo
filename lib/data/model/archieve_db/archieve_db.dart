@@ -8,7 +8,7 @@ class ArchieveModel {
   String text;
 
   @HiveField(1)
-  DateTime? deadlineDateTime;
+  DateTime deadlineDateTime;
 
   @HiveField(2)
   String category;

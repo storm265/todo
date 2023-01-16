@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo/data/model/archieve_db/archieve_db.dart';
 
 class ArchieveBodyWidget extends StatelessWidget {
-  final String text, category, deadlineDay, deadlineMonth, deadlineYear;
+  final ArchieveModel archieveModel;
+
   const ArchieveBodyWidget({
     Key? key,
-    required this.category,
-    required this.deadlineDay,
-    required this.deadlineMonth,
-    required this.deadlineYear,
-    required this.text,
+    required this.archieveModel,
   }) : super(key: key);
 
   @override
@@ -21,16 +20,18 @@ class ArchieveBodyWidget extends StatelessWidget {
         shadowColor: Colors.grey,
         child: Container(
           width: 370,
-          height: 70,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: Colors.white,
           ),
           child: ListTile(
-            title: Text(text),
-            trailing: Text(category),
-            subtitle:
-                Text('Deadline at: $deadlineDay/$deadlineMonth/$deadlineYear'),
+            title: Text(
+              archieveModel.text,
+              maxLines: 2,
+            ),
+            trailing: Text(archieveModel.category),
+            subtitle: Text(
+                'Deadline at: ${DateFormat('dd/MM/yyyy').format(archieveModel.deadlineDateTime)}'),
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo/controller/common/string_time_formatter.dart';
 import 'package:todo/data/repository/archieve_repository.dart';
 import 'package:todo/screens/archieve/widgets/archieve_body_widget.dart';
 import 'package:todo/screens/archieve/widgets/dismiss_style_widget.dart';
@@ -15,7 +14,6 @@ class ArchievePage extends StatefulWidget {
 
 class _ArchievePageState extends State<ArchievePage> {
   final _categoryBox = ArchieveRepositoryImpl().database;
-  final _formatter = StringTimeFormatter();
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +27,7 @@ class _ArchievePageState extends State<ArchievePage> {
           scrollDirection: Axis.vertical,
           itemCount: _categoryBox.length,
           itemBuilder: (context, index) {
-            final box = _categoryBox.getAt(index);
-
-            String text = box!.text;
-            String category = box.category;
-            String deadlineDay =
-                _formatter.formatTime(box.deadlineDateTime!.day);
-
-            String deadlineMonth =
-                _formatter.formatTime(box.deadlineDateTime!.month);
-            String deadlineYear = '${box.deadlineDateTime!.year}';
+            final archieveModel = _categoryBox.getAt(index);
 
             return Dismissible(
               onDismissed: (direction) async {
@@ -51,11 +40,7 @@ class _ArchievePageState extends State<ArchievePage> {
               key: UniqueKey(),
               background: const DismissStyleWidget(),
               child: ArchieveBodyWidget(
-                category: category,
-                deadlineDay: deadlineDay,
-                deadlineMonth: deadlineMonth,
-                deadlineYear: deadlineYear,
-                text: text,
+                archieveModel: archieveModel!,
               ),
             );
           }),

@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:todo/data/model/tasks_db/task_model.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 
-class WhiteNotDoneTaskBodyWidget extends StatelessWidget {
-  final String text, category;
-  const WhiteNotDoneTaskBodyWidget({
+class TaskCardWidget extends StatelessWidget {
+  final TaskModel taskModel;
+
+  const TaskCardWidget({
     Key? key,
-    required this.text,
-    required this.category,
+    required this.taskModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 85,
-      decoration: BodyColors.emptyTaskBody,
-      child: Padding(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 250,
+        height: 85,
         padding: const EdgeInsets.all(8.0),
+        decoration: taskModel.isDone
+            ? BodyColors.gradientTaskBody
+            : BodyColors.emptyTaskBody,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 18,
-                ),
+            Text(
+              taskModel.text,
+              maxLines: 2,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 18,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             Text(
-              category,
+              taskModel.category,
               style: const TextStyle(
                 color: Colors.black87,
                 fontWeight: FontWeight.w300,

@@ -22,11 +22,12 @@ class TaskModel {
   @HiveField(5)
   String text;
 
-  TaskModel(
-      {required this.id,
-      required this.creationDate,
-      required this.deadlineDateTime,
-      required this.text,
-      required this.category,
-      required this.isDone});
+  TaskModel({
+    required this.id,
+    required this.creationDate,
+    required this.deadlineDateTime,
+    required this.text,
+    required this.category,
+    required this.isDone,
+  });
 }

@@ -17,7 +17,7 @@ class ArchieveModelAdapter extends TypeAdapter<ArchieveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ArchieveModel(
-      deadlineDateTime: fields[1] as DateTime?,
+      deadlineDateTime: fields[1] as DateTime,
       text: fields[0] as String,
       category: fields[2] as String,
     );

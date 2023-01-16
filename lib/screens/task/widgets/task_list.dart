@@ -10,9 +10,8 @@ import 'package:todo/data/repository/archieve_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_not_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/body/gradient_task_body.dart';
 import 'package:todo/screens/task/widgets/task_body/icons/icon_not_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/body/white_task_body.dart';
+import 'package:todo/screens/task/widgets/task_body/body/task_card_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/icons/icon_done_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/no_tasks_text.dart';
 
@@ -34,8 +33,8 @@ class TaskList extends StatelessWidget {
                   itemCount: box.length,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (_, i) {
-                    TaskModel? taskBox = box.getAt(i);
-                    DateTime? deadline = taskBox!.deadlineDateTime;
+                    TaskModel? task = box.getAt(i);
+                    DateTime? deadline = task!.deadlineDateTime;
 
                     if (deadline!.toString().substring(0, 11) ==
                         selectedDate.toString().substring(0, 11)) {
@@ -54,7 +53,7 @@ class TaskList extends StatelessWidget {
                             ),
                             SlidableAction(
                               flex: 2,
-                              onPressed: (taskBox.isDone)
+                              onPressed: (task.isDone)
                                   ? null
                                   : (_) async {
                                       //TODO  put in controller
@@ -62,13 +61,12 @@ class TaskList extends StatelessWidget {
                                         i,
                                         TaskModel(
                                           id: CategoryIndexProvider()
-                                              .getCategoryIndex(
-                                                  taskBox.category),
-                                          creationDate: taskBox.creationDate,
+                                              .getCategoryIndex(task.category),
+                                          creationDate: task.creationDate,
                                           deadlineDateTime:
-                                              taskBox.deadlineDateTime,
-                                          text: taskBox.text,
-                                          category: taskBox.category,
+                                              task.deadlineDateTime,
+                                          text: task.text,
+                                          category: task.category,
                                           isDone: true,
                                         ),
                                       );
@@ -89,10 +87,10 @@ class TaskList extends StatelessWidget {
                                 // remove
                                 ArchieveRepositoryImpl().database.add(
                                       ArchieveModel(
-                                        category: taskBox.category,
-                                        text: taskBox.text,
+                                        category: task.category,
+                                        text: task.text,
                                         deadlineDateTime:
-                                            taskBox.deadlineDateTime,
+                                            task.deadlineDateTime!,
                                       ),
                                     );
                                 await box.deleteAt(i);
@@ -108,13 +106,13 @@ class TaskList extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 30),
                           child: TimelineTile(
                             node: TimelineNode(
-                              indicator: (taskBox.isDone)
+                              indicator: (task.isDone)
                                   ? const IconDoneWidget()
                                   : const IconNotDoneWidget(),
-                              startConnector: (taskBox.isDone)
+                              startConnector: (task.isDone)
                                   ? const ConnectorDoneWidget()
                                   : const ConnectorNotDoneWidget(),
-                              endConnector: (taskBox.isDone)
+                              endConnector: (task.isDone)
                                   ? const ConnectorDoneWidget()
                                   : const ConnectorNotDoneWidget(),
                             ),
@@ -126,21 +124,11 @@ class TaskList extends StatelessWidget {
                                 Text(
                                   deadline.toIso8601String().substring(11, 16),
                                   style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: (taskBox.isDone)
-                                      ? GradientDoneTaskBodyWidget(
-                                          text: taskBox.text,
-                                          category: taskBox.category,
-                                        )
-                                      : WhiteNotDoneTaskBodyWidget(
-                                          text: taskBox.text,
-                                          category: taskBox.category,
-                                        ),
-                                ),
+                                TaskCardWidget(taskModel: task),
                               ],
                             ),
                           ),
