@@ -31,6 +31,7 @@ class PopupButtonsWidget extends StatelessWidget {
           ),
           itemBuilder: (_) => [
                 PopupMenuItem(
+                  value: 0,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: const [
@@ -38,9 +39,9 @@ class PopupButtonsWidget extends StatelessWidget {
                       Text("Edit"),
                     ],
                   ),
-                  value: 0,
                 ),
                 PopupMenuItem(
+                  value: 1,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: const [
@@ -48,7 +49,6 @@ class PopupButtonsWidget extends StatelessWidget {
                       Text("Remove"),
                     ],
                   ),
-                  value: 0,
                 ),
               ]),
     );

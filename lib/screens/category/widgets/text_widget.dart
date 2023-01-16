@@ -15,11 +15,14 @@ class TextWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title),
-          Text('$event events',
-              style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                  fontSize: 15,
-                  color: Colors.black87))
+          Text(
+            '$event events',
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 15,
+              color: Colors.black87,
+            ),
+          )
         ],
       ),
     );

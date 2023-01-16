@@ -33,14 +33,14 @@ class MyApp extends StatelessWidget {
 }
 
 final classicTheme = ThemeData(
-  useMaterial3: true,
+  useMaterial3: false,
   fontFamily: 'Ubuntu',
-  primarySwatch: Colors.orange,
+  primarySwatch: Colors.deepOrange,
   scaffoldBackgroundColor: Colors.white,
 );
 
 final darkTheme = ThemeData(
-  useMaterial3: true,
+  useMaterial3: false,
   fontFamily: 'Ubuntu',
   primarySwatch: Colors.blue,
   scaffoldBackgroundColor: Colors.black,

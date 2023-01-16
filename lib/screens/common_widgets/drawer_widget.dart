@@ -18,16 +18,16 @@ class CustomDrawerWidget extends StatelessWidget {
       child: ListView.separated(
         itemBuilder: (context, i) {
           return InkWell(
-            onTap: () {
+            onTap: () async {
               switch (i) {
                 case 0:
                   Navigator.pop(context);
-                  Routers.toCategoryPage(context);
+                  await Routers.toCategoryPage(context);
 
                   break;
                 case 1:
                   Navigator.pop(context);
-                  Routers.toAddArchievePage(context);
+                  await Routers.toAddArchievePage(context);
                   break;
               }
             },

@@ -24,7 +24,6 @@ class CustomAppBarWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
       automaticallyImplyLeading: false,
       leading: IconButton(
         onPressed: () {
