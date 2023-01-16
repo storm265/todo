@@ -23,7 +23,9 @@ dependencies:
   path_provider:
   timelines:
   flutter_platform_widgets: 
-  flutter_slidable: 
+  flutter_slidable:
+  flutter_native_splash:
+  # device_preview: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +48,7 @@ flutter:
   assets:
     - assets/defaultCategoryIcons/
     - assets/
+    - assets/app_icon/
 
 
   fonts:

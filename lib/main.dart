@@ -10,8 +10,9 @@ void main() async {
   await DatabaseProvider.registerAdapters();
   await DatabaseProvider.openAllBoxes();
   await DefaultCategoryProvider.fillDefaultCategory();
-
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +25,6 @@ class MyApp extends StatelessWidget {
       title: 'Demo ToDo',
       theme: classicTheme,
       home: const SafeArea(
-        maintainBottomViewPadding: true,
-        bottom: false,
         child: TaskListPage(),
       ),
     );

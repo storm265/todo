@@ -43,7 +43,7 @@ class CustomAppBarWidget extends StatelessWidget
       centerTitle: true,
       title: Text(title),
       flexibleSpace: Container(
-        height: 250,
+        height: MediaQuery.of(context).size.height * 0.25,
         width: double.infinity,
         decoration: const BoxDecoration(
           boxShadow: [

@@ -17,6 +17,7 @@ class AddEditTaskTextfieldWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+        maxLength: 255,
         enabled: enabled,
         controller: textEditingController,
         decoration: InputDecoration(
