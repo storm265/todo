@@ -14,7 +14,10 @@ class DismissStyleWidget extends StatelessWidget {
             Icons.delete,
             color: Colors.white,
           ),
-          Text("Remove", style: TextStyle(color: Colors.white))
+          Text(
+            "Remove",
+            style: TextStyle(color: Colors.white),
+          )
         ],
       ),
     );

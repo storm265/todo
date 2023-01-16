@@ -32,13 +32,13 @@ class _CategoryPageState extends State<CategoryPage> {
             return ListView.builder(
                 itemCount: box.length,
                 itemBuilder: (_, i) {
-                  CategoryModel _categoryModel = box.getAt(i)!;
+                  CategoryModel categoryModel = box.getAt(i)!;
                   return CategoryBodyWidget(
                     widgets: [
-                      CircleAvatarWidget(imgPath: _categoryModel.imgPath),
+                      CircleAvatarWidget(imgPath: categoryModel.imgPath),
                       TextWidget(
                         event: _categoryController.getCategoriesLength(i),
-                        title: _categoryModel.title,
+                        title: categoryModel.title,
                       ),
                       PopupButtonsWidget(index: i)
                     ],

@@ -40,11 +40,11 @@ class _DayLineWidgetState extends State<DayLineWidget> {
         itemCount: _taskListController.calendar.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, i) {
-          final _calendar = _taskListController.calendar;
+          final calendar = _taskListController.calendar;
           return GestureDetector(
             onTap: () {
               widget.changeDay(
-                  _taskListController.selectedDate.value = _calendar[i]);
+                  _taskListController.selectedDate.value = calendar[i]);
 
               _taskListController.scrollToSelectedIndex();
             },
@@ -56,15 +56,15 @@ class _DayLineWidgetState extends State<DayLineWidget> {
                 children: [
                   FittedBox(
                     child: Text(
-                      DateFormat('d').format(_calendar[i]),
+                      DateFormat('d').format(calendar[i]),
                       style: (_taskListController.selectedDate.value ==
-                              _calendar[i])
+                              calendar[i])
                           ? DateLineFonts.selected
                           : DateLineFonts.unSelected,
                     ),
                   ),
                   Text(
-                    DateFormat('EEEE').format(_calendar[i]).substring(0, 3),
+                    DateFormat('EEEE').format(calendar[i]).substring(0, 3),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,

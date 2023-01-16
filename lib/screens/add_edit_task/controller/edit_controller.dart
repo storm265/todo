@@ -17,37 +17,37 @@ class EditTaskController {
         _tasksRepositoryImpl = tasksRepositoryImpl;
 
   void getEditData(int index) {
-    final _taskBox = _tasksRepositoryImpl.database.getAt(index)!;
-    final _time =
-        TimeOfDay.fromDateTime(_taskBox.deadlineDateTime ?? DateTime.now());
+    final taskBox = _tasksRepositoryImpl.database.getAt(index)!;
+    final time =
+        TimeOfDay.fromDateTime(taskBox.deadlineDateTime ?? DateTime.now());
 
-    final _formatter = StringTimeFormatter();
-    addEditController.hour = _formatter.formatTime(_time.hour);
-    addEditController.min = _formatter.formatTime(_time.minute);
+    final formatter = StringTimeFormatter();
+    addEditController.hour = formatter.formatTime(time.hour);
+    addEditController.min = formatter.formatTime(time.minute);
 
     addEditController.timeTextController.text =
         '${addEditController.hour}:${addEditController.min}';
 
     addEditController.stringDate.value =
-        _taskBox.deadlineDateTime.toString().substring(0, 10);
+        taskBox.deadlineDateTime.toString().substring(0, 10);
     addEditController.pickedTime.value =
-        TimeOfDay(hour: _time.hour, minute: _time.minute);
+        TimeOfDay(hour: time.hour, minute: time.minute);
 
     addEditController.convertedDateTime =
-        _taskBox.deadlineDateTime.toString();
+        taskBox.deadlineDateTime.toString();
 
     addEditController.dateTextController.text =
-        '${_formatter.formatTime(_taskBox.deadlineDateTime!.day)}.${_formatter.formatTime(_taskBox.deadlineDateTime!.month)}.${_taskBox.deadlineDateTime!.year}';
+        '${formatter.formatTime(taskBox.deadlineDateTime!.day)}.${formatter.formatTime(taskBox.deadlineDateTime!.month)}.${taskBox.deadlineDateTime!.year}';
 
-    addEditController.titleTextController.text = _taskBox.text;
+    addEditController.titleTextController.text = taskBox.text;
 
     addEditController.selectedCategory.value = getCategoryIndex(index);
   }
 
   int getCategoryIndex(int index) {
-    Box<CategoryModel> _categoryBox = _categoryRepositoryImpl.database;
-    for (int i = 0; i < _categoryBox.length; i++) {
-      if (_categoryBox.getAt(i)!.title ==
+    Box<CategoryModel> categoryBox = _categoryRepositoryImpl.database;
+    for (int i = 0; i < categoryBox.length; i++) {
+      if (categoryBox.getAt(i)!.title ==
           _tasksRepositoryImpl.database.getAt(index)!.category) {
         return addEditController.selectedCategory.value = i;
       }

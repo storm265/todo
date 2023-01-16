@@ -14,10 +14,10 @@ class DefaultCategoryProvider {
   ];
 
   static Future<void> fillDefaultCategory() async {
-    final _configRepository = FirstTimeVisitRepositoryImpl();
-    await _configRepository.openConfigBox();
+    final configRepository = FirstTimeVisitRepositoryImpl();
+    await configRepository.openConfigBox();
 
-    if (await _configRepository.getIsFirstTime()) {
+    if (await configRepository.getIsFirstTime()) {
       for (int i = 0; i < _categoryTitles.length; i++) {
         await CategoryRepositoryImpl().database.add(
               CategoryModel(
@@ -28,6 +28,6 @@ class DefaultCategoryProvider {
             );
       }
     }
-    await _configRepository.putIsFirstTime(false);
+    await configRepository.putIsFirstTime(false);
   }
 }

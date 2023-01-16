@@ -16,6 +16,7 @@ class GradientDoneTaskBodyWidget extends StatelessWidget {
     return Container(
       width: 200,
       height: 85,
+      decoration: BodyColors.gradientTaskBody,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -44,7 +45,6 @@ class GradientDoneTaskBodyWidget extends StatelessWidget {
           ],
         ),
       ),
-      decoration: BodyColors.gradientTaskBody,
     );
   }
 }

@@ -14,6 +14,7 @@ class WhiteNotDoneTaskBodyWidget extends StatelessWidget {
     return Container(
       width: 200,
       height: 85,
+      decoration: BodyColors.emptyTaskBody,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -42,7 +43,6 @@ class WhiteNotDoneTaskBodyWidget extends StatelessWidget {
           ],
         ),
       ),
-      decoration: BodyColors.emptyTaskBody,
     );
   }
 }

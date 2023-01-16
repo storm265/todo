@@ -51,38 +51,38 @@ class TaskListController extends ChangeNotifier {
   void generateFirstCalendarElements() {
     if (pageController.position.minScrollExtent ==
         pageController.position.pixels) {
-      var _firstElement = calendar.first;
+      final firstElement = calendar.first;
 
-      List<DateTime> _first = List.generate(
+      List<DateTime> first = List.generate(
         20,
         (index) => DateTime.parse(
-          DateTime.utc(_firstElement.year, _firstElement.month,
-                  _firstElement.day - index)
+          DateTime.utc(firstElement.year, firstElement.month,
+                  firstElement.day - index)
               .toString(),
         ),
       );
 
-      calendar.insertAll(0, _first);
+      calendar.insertAll(0, first);
     }
   }
 
   void generateLastCalendarElements() {
     if (pageController.position.maxScrollExtent ==
         pageController.position.pixels) {
-      final _lastElement = calendar.last;
+      final lastElement = calendar.last;
 
-      List<DateTime> _last = List.generate(
+      List<DateTime> last = List.generate(
         20,
         (index) => DateTime.parse(
           DateTime.utc(
-            _lastElement.year,
-            _lastElement.month,
-            _lastElement.day + 1 + index,
+            lastElement.year,
+            lastElement.month,
+            lastElement.day + 1 + index,
           ).toString(),
         ),
       );
 
-      calendar.addAll(_last);
+      calendar.addAll(last);
     }
   }
 }

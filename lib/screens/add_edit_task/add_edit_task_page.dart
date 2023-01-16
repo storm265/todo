@@ -18,7 +18,7 @@ class AddEditTaskPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AddEditTaskPageState createState() => _AddEditTaskPageState();
+  State<AddEditTaskPage> createState() => _AddEditTaskPageState();
 }
 
 class _AddEditTaskPageState extends State<AddEditTaskPage> {

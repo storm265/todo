@@ -10,10 +10,8 @@ import 'package:todo/data/repository/repository.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
+class TaskValidator {}
 
-class TaskValidator{
-
-}
 class AddEditTaskController extends ChangeNotifier {
   final Repository _tasksRepository;
   final StringTimeFormatter _stringTimeFormatter;
@@ -40,7 +38,7 @@ class AddEditTaskController extends ChangeNotifier {
   final _categoryBox = CategoryRepositoryImpl().database;
 
   final stringDate = ValueNotifier<String>('');
-  String convertedDateTime ='';
+  String convertedDateTime = '';
   final pickedDate = ValueNotifier<DateTime>(DateTime.now());
   final pickedTime =
       ValueNotifier<TimeOfDay>(const TimeOfDay(hour: 1, minute: 11));
@@ -69,8 +67,7 @@ class AddEditTaskController extends ChangeNotifier {
       showMessage(context, 'Pick date. 😑');
     } else if (_isTimePicked) {
       showMessage(context, 'Pick time. 😑');
-    } else if (DateTime.now()
-        .isBefore(DateTime.parse(convertedDateTime))) {
+    } else if (DateTime.now().isBefore(DateTime.parse(convertedDateTime))) {
       if (isEdit) {
         await editData(
             context: context,
@@ -198,9 +195,9 @@ class AddEditTaskController extends ChangeNotifier {
     pickedDate.value = picked;
 
     dateTextController.text = DateFormat.yMd().format(pickedDate.value);
-    String _month = _stringTimeFormatter.formatTime(pickedDate.value.month);
-    String _day = _stringTimeFormatter.formatTime(pickedDate.value.day);
-    stringDate.value = '${pickedDate.value.year}-$_month-$_day';
+    String month = _stringTimeFormatter.formatTime(pickedDate.value.month);
+    String day = _stringTimeFormatter.formatTime(pickedDate.value.day);
+    stringDate.value = '${pickedDate.value.year}-$month-$day';
   }
 
   void showMessage(

@@ -9,15 +9,21 @@ class IconDoneWidget extends StatelessWidget {
     return Container(
       width: 30,
       height: 30,
-      child: const Center(
-        child: Icon(Icons.done, color: Colors.white, size: 18),
-      ),
       decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-              colors: Gradients.classicGradient,
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight)),
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: Gradients.classicGradient,
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      child: const Center(
+        child: Icon(
+          Icons.done,
+          color: Colors.white,
+          size: 18,
+        ),
+      ),
     );
   }
 }

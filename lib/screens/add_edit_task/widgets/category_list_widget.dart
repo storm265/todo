@@ -27,7 +27,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                CategoryModel _categoryModel = box.getAt(index)!;
+                CategoryModel categoryModel = box.getAt(index)!;
 
                 return GestureDetector(
                     onTap: () => setState(
@@ -41,12 +41,12 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                             height: 50,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: (_categoryModel.imgPath
+                                    image: (categoryModel.imgPath
                                             .startsWith('assets'))
-                                        ? AssetImage(_categoryModel.imgPath)
+                                        ? AssetImage(categoryModel.imgPath)
                                             as ImageProvider
                                         : FileImage(
-                                            File(_categoryModel.imgPath))),
+                                            File(categoryModel.imgPath))),
                                 border: Border.all(
                                     color: (addEditController
                                                 .selectedCategory.value ==
@@ -56,7 +56,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                                     width: 5),
                                 shape: BoxShape.circle),
                           ),
-                          Text(_categoryModel.title)
+                          Text(categoryModel.title)
                         ],
                       ),
                     ));

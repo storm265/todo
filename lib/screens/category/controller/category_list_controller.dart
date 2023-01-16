@@ -6,15 +6,15 @@ class CategoryListController {
   final categoryBox = CategoryRepositoryImpl().database;
 
   int getCategoriesLength(int index) {
-    final _taskBox = _taskRepository;
-    List<int> _numbers = [];
+    final taskBox = _taskRepository;
+    List<int> numbers = [];
 
     for (int i = 0; i < categoryBox.length; i++) {
-      _numbers.add(_taskBox.values
+      numbers.add(taskBox.values
           .where((element) => element.category == categoryBox.getAt(i)!.title)
           .toList()
           .length);
     }
-    return _numbers[index];
+    return numbers[index];
   }
 }
