@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/data/model/category_bd/category_model.dart';
+import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/screens/category/controller/category_list_controller.dart';
 import 'package:todo/screens/category/widgets/circle_avatar_widget.dart';
 import 'package:todo/screens/category/widgets/popup_buttons_widget.dart';

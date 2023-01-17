@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/data/model/archieve_db/archieve_db.dart';
+import 'package:todo/data/model/archieve/archieve_db.dart';
+
 
 class ArchieveBodyWidget extends StatelessWidget {
   final ArchieveModel archieveModel;

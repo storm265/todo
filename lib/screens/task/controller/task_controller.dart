@@ -4,25 +4,27 @@ import 'package:intl/intl.dart';
 import 'package:todo/controller/close_keyboard.dart';
 import 'package:todo/controller/common/category_index_provider.dart';
 import 'package:todo/controller/common/string_time_formatter.dart';
-import 'package:todo/data/model/archieve_db/archieve_db.dart';
-import 'package:todo/data/model/tasks_db/task_model.dart';
-import 'package:todo/data/repository/repository.dart';
+import 'package:todo/data/model/archieve/archieve_db.dart';
+import 'package:todo/data/model/tasks/task_model.dart';
+import 'package:todo/data/repository/archieve_repository.dart';
+
 import 'package:todo/data/repository/category_repository.dart';
+import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
 class TaskValidator {}
 
 class AddEditTaskController extends ChangeNotifier {
-  final Repository _tasksRepository;
+  final TasksRepositoryImpl _tasksRepository;
   final StringTimeFormatter _stringTimeFormatter;
   final CategoryIndexProvider _categoryIndexerProvider;
-  final Repository _archieveRepository;
+  final ArchieveRepositoryImpl _archieveRepository;
 
   AddEditTaskController({
-    required Repository tasksRepository,
+    required TasksRepositoryImpl tasksRepository,
     required StringTimeFormatter stringTimeFormatter,
     required CategoryIndexProvider categoryIndexerProvider,
-    required Repository archieveRepository,
+    required ArchieveRepositoryImpl archieveRepository,
   })  : _tasksRepository = tasksRepository,
         _stringTimeFormatter = stringTimeFormatter,
         _categoryIndexerProvider = categoryIndexerProvider,

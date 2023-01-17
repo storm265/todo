@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import 'package:todo/controller/common/same_category_finder.dart';
+import 'package:todo/controller/common/category_finder.dart';
 import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/screens/task/widgets/task_body/dialog/dialog_button.dart';
@@ -17,7 +17,7 @@ class TaskListDialog {
                 TaskListDialogButton(
                     icon: Icons.add_task_outlined,
                     text: 'Add task',
-                    method: () => SameCategoryFinder()
+                    method: () => CategoryFinder()
                         .checkCategoryIsNotEmptyDialog(context)),
                 TaskListDialogButton(
                     icon: Icons.post_add_outlined,

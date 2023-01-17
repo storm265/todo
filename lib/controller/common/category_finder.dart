@@ -5,7 +5,7 @@ import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
-class SameCategoryFinder {
+class CategoryFinder {
   final _categoryIsNotEmpty = CategoryRepositoryImpl().database.isNotEmpty;
   void checkCategoryIsNotEmpty(BuildContext context, int i) async {
     if (_categoryIsNotEmpty) {

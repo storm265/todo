@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/controller/common/default_category_provider.dart';
 import 'package:todo/data/database/hive_init.dart';
-import 'package:todo/controller/system_chrome_controller.dart';
+import 'package:todo/controller/system_chrome_provider.dart';
 import 'package:todo/screens/task/task_list_page.dart';
 
 void main() async {

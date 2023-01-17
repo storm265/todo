@@ -1,9 +1,9 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:todo/data/database/db_sheme.dart';
-import 'package:todo/data/model/archieve_db/archieve_db.dart';
-import 'package:todo/data/model/category_bd/category_model.dart';
-import 'package:todo/data/model/tasks_db/task_model.dart';
+import 'package:todo/data/model/archieve/archieve_db.dart';
+import 'package:todo/data/model/category/category_model.dart';
+import 'package:todo/data/model/tasks/task_model.dart';
 
 class DatabaseProvider {
  static Future<void> registerAdapters() async {

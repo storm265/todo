@@ -1,4 +1,4 @@
-import 'package:todo/data/model/category_bd/category_model.dart';
+import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/config_repository.dart';
 

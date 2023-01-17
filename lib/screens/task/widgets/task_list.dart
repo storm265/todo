@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:timelines/timelines.dart';
-import 'package:todo/controller/common/same_category_finder.dart';
+import 'package:todo/controller/common/category_finder.dart';
 import 'package:todo/controller/common/category_index_provider.dart';
-import 'package:todo/data/model/archieve_db/archieve_db.dart';
-import 'package:todo/data/model/tasks_db/task_model.dart';
+import 'package:todo/data/model/archieve/archieve_db.dart';
+import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
@@ -44,7 +44,7 @@ class TaskList extends StatelessWidget {
                           children: [
                             SlidableAction(
                               flex: 2,
-                              onPressed: (_) => SameCategoryFinder()
+                              onPressed: (_) => CategoryFinder()
                                   .checkCategoryIsNotEmpty(context, i),
                               backgroundColor: Colors.orange,
                               foregroundColor: Colors.white,
