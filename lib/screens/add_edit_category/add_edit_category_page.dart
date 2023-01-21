@@ -48,9 +48,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
+              const SizedBox(height: 50),
               ValueListenableBuilder<File>(
                 valueListenable: _categoryController.imageFile,
                 builder: (context, imageFile, _) {

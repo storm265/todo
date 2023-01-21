@@ -29,7 +29,10 @@ class CustomAppBarWidget extends StatelessWidget
           Navigator.pop(context);
           addEditController.cleanFields();
         },
-        icon: const Icon(Icons.arrow_back_ios_new),
+        icon: const Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.white,
+        ),
       ),
       actions: (showActions)
           ? [
@@ -41,7 +44,10 @@ class CustomAppBarWidget extends StatelessWidget
           : [],
       elevation: 0,
       centerTitle: true,
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white),
+      ),
       flexibleSpace: Container(
         height: MediaQuery.of(context).size.height * 0.25,
         width: double.infinity,

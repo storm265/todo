@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Gradients {
   static const List<Color> classicGradient = [
-    Colors.orange,
-    Colors.purpleAccent,
+    Color(0xFFFCB0F3),
+    Color(0xFF3D05DD),
   ];
 }

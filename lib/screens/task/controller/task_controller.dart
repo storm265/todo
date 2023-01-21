@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
@@ -51,9 +53,11 @@ class AddEditTaskController extends ChangeNotifier {
   bool get _isDatePicked => dateTextController.value.text.isEmpty;
   bool get _isTimePicked => timeTextController.value.text.isEmpty;
 
-  void changeIsDisabledButton(bool newValue) {
+  Future<void> changeIsDisabledButton(bool newValue) async {
+    if (newValue) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
     isAddButtonActive.value = newValue;
-    isAddButtonActive.notifyListeners();
   }
 
   Future<void> tryValidate({
@@ -61,6 +65,7 @@ class AddEditTaskController extends ChangeNotifier {
     required int index,
     required bool isEdit,
   }) async {
+    await changeIsDisabledButton(false);
     convertedDateTime = '${stringDate.value} $hour:$min:00.000000';
 
     if (_isTextValid) {
@@ -84,13 +89,13 @@ class AddEditTaskController extends ChangeNotifier {
     } else {
       showMessage(context, 'You cant create task is past!');
     }
+    await changeIsDisabledButton(true);
   }
 
   Future<void> saveData({
     required String selectedCategory,
     required BuildContext context,
   }) async {
-    changeIsDisabledButton(false);
     await _tasksRepository.save(
       TaskModel(
         id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
@@ -102,7 +107,6 @@ class AddEditTaskController extends ChangeNotifier {
       ),
     );
 
-    changeIsDisabledButton(true);
     showMessage(context, 'Task added😊 🚀.');
     cleanFields();
     Navigator.pop(context);
@@ -125,7 +129,6 @@ class AddEditTaskController extends ChangeNotifier {
     required int index,
     required BuildContext context,
   }) async {
-    changeIsDisabledButton(false);
     await _tasksRepository.database
         .putAt(
           index,
@@ -142,7 +145,6 @@ class AddEditTaskController extends ChangeNotifier {
           (_) => showMessage(context, 'Task updated 😊 🚀.'),
         );
 
-    changeIsDisabledButton(true);
     cleanFields();
     Navigator.pop(context);
   }

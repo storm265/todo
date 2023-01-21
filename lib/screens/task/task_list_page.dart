@@ -31,10 +31,6 @@ class _TaskListPageState extends State<TaskListPage> {
         onPressed: () => TaskListDialog().showAddDialog(context),
         child: const Icon(Icons.add),
       ),
-      appBar: PreferredSize(
-        preferredSize: Size.zero,
-        child: AppBar(backgroundColor: Colors.black),
-      ),
       drawer: const CustomDrawerWidget(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

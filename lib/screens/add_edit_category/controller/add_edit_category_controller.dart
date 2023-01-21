@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,9 +20,12 @@ class AddEditCategoryController extends ChangeNotifier {
   bool get _isImagePicked => imageFile.value.path.isNotEmpty;
   bool get _isTextValid => titleController.text.length >= 2;
 
-  void changeButtonIsActive(bool newValue) {
-    isDisabledAddCategoryButton.value = newValue;
-    isDisabledAddCategoryButton.notifyListeners();
+  Future<void> changeButtonAddValue(bool isActive) async {
+    if (!isActive) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    isDisabledAddCategoryButton.value = isActive;
   }
 
   Future<void> tryValidate(
@@ -28,6 +33,7 @@ class AddEditCategoryController extends ChangeNotifier {
     BuildContext context,
     int index,
   ) async {
+    await changeButtonAddValue(true);
     if (_isTextValid && _isImagePicked) {
       if (isEdit) {
         await editCategory(index, context);
@@ -41,6 +47,7 @@ class AddEditCategoryController extends ChangeNotifier {
     } else if (!_isTextValid) {
       showSnackBar(context, 'Text length must be >2');
     }
+    await changeButtonAddValue(false);
   }
 
   bool isSameCategoryFound(BuildContext context) {
@@ -55,7 +62,6 @@ class AddEditCategoryController extends ChangeNotifier {
   }
 
   Future<void> saveCategory(BuildContext context) async {
-    changeButtonIsActive(false);
     if (!isSameCategoryFound(context)) {
       await _categoryRepository.add(
         CategoryModel(
@@ -64,7 +70,7 @@ class AddEditCategoryController extends ChangeNotifier {
           imgPath: imageFile.value.path,
         ),
       );
-      changeButtonIsActive(true);
+
       showSnackBar(context, 'Category is saved');
       Navigator.pop(context);
     }
@@ -74,7 +80,6 @@ class AddEditCategoryController extends ChangeNotifier {
     int index,
     BuildContext context,
   ) async {
-    changeButtonIsActive(false);
     if (!isSameCategoryFound(context)) {
       await _categoryRepository.putAt(
           index,
@@ -83,7 +88,7 @@ class AddEditCategoryController extends ChangeNotifier {
                   .getCategoryIndex(titleController.text),
               title: titleController.text,
               imgPath: imageFile.value.path));
-      changeButtonIsActive(true);
+
       showSnackBar(context, 'Category is updated');
       Navigator.pop(context);
     }
