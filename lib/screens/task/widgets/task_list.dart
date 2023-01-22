@@ -13,7 +13,6 @@ import 'package:todo/screens/task/widgets/task_body/connectors/connector_not_don
 import 'package:todo/screens/task/widgets/task_body/icons/icon_not_done_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/body/task_card_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/icons/icon_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/no_tasks_text.dart';
 
 class TaskList extends StatelessWidget {
   final DateTime selectedDate;
@@ -26,7 +25,10 @@ class TaskList extends StatelessWidget {
         valueListenable: _tasksRepositoryImpl.database.listenable(),
         builder: (_, Box<TaskModel> box, __) {
           return box.values.isEmpty
-              ? NoTasksWidget.noTasks
+              ? Center(
+    child: Text('No tasks☹️',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
+  )
               : ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,

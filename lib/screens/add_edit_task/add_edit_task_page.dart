@@ -38,16 +38,15 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: CustomAppBarWidget(
-          context: context,
-          showActions: false,
-          title: (widget.isEdit) ? 'Edit task' : 'Add task'),
+        context: context,
+        showActions: false,
+        title: (widget.isEdit) ? 'Edit task' : 'Add task',
+      ),
       body: UnfocusWidget(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 100),
               AddEditTaskTextfieldWidget(
                 textEditingController: addEditController.titleTextController,
                 hintText: 'Text:',
@@ -58,7 +57,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 hintText: 'Finish date:',
               ),
               OutlinedButton.icon(
-                onPressed: () => addEditController.pickDate(
+                onPressed: () async => await addEditController.pickDate(
                   context: context,
                   dateTextController: addEditController.dateTextController,
                 ),
@@ -70,7 +69,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 hintText: 'Finish time:',
               ),
               OutlinedButton.icon(
-                onPressed: () => addEditController.pickTime(
+                onPressed: () async => await addEditController.pickTime(
                     timeTextController: addEditController.timeTextController,
                     context: context),
                 icon: const Icon(Icons.schedule_outlined),

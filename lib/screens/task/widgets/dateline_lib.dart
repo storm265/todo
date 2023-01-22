@@ -4,11 +4,13 @@ import 'package:todo/screens/task/controller/task_list_controller.dart';
 import 'package:todo/screens/task/widgets/date_line_fonts.dart';
 
 class DayLineWidget extends StatefulWidget {
+  final TaskListController taskListController;
   final Function(DateTime) changeDay;
 
   const DayLineWidget({
     Key? key,
     required this.changeDay,
+    required this.taskListController,
   }) : super(key: key);
 
   @override
@@ -16,37 +18,22 @@ class DayLineWidget extends StatefulWidget {
 }
 
 class _DayLineWidgetState extends State<DayLineWidget> {
-  final _taskListController = TaskListController();
-
-  @override
-  void initState() {
-    _taskListController.generateCalendarElements();
-    _taskListController.scrollToSelectedIndex();
-    _taskListController.updateCalendarElements(() => setState(() {}));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _taskListController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: PageView.builder(
-        controller: _taskListController.pageController,
-        itemCount: _taskListController.calendar.length,
+        child: ValueListenableBuilder(
+      valueListenable: widget.taskListController.calendar,
+      builder: (__, calendarList, _) => PageView.builder(
+        controller: widget.taskListController.pageController,
+        itemCount: calendarList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (_, i) {
-          final calendar = _taskListController.calendar;
           return GestureDetector(
             onTap: () {
-              widget.changeDay(
-                  _taskListController.selectedDate.value = calendar[i]);
+              widget.changeDay(widget.taskListController.selectedDate.value =
+                  calendarList[i]);
 
-              _taskListController.scrollToSelectedIndex();
+              widget.taskListController.scrollToSelectedIndex();
             },
             child: Padding(
               padding: const EdgeInsets.only(
@@ -56,15 +43,15 @@ class _DayLineWidgetState extends State<DayLineWidget> {
                 children: [
                   FittedBox(
                     child: Text(
-                      DateFormat('d').format(calendar[i]),
-                      style: (_taskListController.selectedDate.value ==
-                              calendar[i])
+                      DateFormat('d').format(calendarList[i]),
+                      style: (widget.taskListController.selectedDate.value ==
+                              calendarList[i])
                           ? DateLineFonts.selected
                           : DateLineFonts.unSelected,
                     ),
                   ),
                   Text(
-                    DateFormat('EEEE').format(calendar[i]).substring(0, 3),
+                    DateFormat('EEEE').format(calendarList[i]).substring(0, 3),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -76,6 +63,6 @@ class _DayLineWidgetState extends State<DayLineWidget> {
           );
         },
       ),
-    );
+    ));
   }
 }

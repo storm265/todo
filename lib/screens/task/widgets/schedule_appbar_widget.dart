@@ -15,7 +15,10 @@ class ScheduleAppBarWidget extends StatelessWidget {
         ),
         const Text(
           'Schredule',
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
         ),
         IconButton(
           icon: const Icon(Icons.menu),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 
-
 class ArchieveBodyWidget extends StatelessWidget {
   final ArchieveModel archieveModel;
 
@@ -32,7 +31,8 @@ class ArchieveBodyWidget extends StatelessWidget {
             ),
             trailing: Text(archieveModel.category),
             subtitle: Text(
-                'Finish at: ${DateFormat('dd/MM/yyyy').format(archieveModel.deadlineDateTime)}'),
+                    'Finish at: ${DateFormat.yMd().format(archieveModel.deadlineDateTime)}',
+                  ),
           ),
         ),
       ),

@@ -88,38 +88,22 @@ class AddEditTaskController extends ChangeNotifier {
     required String selectedCategory,
     required BuildContext context,
   }) async {
-    await _tasksRepository.saveTask(
-      TaskModel(
-        id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
-        isDone: false,
-        category: selectedCategory,
-        creationDate: DateTime.now(),
-        text: titleTextController.text,
-        deadlineDateTime: convertedDateTime!,
-      ),
-    );
+    await _tasksRepository
+        .saveTask(
+          TaskModel(
+            id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
+            isDone: false,
+            category: selectedCategory,
+            creationDate: DateTime.now(),
+            text: titleTextController.text,
+            deadlineDateTime: convertedDateTime!,
+          ),
+        )
+        .then((_) => showMessage(context, 'Task added😊 🚀.'));
 
-    showMessage(context, 'Task added😊 🚀.');
     cleanFields();
     Navigator.pop(context);
   }
-
-  // Future<void> markTaskAsDone({
-  //   required int index,
-  //   required TaskModel model,
-  // }) async {
-  //   await _tasksRepository.updateTask(
-  //     index: index,
-  //     model: TaskModel(
-  //       id: CategoryIndexProvider().getCategoryIndex(model.category),
-  //       creationDate: model.creationDate,
-  //       deadlineDateTime: model.deadlineDateTime,
-  //       text: model.text,
-  //       category: model.category,
-  //       isDone: true,
-  //     ),
-  //   );
-  // }
 
   Future<void> editData({
     required String selectedCategory,
@@ -169,7 +153,7 @@ class AddEditTaskController extends ChangeNotifier {
     pickedTime.value = picked!;
 
     if (pickedTime.value != null) {
-      timeTextController.text = DateFormat.Hm().format(DateTime.utc(
+      timeTextController.text = DateFormat('hh:mm a').format(DateTime.utc(
           2022, 12, 12, pickedTime.value!.hour, pickedTime.value!.minute));
     }
   }

@@ -5,7 +5,7 @@ import 'package:todo/screens/task/widgets/current_date_widget.dart';
 import 'package:todo/screens/task/widgets/dateline_lib.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 import 'package:todo/screens/task/widgets/schedule_appbar_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/dialog/dialogs.dart';
+import 'package:todo/screens/task/widgets/task_body/dialog/task_list_options_dialog.dart';
 import 'package:todo/screens/task/widgets/task_list.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -17,18 +17,19 @@ class TaskListPage extends StatefulWidget {
 
 class _TaskListPageState extends State<TaskListPage> {
   final _taskListController = TaskListController();
-
   @override
-  void dispose() {
-    _taskListController.dispose();
-    super.dispose();
+  void initState() {
+    _taskListController.generateCalendarElements();
+    _taskListController.scrollToSelectedIndex();
+    _taskListController.updateCalendarElements(() => setState(() {}));
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => TaskListDialog().showAddDialog(context),
+        onPressed: () => TaskListOptionsDialog.showOptionsDialog(context),
         child: const Icon(Icons.add),
       ),
       drawer: const CustomDrawerWidget(),
@@ -46,6 +47,7 @@ class _TaskListPageState extends State<TaskListPage> {
                     selectedDay: _taskListController.selectedDate.value,
                   ),
                   DayLineWidget(
+                    taskListController: _taskListController,
                     changeDay: (value) {
                       setState(() {
                         _taskListController.selectedDate.value = value;

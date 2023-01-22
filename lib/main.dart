@@ -14,10 +14,8 @@ void main() async {
   await DefaultCategoryProvider.fillDefaultCategory();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp(
-    const MyApp(),
   );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
       theme: classicTheme,
-      home: const SafeArea(
+      home: SafeArea(
         child: TaskListPage(),
       ),
     );
