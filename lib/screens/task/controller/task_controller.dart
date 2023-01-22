@@ -96,7 +96,7 @@ class AddEditTaskController extends ChangeNotifier {
     required String selectedCategory,
     required BuildContext context,
   }) async {
-    await _tasksRepository.save(
+    await _tasksRepository.saveTask(
       TaskModel(
         id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
         isDone: false,

@@ -7,7 +7,8 @@ class TasksRepositoryImpl {
 
   Box<TaskModel> get database => _taskDatabase;
 
-  Future<void> save(TaskModel model) async => await _taskDatabase.add(model);
+  Future<void> saveTask(TaskModel model) async =>
+      await _taskDatabase.add(model);
 
-  Future<void> delete(int index) async => await _taskDatabase.deleteAt(index);
+  Future<void> deleteTask(int index) async => await _taskDatabase.deleteAt(index);
 }
