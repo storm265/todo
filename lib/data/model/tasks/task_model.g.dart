@@ -19,7 +19,7 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     return TaskModel(
       id: fields[0] as int,
       creationDate: fields[2] as DateTime,
-      deadlineDateTime: fields[1] as DateTime?,
+      deadlineDateTime: fields[1] as DateTime,
       text: fields[5] as String,
       category: fields[3] as String,
       isDone: fields[4] as bool,

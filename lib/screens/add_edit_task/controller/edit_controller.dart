@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo/controller/common/string_time_formatter.dart';
+import 'package:intl/intl.dart';
 import 'package:todo/controller/global_controller.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category_repository.dart';
@@ -18,26 +18,18 @@ class EditTaskController {
 
   void getEditData(int index) {
     final taskBox = _tasksRepositoryImpl.database.getAt(index)!;
-    final time =
-        TimeOfDay.fromDateTime(taskBox.deadlineDateTime ?? DateTime.now());
-
-    final formatter = StringTimeFormatter();
-    addEditController.hour = formatter.formatTime(time.hour);
-    addEditController.min = formatter.formatTime(time.minute);
+    final time = TimeOfDay.fromDateTime(taskBox.deadlineDateTime);
 
     addEditController.timeTextController.text =
-        '${addEditController.hour}:${addEditController.min}';
+        DateFormat.jm().format(taskBox.deadlineDateTime);
 
-    addEditController.stringDate.value =
-        taskBox.deadlineDateTime.toString().substring(0, 10);
     addEditController.pickedTime.value =
         TimeOfDay(hour: time.hour, minute: time.minute);
 
-    addEditController.convertedDateTime =
-        taskBox.deadlineDateTime.toString();
+    addEditController.convertedDateTime = taskBox.deadlineDateTime;
 
     addEditController.dateTextController.text =
-        '${formatter.formatTime(taskBox.deadlineDateTime!.day)}.${formatter.formatTime(taskBox.deadlineDateTime!.month)}.${taskBox.deadlineDateTime!.year}';
+        DateFormat.yMd().format(taskBox.deadlineDateTime);
 
     addEditController.titleTextController.text = taskBox.text;
 

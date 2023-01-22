@@ -32,7 +32,7 @@ class ArchieveBodyWidget extends StatelessWidget {
             ),
             trailing: Text(archieveModel.category),
             subtitle: Text(
-                'Deadline at: ${DateFormat('dd/MM/yyyy').format(archieveModel.deadlineDateTime)}'),
+                'Finish at: ${DateFormat('dd/MM/yyyy').format(archieveModel.deadlineDateTime)}'),
           ),
         ),
       ),

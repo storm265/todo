@@ -8,7 +8,7 @@ class TaskModel {
   int id;
 
   @HiveField(1)
-  DateTime? deadlineDateTime;
+  DateTime deadlineDateTime;
 
   @HiveField(2)
   DateTime creationDate;

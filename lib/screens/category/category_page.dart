@@ -20,7 +20,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       appBar: CustomAppBarWidget(
         context: context,
-        title: 'Caterogy',
+        title: 'Categories',
         showActions: false,
       ),
       body: ValueListenableBuilder<Box<CategoryModel>>(

@@ -10,5 +10,15 @@ class TasksRepositoryImpl {
   Future<void> saveTask(TaskModel model) async =>
       await _taskDatabase.add(model);
 
-  Future<void> deleteTask(int index) async => await _taskDatabase.deleteAt(index);
+  Future<void> deleteTask(int index) async =>
+      await _taskDatabase.deleteAt(index);
+
+  Future<void> updateTask({
+    required int index,
+    required TaskModel model,
+  }) async =>
+      await _taskDatabase.putAt(
+        index,
+        model,
+      );
 }

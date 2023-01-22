@@ -55,7 +55,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               ),
               AddEditTaskTextfieldWidget(
                 textEditingController: addEditController.dateTextController,
-                hintText: 'Deadline date:',
+                hintText: 'Finish date:',
               ),
               OutlinedButton.icon(
                 onPressed: () => addEditController.pickDate(
@@ -67,7 +67,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
               ),
               AddEditTaskTextfieldWidget(
                 textEditingController: addEditController.timeTextController,
-                hintText: 'Deadline time:',
+                hintText: 'Finish time:',
               ),
               OutlinedButton.icon(
                 onPressed: () => addEditController.pickTime(

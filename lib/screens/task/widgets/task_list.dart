@@ -36,7 +36,7 @@ class TaskList extends StatelessWidget {
                     TaskModel? task = box.getAt(i);
                     DateTime? deadline = task!.deadlineDateTime;
 
-                    if (deadline!.toString().substring(0, 11) ==
+                    if (deadline.toString().substring(0, 11) ==
                         selectedDate.toString().substring(0, 11)) {
                       return Slidable(
                         startActionPane: ActionPane(
@@ -90,7 +90,7 @@ class TaskList extends StatelessWidget {
                                         category: task.category,
                                         text: task.text,
                                         deadlineDateTime:
-                                            task.deadlineDateTime!,
+                                            task.deadlineDateTime,
                                       ),
                                     );
                                 await box.deleteAt(i);
