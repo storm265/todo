@@ -25,6 +25,7 @@ dependencies:
   flutter_platform_widgets: 
   flutter_slidable:
   flutter_native_splash:
+  firebase_core:
   # device_preview: ^1.1.0
 
 dev_dependencies:

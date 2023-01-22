@@ -3,6 +3,8 @@ import 'package:todo/controller/common/default_category_provider.dart';
 import 'package:todo/data/database/hive_init.dart';
 import 'package:todo/controller/system_chrome_provider.dart';
 import 'package:todo/screens/task/task_list_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +12,9 @@ void main() async {
   await DatabaseProvider.registerAdapters();
   await DatabaseProvider.openAllBoxes();
   await DefaultCategoryProvider.fillDefaultCategory();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(
     const MyApp(),
   );
@@ -41,6 +46,6 @@ final classicTheme = ThemeData(
 final darkTheme = ThemeData(
   useMaterial3: false,
   fontFamily: 'Ubuntu',
-  primarySwatch: Colors.blue,
+  primarySwatch: Colors.deepPurple,
   scaffoldBackgroundColor: Colors.black,
 );

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "516813002448",
+    "project_id": "todo-simple-task-app",
+    "storage_bucket": "todo-simple-task-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516813002448:android:de6e241825578dfa10f0d5",
+        "android_client_info": {
+          "package_name": "com.nevoapps.todo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516813002448-72m6rf0vm3gok3t8pstpc5jae84ov4e9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLiB4uoESt7YXwbdHIyGrqeZw99zZni24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516813002448-72m6rf0vm3gok3t8pstpc5jae84ov4e9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
