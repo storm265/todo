@@ -9,8 +9,11 @@ import 'package:todo/screens/common_widgets/unfocus_widget.dart';
 class AddCategoryPage extends StatefulWidget {
   final bool isEdit;
   final int index;
-  const AddCategoryPage({Key? key, required this.index, required this.isEdit})
-      : super(key: key);
+  const AddCategoryPage({
+    Key? key,
+    required this.index,
+    required this.isEdit,
+  }) : super(key: key);
 
   @override
   State<AddCategoryPage> createState() => _AddCategoryPageState();
@@ -40,7 +43,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     return Scaffold(
       appBar: CustomAppBarWidget(
         context: context,
-        title: 'Add category',
+        title: widget.isEdit ? 'Edit category' : 'Add category',
         showActions: false,
       ),
       body: UnfocusWidget(

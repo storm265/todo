@@ -36,9 +36,7 @@ class _DayLineWidgetState extends State<DayLineWidget> {
               widget.taskListController.scrollToSelectedIndex();
             },
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-              ),
+              padding: const EdgeInsets.only(top: 20),
               child: Column(
                 children: [
                   FittedBox(

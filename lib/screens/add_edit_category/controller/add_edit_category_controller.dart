@@ -50,48 +50,43 @@ class AddEditCategoryController extends ChangeNotifier {
     await changeButtonAddValue(false);
   }
 
-  bool isSameCategoryFound(BuildContext context) {
-    for (int i = 0; i < _categoryRepository.length; i++) {
-      if (_categoryRepository.getAt(i)!.title.toLowerCase() ==
-          titleController.text.toLowerCase()) {
-        showSnackBar(context, 'This category  is already exists!');
-        return true;
-      }
-    }
-    return false;
-  }
+  // bool isSameCategoryFound(BuildContext context) {
+  //   for (int i = 0; i < _categoryRepository.length; i++) {
+  //     if (_categoryRepository.getAt(i)!.title.toLowerCase() ==
+  //         titleController.text.toLowerCase()) {
+  //       showSnackBar(context, 'This category  is already exists!');
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   Future<void> saveCategory(BuildContext context) async {
-    if (!isSameCategoryFound(context)) {
-      await _categoryRepository.add(
-        CategoryModel(
-          id: _categoryIndexController.getCategoryIndex(titleController.text),
-          title: titleController.text,
-          imgPath: imageFile.value.path,
-        ),
-      );
+    await _categoryRepository.add(
+      CategoryModel(
+        id: _categoryIndexController.getCategoryIndex(titleController.text),
+        title: titleController.text,
+        imgPath: imageFile.value.path,
+      ),
+    );
 
-      showSnackBar(context, 'Category is saved');
-      Navigator.pop(context);
-    }
+    showSnackBar(context, 'Category is saved');
+    Navigator.pop(context);
   }
 
   Future<void> editCategory(
     int index,
     BuildContext context,
   ) async {
-    if (!isSameCategoryFound(context)) {
-      await _categoryRepository.putAt(
-          index,
-          CategoryModel(
-              id: _categoryIndexController
-                  .getCategoryIndex(titleController.text),
-              title: titleController.text,
-              imgPath: imageFile.value.path));
+    await _categoryRepository.putAt(
+        index,
+        CategoryModel(
+            id: _categoryIndexController.getCategoryIndex(titleController.text),
+            title: titleController.text,
+            imgPath: imageFile.value.path));
 
-      showSnackBar(context, 'Category is updated');
-      Navigator.pop(context);
-    }
+    showSnackBar(context, 'Category is updated');
+    Navigator.pop(context);
   }
 
   Future<void> pickImageFromGallery() async {
