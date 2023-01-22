@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/controller/close_keyboard.dart';
-import 'package:todo/controller/common/category_index_provider.dart';
+import 'package:todo/service/close_keyboard.dart';
+import 'package:todo/service/common/category_index_provider.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve_repository.dart';
 import 'package:todo/data/repository/category_repository.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/controller/global_controller.dart';
+import 'package:todo/service/global_controller.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';

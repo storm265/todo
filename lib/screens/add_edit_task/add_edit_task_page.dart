@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/controller/global_controller.dart';
+import 'package:todo/service/global_controller.dart';
 import 'package:todo/screens/add_edit_task/controller/edit_controller.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';

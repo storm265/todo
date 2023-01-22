@@ -15,17 +15,18 @@ class DefaultCategoryProvider {
 
   static Future<void> fillDefaultCategory() async {
     final configRepository = FirstTimeVisitRepositoryImpl();
+    final categoryModel = CategoryRepositoryImpl().database;
     await configRepository.openConfigBox();
 
     if (await configRepository.getIsFirstTime()) {
       for (int i = 0; i < _categoryTitles.length; i++) {
-        await CategoryRepositoryImpl().database.add(
-              CategoryModel(
-                id: i,
-                title: _categoryTitles[i],
-                imgPath: '$_assetsPath${_categoryTitles[i]}.png',
-              ),
-            );
+        await categoryModel.add(
+          CategoryModel(
+            id: i,
+            title: _categoryTitles[i],
+            imgPath: '$_assetsPath${_categoryTitles[i]}.png',
+          ),
+        );
       }
     }
     await configRepository.putIsFirstTime(false);

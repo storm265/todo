@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nevoapps.todo">
+    package="com.nevoapps.todo">  
+    <uses-permission android:name="android.permission.INTERNET" />
+    
    <application
         android:label="Todo"
         android:name="${applicationName}"
