@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
       theme: classicTheme,
-      home: SafeArea(
+      home: const SafeArea(
         child: TaskListPage(),
       ),
     );

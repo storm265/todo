@@ -25,10 +25,12 @@ class TaskList extends StatelessWidget {
         valueListenable: _tasksRepositoryImpl.database.listenable(),
         builder: (_, Box<TaskModel> box, __) {
           return box.values.isEmpty
-              ? Center(
-    child: Text('No tasks☹️',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
-  )
+              ? const Center(
+                  child: Text(
+                    'No tasks☹️',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                  ),
+                )
               : ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -91,8 +93,7 @@ class TaskList extends StatelessWidget {
                                       ArchieveModel(
                                         category: task.category,
                                         text: task.text,
-                                        deadlineDateTime:
-                                            task.deadlineDateTime,
+                                        deadlineDateTime: task.deadlineDateTime,
                                       ),
                                     );
                                 await box.deleteAt(i);
