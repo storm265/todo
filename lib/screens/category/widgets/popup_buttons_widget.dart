@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo/routes/routers.dart';
+import 'package:todo/screens/category/controller/category_list_controller.dart';
 
 class PopupButtonsWidget extends StatelessWidget {
+  final CategoryListController categoryController;
   final int index;
   const PopupButtonsWidget({
     Key? key,
     required this.index,
+    required this.categoryController,
   }) : super(key: key);
 
   @override
@@ -17,9 +20,7 @@ class PopupButtonsWidget extends StatelessWidget {
               await Routers.toAddEditCategoryPage(context, index, true);
               break;
             case 1:
-
-              // TODO FIX IT
-              // await CategoryRepositoryImpl().delete(index);
+              await categoryController.removeCategory(index: index);
               break;
           }
         },

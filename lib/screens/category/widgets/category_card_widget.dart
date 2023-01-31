@@ -51,7 +51,10 @@ class CategoryCardWidget extends StatelessWidget {
               ),
             ),
             leading: CircleAvatarWidget(imgPath: categoryModel.imgPath),
-            trailing: PopupButtonsWidget(index: index),
+            trailing: PopupButtonsWidget(
+              categoryController: categoryController,
+              index: index,
+            ),
           ),
         ),
       ),
