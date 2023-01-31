@@ -11,9 +11,9 @@ import 'package:todo/screens/task/widgets/current_date_widget.dart';
 import 'package:todo/screens/task/widgets/dateline_lib.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 import 'package:todo/screens/task/widgets/schedule_appbar_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/dialog/task_list_options_dialog.dart';
+import 'package:todo/screens/task/widgets/task_body/dialogs/task_list_options_dialog.dart';
 import 'package:todo/screens/task/widgets/tasks_list.dart';
-import 'package:todo/service/common/category_index_provider.dart';
+import 'package:todo/services/common/category_index_provider.dart';
 
 class TaskListPage extends StatefulWidget {
   const TaskListPage({Key? key}) : super(key: key);

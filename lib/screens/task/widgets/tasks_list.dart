@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:timelines/timelines.dart';
-import 'package:todo/routes/routers.dart';
+import 'package:todo/services/route_service.dart';
 import 'package:todo/screens/task/controller/task_list_controller.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
@@ -53,7 +53,8 @@ class TaskList extends StatelessWidget {
                               flex: 2,
                               onPressed: (_) =>
                                   taskListController.isNotEmptyCategory(context)
-                                      ? Routers.toEditTaskPage(context, task, i)
+                                      ? RouteService.toEditTaskPage(
+                                          context, task, i)
                                       : null,
                               backgroundColor: Colors.orange,
                               foregroundColor: Colors.white,

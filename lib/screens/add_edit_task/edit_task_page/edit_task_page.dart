@@ -12,7 +12,7 @@ import 'package:todo/screens/add_edit_task/add_task/widgets/textfield.dart';
 import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
 import 'package:todo/screens/common_widgets/unfocus_widget.dart';
 import 'package:todo/screens/task/controller/task_validator.dart';
-import 'package:todo/service/common/category_index_provider.dart';
+import 'package:todo/services/common/category_index_provider.dart';
 
 class EditTaskPage extends StatefulWidget {
   final int taskIndex;

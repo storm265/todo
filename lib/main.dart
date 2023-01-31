@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/service/common/default_category_provider.dart';
+import 'package:todo/services/common/default_category_provider.dart';
 import 'package:todo/data/database/hive_init.dart';
-import 'package:todo/service/system_chrome_provider.dart';
+import 'package:todo/services/system_chrome_provider.dart';
 import 'package:todo/screens/task/task_list_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

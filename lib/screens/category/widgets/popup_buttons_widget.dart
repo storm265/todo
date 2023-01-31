@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/routes/routers.dart';
+import 'package:todo/services/route_service.dart';
 import 'package:todo/screens/category/controller/category_list_controller.dart';
 
 class PopupButtonsWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class PopupButtonsWidget extends StatelessWidget {
         onSelected: (int value) async {
           switch (value) {
             case 0:
-              await Routers.toAddEditCategoryPage(context, index, true);
+              await RouteService.toAddEditCategoryPage(context, index, true);
               break;
             case 1:
               await categoryController.removeCategory(index: index);

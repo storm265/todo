@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/task/controller/drawer_items.dart';
-import 'package:todo/routes/routers.dart';
+import 'package:todo/services/route_service.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
   const CustomDrawerWidget({Key? key}) : super(key: key);
@@ -17,12 +17,12 @@ class CustomDrawerWidget extends StatelessWidget {
               switch (i) {
                 case 0:
                   Navigator.pop(context);
-                  await Routers.toCategoryPage(context);
+                  await RouteService.toCategoryPage(context);
 
                   break;
                 case 1:
                   Navigator.pop(context);
-                  await Routers.toAddArchievePage(context);
+                  await RouteService.toAddArchievePage(context);
                   break;
               }
             },
