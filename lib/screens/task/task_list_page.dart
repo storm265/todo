@@ -8,7 +8,7 @@ import 'package:todo/data/repository/task/tasks_repository_impl.dart';
 import 'package:todo/screens/task/controller/task_list_controller.dart';
 import 'package:todo/screens/widgets/drawer_widget.dart';
 import 'package:todo/screens/task/widgets/current_date_widget.dart';
-import 'package:todo/screens/task/widgets/dateline_lib.dart';
+import 'package:todo/screens/task/widgets/day_line_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
 import 'package:todo/screens/task/widgets/schedule_appbar_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/dialogs/task_list_options_dialog.dart';

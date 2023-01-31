@@ -3,8 +3,10 @@ import 'package:intl/intl.dart';
 
 class CurrentDateWidget extends StatelessWidget {
   final DateTime selectedDay;
-  const CurrentDateWidget({Key? key, required this.selectedDay})
-      : super(key: key);
+  const CurrentDateWidget({
+    Key? key,
+    required this.selectedDay,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
