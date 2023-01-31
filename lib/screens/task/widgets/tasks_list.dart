@@ -28,12 +28,7 @@ class TaskList extends StatelessWidget {
         valueListenable: taskListController.getTaskDataBase().listenable(),
         builder: (_, Box<TaskModel> box, __) {
           return box.values.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No tasks☹️',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                  ),
-                )
+              ? const SizedBox()
               : ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
