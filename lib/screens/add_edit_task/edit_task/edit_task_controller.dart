@@ -38,24 +38,25 @@ class EditTaskController extends TaskController {
 
   void getEditData({
     required int index,
-    required String timeText,
-    required String dateText,
-    required String title,
+    required TextEditingController timeTextController,
+    required TextEditingController dateTextController,
+    required TextEditingController titleTextController,
   }) {
     final taskBox = tasksRepository.getDatabase().getAt(index)!;
     final time = TimeOfDay.fromDateTime(taskBox.deadlineDateTime);
 
-    timeText = DateFormat.jm().format(taskBox.deadlineDateTime);
+    timeTextController.text = DateFormat.jm().format(taskBox.deadlineDateTime);
 
     pickedTime.value = TimeOfDay(hour: time.hour, minute: time.minute);
 
     convertedDateTime = taskBox.deadlineDateTime;
 
-    dateText = DateFormat.yMd().format(taskBox.deadlineDateTime);
+    dateTextController.text = DateFormat.yMd().format(taskBox.deadlineDateTime);
 
-    title = taskBox.text;
+    titleTextController.text = taskBox.text;
 
     selectedCategoryIndex.value = getCategoryIndex(index);
+
   }
 
   int getCategoryIndex(int index) {

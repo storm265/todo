@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo/data/data_source/archieve/archieve_data_source_impl.dart';
 import 'package:todo/data/data_source/category/category_data_source_impl.dart';
@@ -46,15 +48,18 @@ class _EditTaskPageState extends State<EditTaskPage> {
       tasksDataSource: TasksDataSourceImpl(),
     ),
   );
+
   final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     _editTaskController.getEditData(
       index: widget.taskIndex,
-      timeText: _timeTextController.text,
-      dateText: _dateTextController.text,
-      title: _titleTextController.text,
+      timeTextController: _timeTextController,
+      dateTextController: _dateTextController,
+      titleTextController: _titleTextController,
     );
+ 
     super.initState();
   }
 
