@@ -3,8 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:timelines/timelines.dart';
+import 'package:todo/routes/routers.dart';
 import 'package:todo/screens/task/controller/task_list_controller.dart';
-import 'package:todo/service/common/category_finder.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_not_done_widget.dart';
@@ -52,8 +52,9 @@ class TaskList extends StatelessWidget {
                             SlidableAction(
                               flex: 2,
                               onPressed: (_) =>
-                                  taskListController.categoryFinder
-                                    ..checkCategoryIsNotEmpty(context, i),
+                                  taskListController.isNotEmptyCategory(context)
+                                      ? Routers.toEditTaskPage(context, task, i)
+                                      : null,
                               backgroundColor: Colors.orange,
                               foregroundColor: Colors.white,
                               icon: Icons.edit,

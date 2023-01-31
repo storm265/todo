@@ -3,60 +3,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/constants/future_type.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
+import 'package:todo/screens/task/controller/task_validator.dart';
 import 'package:todo/service/close_keyboard.dart';
 import 'package:todo/service/common/category_index_provider.dart';
-import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
-class AddEditTaskController extends ChangeNotifier {
-  final TasksRepository _tasksRepository;
+class TaskController extends ChangeNotifier {
+  final TaskValidator _taskValidator;
+  final TasksRepository tasksRepository;
 
-  final CategoryIndexProvider _categoryIndexerProvider;
-  final CategoryRepository _categoryRepository;
+  final CategoryIndexProvider categoryIndexerProvider;
+  final CategoryRepository categoryRepository;
 
-  AddEditTaskController({
-    required TasksRepository tasksRepository,
-    required CategoryIndexProvider categoryIndexerProvider,
+  TaskController({
+    required TaskValidator taskValidator,
+    required this.tasksRepository,
+    required this.categoryIndexerProvider,
     required ArchieveRepository archieveRepository,
-    required CategoryRepository categoryRepository,
-  })  : _tasksRepository = tasksRepository,
-        _categoryRepository = categoryRepository,
-        _categoryIndexerProvider = categoryIndexerProvider;
+    required this.categoryRepository,
+  }) : _taskValidator = taskValidator;
 
-  final titleTextController = TextEditingController();
-  final dateTextController = TextEditingController();
-  final timeTextController = TextEditingController();
+  final isSubmitActive = ValueNotifier<bool>(true);
 
-  final isAddButtonActive = ValueNotifier<bool>(true);
+  final selectedCategoryIndex = ValueNotifier<int>(0);
 
-  final selectedCategory = ValueNotifier<int>(0);
-
-  Box<CategoryModel> getCategoryBox() => _categoryRepository.getDatabase();
-
+  Box<CategoryModel> getCategoryBox() => categoryRepository.getDatabase();
   DateTime? convertedDateTime;
   final pickedDate = ValueNotifier<DateTime?>(DateTime.now());
   final pickedTime =
       ValueNotifier<TimeOfDay?>(const TimeOfDay(hour: 1, minute: 11));
 
-  bool get _isTextValid => titleTextController.text.length < 4;
-  bool get _isDatePicked => dateTextController.value.text.isEmpty;
-  bool get _isTimePicked => timeTextController.value.text.isEmpty;
-
   Future<void> changeIsDisabledButton(bool newValue) async {
     if (newValue) {
       await Future.delayed(const Duration(seconds: 1));
     }
-    isAddButtonActive.value = newValue;
+    isSubmitActive.value = newValue;
   }
 
-  Future<void> tryValidate({
+  Future<void> validateForm({
     required BuildContext context,
-    required int index,
-    required bool isEdit,
+    required FutureCallback callback,
+    required GlobalKey<FormState> formKey,
   }) async {
     await changeIsDisabledButton(false);
     convertedDateTime = DateTime.utc(
@@ -66,83 +58,13 @@ class AddEditTaskController extends ChangeNotifier {
       pickedTime.value!.hour,
       pickedTime.value!.minute,
     );
-    if (_isTextValid) {
-      showMessage(context, 'Text title must be more then 4 characters. 😑');
-    } else if (_isDatePicked) {
-      showMessage(context, 'Pick date. 😑');
-    } else if (_isTimePicked) {
-      showMessage(context, 'Pick time. 😑');
-    } else if (DateTime.now().isBefore(convertedDateTime!)) {
-      if (isEdit) {
-        await editData(
-            context: context,
-            selectedCategory:
-                getCategoryBox().getAt(selectedCategory.value)!.title,
-            index: index);
-      } else {
-        await saveData(
-            context: context,
-            selectedCategory:
-                getCategoryBox().getAt(selectedCategory.value)!.title);
-      }
+    if (_taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
+      await callback();
+      Navigator.pop(context);
     } else {
       showMessage(context, 'You cant create task is past!');
     }
     await changeIsDisabledButton(true);
-  }
-
-  Future<void> saveData({
-    required String selectedCategory,
-    required BuildContext context,
-  }) async {
-    await _tasksRepository
-        .saveTask(
-          TaskModel(
-            id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
-            isDone: false,
-            category: selectedCategory,
-            creationDate: DateTime.now(),
-            text: titleTextController.text,
-            deadlineDateTime: convertedDateTime!,
-          ),
-        )
-        .then((_) => showMessage(context, 'Task added😊 🚀.'));
-
-    cleanFields();
-    Navigator.pop(context);
-  }
-
-  Future<void> editData({
-    required String selectedCategory,
-    required int index,
-    required BuildContext context,
-  }) async {
-    await _tasksRepository
-        .getDatabase()
-        .putAt(
-          index,
-          TaskModel(
-            id: _categoryIndexerProvider.getCategoryIndex(selectedCategory),
-            isDone: false,
-            category: selectedCategory,
-            creationDate: DateTime.now(),
-            text: titleTextController.text,
-            deadlineDateTime: convertedDateTime!,
-          ),
-        )
-        .then(
-          (_) => showMessage(context, 'Task updated 😊 🚀.'),
-        );
-
-    cleanFields();
-    Navigator.pop(context);
-  }
-
-  void cleanFields() {
-    titleTextController.clear();
-    dateTextController.clear();
-    timeTextController.clear();
-    selectedCategory.value = 0;
   }
 
   Future<void> pickTime({

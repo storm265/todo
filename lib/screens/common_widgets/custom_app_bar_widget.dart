@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo/service/global_controller.dart';
 import 'package:todo/screens/common_widgets/gradient_color.dart';
 
 class CustomAppBarWidget extends StatelessWidget
@@ -27,7 +26,6 @@ class CustomAppBarWidget extends StatelessWidget
       leading: IconButton(
         onPressed: () {
           Navigator.pop(context);
-          addEditController.cleanFields();
         },
         icon: const Icon(
           Icons.arrow_back_ios_new,

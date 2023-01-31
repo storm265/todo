@@ -5,24 +5,25 @@ import 'package:intl/intl.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
-import 'package:todo/service/common/category_finder.dart';
+import 'package:todo/data/repository/category/category_repository.dart';
+import 'package:todo/data/repository/task/tasks_repository.dart';
+import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 import 'package:todo/service/common/category_index_provider.dart';
 
-import '../../../data/repository/task/tasks_repository.dart';
-
 class TaskListController {
-  final CategoryFinder categoryFinder;
   final CategoryIndexProvider _categoryIndexProvider;
   final TasksRepository _taskRepository;
   final ArchieveRepository archieveRepository;
+  final CategoryRepository _categoryRepository;
 
   TaskListController({
-    required this.categoryFinder,
+    required CategoryRepository categoryRepository,
     required TasksRepository taskRepository,
     required CategoryIndexProvider categoryIndexProvider,
     required this.archieveRepository,
   })  : _taskRepository = taskRepository,
-        _categoryIndexProvider = categoryIndexProvider;
+        _categoryIndexProvider = categoryIndexProvider,
+        _categoryRepository = categoryRepository;
 
   Box<TaskModel> getTaskDataBase() => _taskRepository.getDatabase();
 
@@ -140,6 +141,18 @@ class TaskListController {
       );
 
       calendar.value.addAll(last);
+    }
+  }
+
+  bool isNotEmptyCategory(BuildContext context) {
+    if (_categoryRepository.getDatabase().isNotEmpty) {
+      return true;
+    } else {
+      CustomSnackbarWidget.showCustomSnackbar(
+        context: context,
+        message: 'No categories! Add category at first!',
+      );
+      return false;
     }
   }
 }

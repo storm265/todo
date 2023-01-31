@@ -9,11 +9,6 @@ class CustomDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       width: 250,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.horizontal(
-          right: Radius.circular(12),
-        ),
-      ),
       backgroundColor: Colors.white,
       child: ListView.separated(
         itemBuilder: (context, i) {
