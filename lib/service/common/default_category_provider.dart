@@ -1,7 +1,8 @@
 import 'package:todo/data/data_source/category/category_data_source_impl.dart';
+import 'package:todo/data/data_source/user_config/user_config_data_source_impl.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
-import 'package:todo/data/repository/config_repository.dart';
+import 'package:todo/data/repository/user_config/user_config_repository_impl.dart';
 
 class DefaultCategoryProvider {
   static String get _assetsPath => 'assets/defaultCategoryIcons/';
@@ -14,7 +15,9 @@ class DefaultCategoryProvider {
   ];
 
   static Future<void> fillDefaultCategory() async {
-    final configRepository = FirstTimeVisitRepositoryImpl();
+    final configRepository = UserConfigRepositoryImpl(
+      userConfigDataSource: UserConfigDataSourceImpl(),
+    );
     final categoryModel = CategoryRepositoryImpl(
       categoryDataSource: CategoryDataSourceImpl(),
     ).getDatabase();

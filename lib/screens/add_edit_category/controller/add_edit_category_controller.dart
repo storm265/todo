@@ -9,7 +9,7 @@ import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
-// TODO split it
+// TODO use SRP
 class AddEditCategoryController extends ChangeNotifier {
   final isDisabledAddCategoryButton = ValueNotifier<bool>(false);
   final imageFile = ValueNotifier(File(''));
