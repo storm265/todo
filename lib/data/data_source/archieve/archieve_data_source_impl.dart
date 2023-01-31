@@ -4,16 +4,15 @@ import 'package:todo/data/database/db_sheme.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 
 class ArchieveDataSourceImpl implements ArchieveDataSource {
-  final _archieveDatabase = Hive.box<ArchieveModel>(DbScheme.archieve);
-
   @override
-  Box<ArchieveModel> getDatabase() => _archieveDatabase;
+  Box<ArchieveModel> getDatabase() =>
+      Hive.box<ArchieveModel>(DbScheme.archieve);
 
   @override
   Future<void> save(ArchieveModel model) async =>
-      await _archieveDatabase.add(model);
+      await Hive.box<ArchieveModel>(DbScheme.archieve).add(model);
 
   @override
   Future<void> delete(int index) async =>
-      await _archieveDatabase.deleteAt(index);
+      await Hive.box<ArchieveModel>(DbScheme.archieve).deleteAt(index);
 }

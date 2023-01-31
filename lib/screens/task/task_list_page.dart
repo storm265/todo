@@ -48,7 +48,8 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => await TaskListOptionsDialog.showOptionsDialog(
+        onPressed: () async =>
+         await TaskListOptionsDialog.showOptionsDialog(
           buildContext: context,
           taskListController: _taskListController,
         ),
