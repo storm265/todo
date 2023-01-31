@@ -97,16 +97,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   return OutlinedButton.icon(
                     onPressed: _addTaskController.isSubmitActive.value
                         ? () async {
-                            // TODO finish
-                            // await _addTaskController.validateForm(
-                            //   context: context,
-                            //   callback: () => _addTaskController.createTask(
-                            //     categoryTitle: widget.model.category,
-                            //     context: context,
-                            //     title: _titleTextController.text,
-                            //   ),
-                            //   formKey: _formKey,
-                            // );
+                            await _addTaskController.validateForm(
+                              context: context,
+                              callback: () => _addTaskController.createTask(
+                                context: context,
+                                title: _titleTextController.text,
+                              ),
+                              formKey: _formKey,
+                            );
                           }
                         : null,
                     icon: const Icon(Icons.save),

@@ -12,22 +12,27 @@ class AddTaskController extends TaskController {
   });
 
   Future<void> createTask({
-    required String categoryTitle,
     required BuildContext context,
     required String title,
-  }) async =>
-      await tasksRepository
-          .saveTask(
-            TaskModel(
-              id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
-              isDone: false,
-              category: categoryTitle,
-              creationDate: DateTime.now(),
-              text: title,
-              deadlineDateTime: convertedDateTime!,
-            ),
-          )
-          .then(
-            (_) => showMessage(context, 'Task added😊 🚀.'),
-          );
+  }) async {
+    final categoryTitle = categoryRepository
+        .getDatabase()
+        .getAt(selectedCategoryIndex.value)!
+        .title;
+
+    await tasksRepository
+        .saveTask(
+          TaskModel(
+            id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
+            isDone: false,
+            category: categoryTitle,
+            creationDate: DateTime.now(),
+            text: title,
+            deadlineDateTime: convertedDateTime!,
+          ),
+        )
+        .then(
+          (_) => showMessage(context, 'Task added😊 🚀.'),
+        );
+  }
 }
