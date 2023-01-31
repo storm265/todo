@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:todo/service/close_keyboard.dart';
 import 'package:todo/service/common/category_index_provider.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/data/repository/archieve_repository.dart';
+import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
@@ -18,7 +18,7 @@ class AddEditTaskController extends ChangeNotifier {
   AddEditTaskController({
     required TasksRepositoryImpl tasksRepository,
     required CategoryIndexProvider categoryIndexerProvider,
-    required ArchieveRepositoryImpl archieveRepository,
+    required ArchieveRepository archieveRepository,
   })  : _tasksRepository = tasksRepository,
         _categoryIndexerProvider = categoryIndexerProvider;
 

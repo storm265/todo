@@ -3,11 +3,13 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:timelines/timelines.dart';
+import 'package:todo/data/data_source/archieve/archieve_data_source_impl.dart';
+import 'package:todo/data/repository/archieve/archieve_repository_impl.dart';
 import 'package:todo/service/common/category_finder.dart';
 import 'package:todo/service/common/category_index_provider.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/data/repository/archieve_repository.dart';
+import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/tasks_repository.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
 import 'package:todo/screens/task/widgets/task_body/connectors/connector_not_done_widget.dart';
@@ -89,8 +91,10 @@ class TaskList extends StatelessWidget {
                             SlidableAction(
                               flex: 2,
                               onPressed: (_) async {
-                                // remove
-                                await ArchieveRepositoryImpl().database.add(
+                                // TODO remove it
+                                await ArchieveRepositoryImpl(
+                                  archieveDataSource: ArchieveDataSourceImpl(),
+                                ).getDatabase().add(
                                       ArchieveModel(
                                         category: task.category,
                                         text: task.text,

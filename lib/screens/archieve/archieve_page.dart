@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:todo/data/repository/archieve_repository.dart';
+import 'package:todo/data/data_source/archieve/archieve_data_source_impl.dart';
+import 'package:todo/data/repository/archieve/archieve_repository_impl.dart';
+import 'package:todo/screens/archieve/archieve_controller.dart';
 import 'package:todo/screens/archieve/widgets/archieve_body_widget.dart';
 import 'package:todo/screens/archieve/widgets/dismiss_style_widget.dart';
 import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
 
-// TODO create controller
 class ArchievePage extends StatefulWidget {
   const ArchievePage({Key? key}) : super(key: key);
 
@@ -13,7 +14,11 @@ class ArchievePage extends StatefulWidget {
 }
 
 class _ArchievePageState extends State<ArchievePage> {
-  final _categoryBox = ArchieveRepositoryImpl().database;
+  final _archieveController = ArchieveController(
+    archieveRepository: ArchieveRepositoryImpl(
+      archieveDataSource: ArchieveDataSourceImpl(),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +30,16 @@ class _ArchievePageState extends State<ArchievePage> {
       ),
       body: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: _categoryBox.length,
+          itemCount: _archieveController.getDatabase().length,
           itemBuilder: (context, index) {
-            final archieveModel = _categoryBox.getAt(index);
+            final archieveModel =
+                _archieveController.getDatabase().getAt(index);
 
             return Dismissible(
               onDismissed: (direction) async {
                 if (direction == DismissDirection.endToStart) {
-                  await _categoryBox
-                      .deleteAt(index)
+                  await _archieveController
+                      .deleteItem(index: index)
                       .then((_) => setState(() {}));
                 }
               },
