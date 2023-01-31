@@ -1,25 +1,30 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/data/model/category/category_model.dart';
+import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/service/close_keyboard.dart';
 import 'package:todo/service/common/category_index_provider.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
-import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/data/repository/tasks_repository.dart';
+import 'package:todo/data/repository/task/tasks_repository.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
 class AddEditTaskController extends ChangeNotifier {
-  final TasksRepositoryImpl _tasksRepository;
+  final TasksRepository _tasksRepository;
 
   final CategoryIndexProvider _categoryIndexerProvider;
+  final CategoryRepository _categoryRepository;
 
   AddEditTaskController({
-    required TasksRepositoryImpl tasksRepository,
+    required TasksRepository tasksRepository,
     required CategoryIndexProvider categoryIndexerProvider,
     required ArchieveRepository archieveRepository,
+    required CategoryRepository categoryRepository,
   })  : _tasksRepository = tasksRepository,
+        _categoryRepository = categoryRepository,
         _categoryIndexerProvider = categoryIndexerProvider;
 
   final titleTextController = TextEditingController();
@@ -29,7 +34,8 @@ class AddEditTaskController extends ChangeNotifier {
   final isAddButtonActive = ValueNotifier<bool>(true);
 
   final selectedCategory = ValueNotifier<int>(0);
-  final _categoryBox = CategoryRepositoryImpl().database;
+
+  Box<CategoryModel> getCategoryBox() => _categoryRepository.getDatabase();
 
   DateTime? convertedDateTime;
   final pickedDate = ValueNotifier<DateTime?>(DateTime.now());
@@ -70,13 +76,14 @@ class AddEditTaskController extends ChangeNotifier {
       if (isEdit) {
         await editData(
             context: context,
-            selectedCategory: _categoryBox.getAt(selectedCategory.value)!.title,
+            selectedCategory:
+                getCategoryBox().getAt(selectedCategory.value)!.title,
             index: index);
       } else {
         await saveData(
             context: context,
             selectedCategory:
-                _categoryBox.getAt(selectedCategory.value)!.title);
+                getCategoryBox().getAt(selectedCategory.value)!.title);
       }
     } else {
       showMessage(context, 'You cant create task is past!');
@@ -110,7 +117,8 @@ class AddEditTaskController extends ChangeNotifier {
     required int index,
     required BuildContext context,
   }) async {
-    await _tasksRepository.database
+    await _tasksRepository
+        .getDatabase()
         .putAt(
           index,
           TaskModel(

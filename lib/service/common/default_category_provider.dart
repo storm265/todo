@@ -1,5 +1,6 @@
+import 'package:todo/data/data_source/category/category_data_source_impl.dart';
 import 'package:todo/data/model/category/category_model.dart';
-import 'package:todo/data/repository/category_repository.dart';
+import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/data/repository/config_repository.dart';
 
 String get _assetsPath => 'assets/defaultCategoryIcons/';
@@ -15,7 +16,9 @@ class DefaultCategoryProvider {
 
   static Future<void> fillDefaultCategory() async {
     final configRepository = FirstTimeVisitRepositoryImpl();
-    final categoryModel = CategoryRepositoryImpl().database;
+    final categoryModel =
+        CategoryRepositoryImpl(categoryDataSource: CategoryDataSourceImpl())
+            .getDatabase();
     await configRepository.openConfigBox();
 
     if (await configRepository.getIsFirstTime()) {

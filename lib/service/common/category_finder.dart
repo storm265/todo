@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:todo/data/data_source/category/category_data_source_impl.dart';
 
-import 'package:todo/data/repository/category_repository.dart';
+import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/routes/delayed_navigator_extension.dart';
 import 'package:todo/routes/routers.dart';
 import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
 
+// TODO remove it
 class CategoryFinder {
-  final _categoryIsNotEmpty = CategoryRepositoryImpl().database.isNotEmpty;
+  final _categoryIsNotEmpty =
+      CategoryRepositoryImpl(categoryDataSource: CategoryDataSourceImpl())
+          .getDatabase()
+          .isNotEmpty;
   void checkCategoryIsNotEmpty(BuildContext context, int i) async {
     if (_categoryIsNotEmpty) {
       await Routers.toAddEditTaskPage(context, i, true);

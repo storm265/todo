@@ -1,9 +1,17 @@
-import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/data/repository/tasks_repository.dart';
+import 'package:todo/data/data_source/category/category_data_source_impl.dart';
+import 'package:todo/data/data_source/tasks/tasks_data_source_impl.dart';
+import 'package:todo/data/repository/category/category_repository_impl.dart';
+import 'package:todo/data/repository/task/tasks_repository_impl.dart';
+
+// TODO remove it
 
 class CategoryListController {
-  final _taskRepository = TasksRepositoryImpl().database;
-  final categoryBox = CategoryRepositoryImpl().database;
+  final _taskRepository = TasksRepositoryImpl(
+    tasksDataSource: TasksDataSourceImpl(),
+  ).getDatabase();
+  final categoryBox =
+      CategoryRepositoryImpl(categoryDataSource: CategoryDataSourceImpl())
+          .getDatabase();
 
   int getCategoriesLength(int index) {
     final taskBox = _taskRepository;

@@ -1,12 +1,64 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/data/model/archieve/archieve_db.dart';
+import 'package:todo/data/model/tasks/task_model.dart';
+import 'package:todo/data/repository/archieve/archieve_repository.dart';
+import 'package:todo/service/common/category_finder.dart';
+import 'package:todo/service/common/category_index_provider.dart';
+
+import '../../../data/repository/task/tasks_repository.dart';
 
 class TaskListController {
+  final CategoryFinder categoryFinder;
+  final CategoryIndexProvider _categoryIndexProvider;
+  final TasksRepository _taskRepository;
+  final ArchieveRepository archieveRepository;
+
+  TaskListController({
+    required this.categoryFinder,
+    required TasksRepository taskRepository,
+    required CategoryIndexProvider categoryIndexProvider,
+    required this.archieveRepository,
+  })  : _taskRepository = taskRepository,
+        _categoryIndexProvider = categoryIndexProvider;
+
+  Box<TaskModel> getTaskDataBase() => _taskRepository.getDatabase();
+
   final selectedDate = ValueNotifier(DateTime.now());
 
   final pageController = PageController(viewportFraction: 0.18);
   final calendar = ValueNotifier<List<DateTime>>([]);
+
+  Future<void> markTaskAsDone({
+    required TaskModel task,
+    required int index,
+  }) async {
+    await getTaskDataBase().putAt(
+      index,
+      TaskModel(
+        id: _categoryIndexProvider.getCategoryIndex(task.category),
+        creationDate: task.creationDate,
+        deadlineDateTime: task.deadlineDateTime,
+        text: task.text,
+        category: task.category,
+        isDone: true,
+      ),
+    );
+  }
+
+  Future<void> pushTaskToArchieve({required TaskModel task}) async =>
+      await archieveRepository.save(
+        ArchieveModel(
+          category: task.category,
+          text: task.text,
+          deadlineDateTime: task.deadlineDateTime,
+        ),
+      );
+
+  Future<void> deleteTask({required int index}) async =>
+      await _taskRepository.deleteTask(index);
 
   void generateCalendarElements() {
     calendar.value = List.generate(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:todo/data/data_source/category/category_data_source_impl.dart';
+import 'package:todo/data/data_source/tasks/tasks_data_source_impl.dart';
+import 'package:todo/data/repository/task/tasks_repository_impl.dart';
 import 'package:todo/service/global_controller.dart';
 import 'package:todo/screens/add_edit_task/controller/edit_controller.dart';
-import 'package:todo/data/repository/category_repository.dart';
-import 'package:todo/data/repository/tasks_repository.dart';
+import 'package:todo/data/repository/category/category_repository_impl.dart';
+import 'package:todo/data/repository/task/tasks_repository.dart';
 import 'package:todo/screens/add_edit_task/widgets/category_list_widget.dart';
 import 'package:todo/screens/add_edit_task/widgets/textfield.dart';
 import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
@@ -23,8 +26,12 @@ class AddEditTaskPage extends StatefulWidget {
 
 class _AddEditTaskPageState extends State<AddEditTaskPage> {
   final _editTaskController = EditTaskController(
-    categoryRepositoryImpl: CategoryRepositoryImpl(),
-    tasksRepositoryImpl: TasksRepositoryImpl(),
+    categoryRepositoryImpl: CategoryRepositoryImpl(
+      categoryDataSource: CategoryDataSourceImpl(),
+    ),
+    tasksRepositoryImpl: TasksRepositoryImpl(
+      tasksDataSource: TasksDataSourceImpl(),
+    ),
   );
 
   @override
