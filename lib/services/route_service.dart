@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/screens/add_edit_task/edit_task_page/edit_task_page.dart';
+import 'package:todo/screens/add_edit_task/edit_task/edit_task_page.dart';
 import 'package:todo/screens/archieve/archieve_page.dart';
 import 'package:todo/screens/add_edit_category/add_edit_category_page.dart';
 import 'package:todo/screens/add_edit_task/add_task/add_task_page.dart';

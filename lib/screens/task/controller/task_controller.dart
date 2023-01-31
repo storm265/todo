@@ -14,19 +14,19 @@ import 'package:todo/data/repository/task/tasks_repository.dart';
 import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 
 class TaskController extends ChangeNotifier {
-  final TaskValidator _taskValidator;
+  final TaskValidator taskValidator;
   final TasksRepository tasksRepository;
 
   final CategoryIndexProvider categoryIndexerProvider;
   final CategoryRepository categoryRepository;
 
   TaskController({
-    required TaskValidator taskValidator,
+    required this.taskValidator,
     required this.tasksRepository,
     required this.categoryIndexerProvider,
     required ArchieveRepository archieveRepository,
     required this.categoryRepository,
-  }) : _taskValidator = taskValidator;
+  });
 
   final isSubmitActive = ValueNotifier<bool>(true);
 
@@ -51,18 +51,20 @@ class TaskController extends ChangeNotifier {
     required GlobalKey<FormState> formKey,
   }) async {
     await changeIsDisabledButton(false);
-    convertedDateTime = DateTime.utc(
-      pickedDate.value!.year,
-      pickedDate.value!.month,
-      pickedDate.value!.day,
-      pickedTime.value!.hour,
-      pickedTime.value!.minute,
-    );
-    if (_taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
-      await callback();
-      Navigator.pop(context);
-    } else {
-      showMessage(context, 'You cant create task is past!');
+    if (formKey.currentState!.validate()) {
+      convertedDateTime = DateTime.utc(
+        pickedDate.value!.year,
+        pickedDate.value!.month,
+        pickedDate.value!.day,
+        pickedTime.value!.hour,
+        pickedTime.value!.minute,
+      );
+      if (taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
+        await callback();
+        Navigator.pop(context);
+      } else {
+        showMessage(context, 'You cant create task is past!');
+      }
     }
     await changeIsDisabledButton(true);
   }
