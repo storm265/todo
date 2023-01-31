@@ -9,7 +9,8 @@ import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 
-// TODO use SRP
+// TODO fix with SRP
+
 class AddEditCategoryController extends ChangeNotifier {
   final isDisabledAddCategoryButton = ValueNotifier<bool>(false);
   final imageFile = ValueNotifier(File(''));
@@ -32,6 +33,7 @@ class AddEditCategoryController extends ChangeNotifier {
     isDisabledAddCategoryButton.value = isActive;
   }
 
+// TODO create validator class
   Future<void> tryValidate(
     bool isEdit,
     BuildContext context,
