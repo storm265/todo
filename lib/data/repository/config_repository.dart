@@ -5,9 +5,14 @@ abstract class FirstTimeVisitRepository {
   Future<Box> openConfigBox();
   Future<bool> getIsFirstTime();
   Future<void> putIsFirstTime(bool value);
+  Future<void> closeBox();
 }
 
 class FirstTimeVisitRepositoryImpl implements FirstTimeVisitRepository {
+  
+  @override
+  Future<void> closeBox() async => await Hive.close();
+
   @override
   Future<Box> openConfigBox() async => await Hive.openBox(DbScheme.config);
 

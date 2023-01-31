@@ -3,9 +3,8 @@ import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/data/repository/config_repository.dart';
 
-String get _assetsPath => 'assets/defaultCategoryIcons/';
-
 class DefaultCategoryProvider {
+  static String get _assetsPath => 'assets/defaultCategoryIcons/';
   static const List<String> _categoryTitles = [
     'Event',
     'Personal',
@@ -16,9 +15,9 @@ class DefaultCategoryProvider {
 
   static Future<void> fillDefaultCategory() async {
     final configRepository = FirstTimeVisitRepositoryImpl();
-    final categoryModel =
-        CategoryRepositoryImpl(categoryDataSource: CategoryDataSourceImpl())
-            .getDatabase();
+    final categoryModel = CategoryRepositoryImpl(
+      categoryDataSource: CategoryDataSourceImpl(),
+    ).getDatabase();
     await configRepository.openConfigBox();
 
     if (await configRepository.getIsFirstTime()) {
@@ -33,5 +32,6 @@ class DefaultCategoryProvider {
       }
     }
     await configRepository.putIsFirstTime(false);
+    await configRepository.closeBox();
   }
 }
