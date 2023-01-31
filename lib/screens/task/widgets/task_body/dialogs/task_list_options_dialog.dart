@@ -17,18 +17,21 @@ class TaskListOptionsDialog {
             title: const Text('Chose option'),
             actions: [
               TaskListDialogButton(
-                icon: Icons.add_task_outlined,
-                text: 'Add task',
-                method: () => taskListController.isNotEmptyCategory(context)
-                    ? RouteService.toAddTaskPage(context)
-                    : null,
-              ),
+                  icon: Icons.add_task_outlined,
+                  text: 'Add task',
+                  method: () async {
+                    Navigator.pop(context);
+                    taskListController.isNotEmptyCategory(context)
+                        ? await RouteService.toAddTaskPage(context)
+                        : null;
+                  }),
               TaskListDialogButton(
-                icon: Icons.post_add_outlined,
-                text: 'Add category',
-                method: () async =>
-                    await RouteService.toAddEditCategoryPage(context, 0, false),
-              )
+                  icon: Icons.post_add_outlined,
+                  text: 'Add category',
+                  method: () async {
+                    Navigator.pop(context);
+                    await RouteService.toAddEditCategoryPage(context, 0, false);
+                  })
             ],
           );
         },
