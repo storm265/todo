@@ -4,7 +4,7 @@ import 'package:todo/data/repository/archieve/archieve_repository_impl.dart';
 import 'package:todo/screens/archieve/archieve_controller.dart';
 import 'package:todo/screens/archieve/widgets/archieve_body_widget.dart';
 import 'package:todo/screens/archieve/widgets/dismiss_style_widget.dart';
-import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
+import 'package:todo/screens/widgets/custom_app_bar_widget.dart';
 
 class ArchievePage extends StatefulWidget {
   const ArchievePage({Key? key}) : super(key: key);

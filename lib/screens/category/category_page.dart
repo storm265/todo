@@ -5,7 +5,7 @@ import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/screens/category/controller/category_list_controller.dart';
 import 'package:todo/screens/category/widgets/category_card_widget.dart';
-import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
+import 'package:todo/screens/widgets/custom_app_bar_widget.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);

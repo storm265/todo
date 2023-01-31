@@ -7,7 +7,7 @@ import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/screens/common_widgets/custom_snackbar_widget.dart';
+import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 
 class TaskListController {

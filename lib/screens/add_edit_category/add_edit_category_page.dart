@@ -4,8 +4,8 @@ import 'package:todo/data/data_source/category/category_data_source_impl.dart';
 import 'package:todo/screens/add_edit_category/controller/add_edit_category_controller.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/screens/add_edit_category/widgets/textfield_widget.dart';
-import 'package:todo/screens/common_widgets/custom_app_bar_widget.dart';
-import 'package:todo/screens/common_widgets/unfocus_widget.dart';
+import 'package:todo/screens/widgets/custom_app_bar_widget.dart';
+import 'package:todo/screens/widgets/unfocus_widget.dart';
 
 // TODO fix with SRP
 class AddCategoryPage extends StatefulWidget {
