@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:todo/services/route_service.dart';
-import 'package:todo/screens/task/controller/task_list_controller.dart';
-import 'package:todo/screens/task/widgets/task_body/dialogs/dialog_button.dart';
+import 'package:todo/screens/task_list/controller/task_list_controller.dart';
+import 'package:todo/screens/task_list/widgets/task_body/dialogs/dialog_button.dart';
 
 class TaskListOptionsDialog {
   static Future<void> showOptionsDialog({

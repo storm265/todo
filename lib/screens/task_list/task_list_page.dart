@@ -5,14 +5,14 @@ import 'package:todo/data/data_source/tasks/tasks_data_source_impl.dart';
 import 'package:todo/data/repository/archieve/archieve_repository_impl.dart';
 import 'package:todo/data/repository/category/category_repository_impl.dart';
 import 'package:todo/data/repository/task/tasks_repository_impl.dart';
-import 'package:todo/screens/task/controller/task_list_controller.dart';
+import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/screens/widgets/drawer_widget.dart';
-import 'package:todo/screens/task/widgets/current_date_widget.dart';
-import 'package:todo/screens/task/widgets/day_line_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
-import 'package:todo/screens/task/widgets/schedule_appbar_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/dialogs/task_list_options_dialog.dart';
-import 'package:todo/screens/task/widgets/tasks_list.dart';
+import 'package:todo/screens/task_list/widgets/current_date_widget.dart';
+import 'package:todo/screens/task_list/widgets/day_line_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/body/gradient_boxes.dart';
+import 'package:todo/screens/task_list/widgets/schedule_appbar_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/dialogs/task_list_options_dialog.dart';
+import 'package:todo/screens/task_list/widgets/tasks_list.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -48,8 +48,7 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () async =>
-         await TaskListOptionsDialog.showOptionsDialog(
+        onPressed: () async => await TaskListOptionsDialog.showOptionsDialog(
           buildContext: context,
           taskListController: _taskListController,
         ),

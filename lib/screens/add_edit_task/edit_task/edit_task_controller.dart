@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/screens/task/controller/task_controller.dart';
+import 'package:todo/screens/task_list/controller/task_controller.dart';
 import 'package:todo/data/model/category/category_model.dart';
 
 class EditTaskController extends TaskController {
@@ -19,8 +19,8 @@ class EditTaskController extends TaskController {
     required String title,
     required int index,
     required BuildContext context,
-  }) async =>
-      await tasksRepository
+  }) =>
+      tasksRepository
           .updateTask(
             index: index,
             model: TaskModel(
@@ -56,7 +56,6 @@ class EditTaskController extends TaskController {
     titleTextController.text = taskBox.text;
 
     selectedCategoryIndex.value = getCategoryIndex(index);
-
   }
 
   int getCategoryIndex(int index) {

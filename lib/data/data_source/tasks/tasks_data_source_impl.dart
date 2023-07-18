@@ -1,10 +1,10 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/data/data_source/tasks/task_data_source.dart';
-import 'package:todo/data/database/db_sheme.dart';
+import 'package:todo/data/database/storage_sheme.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 
 class TasksDataSourceImpl implements TasksDataSource {
-  final _taskDatabase = Hive.box<TaskModel>(DbScheme.tasks);
+  final _taskDatabase = Hive.box<TaskModel>(StorageScheme.tasks);
 
   @override
   Box<TaskModel> getDatabase() => _taskDatabase;

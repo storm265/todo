@@ -10,7 +10,7 @@ import 'package:todo/screens/add_edit_task/add_task/widgets/category_list_widget
 import 'package:todo/screens/add_edit_task/add_task/widgets/textfield_widget.dart';
 import 'package:todo/screens/widgets/custom_app_bar_widget.dart';
 import 'package:todo/screens/widgets/unfocus_widget.dart';
-import 'package:todo/screens/task/controller/task_validator.dart';
+import 'package:todo/screens/task_list/controller/task_validator.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   hintText: 'Finish date:',
                 ),
                 OutlinedButton.icon(
-                  onPressed: () async => await _addTaskController.pickDate(
+                  onPressed: () => _addTaskController.pickDate(
                     context: context,
                     dateTextController: _dateTextController,
                   ),
@@ -93,7 +93,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   hintText: 'Finish time:',
                 ),
                 OutlinedButton.icon(
-                  onPressed: () async => await _addTaskController.pickTime(
+                  onPressed: () => _addTaskController.pickTime(
                       timeTextController: _timeTextController,
                       context: context),
                   icon: const Icon(Icons.schedule_outlined),

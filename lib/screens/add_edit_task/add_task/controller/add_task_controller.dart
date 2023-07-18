@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/screens/task/controller/task_controller.dart';
+import 'package:todo/screens/task_list/controller/task_controller.dart';
 
 class AddTaskController extends TaskController {
   AddTaskController({

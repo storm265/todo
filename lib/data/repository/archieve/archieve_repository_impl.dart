@@ -9,12 +9,10 @@ class ArchieveRepositoryImpl implements ArchieveRepository {
       : _archieveDataSource = archieveDataSource;
 
   @override
-  Future<void> save(ArchieveModel model) async =>
-      await _archieveDataSource.save(model);
+  Future<void> save(ArchieveModel model) => _archieveDataSource.save(model);
 
   @override
-  Future<void> delete(int index) async =>
-      await _archieveDataSource.delete(index);
+  Future<void> delete(int index) => _archieveDataSource.delete(index);
 
   @override
   Box<ArchieveModel> getDatabase() => _archieveDataSource.getDatabase();

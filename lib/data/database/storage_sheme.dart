@@ -1,4 +1,4 @@
-class DbScheme {
+class StorageScheme {
   static const tasks = 'tasks';
   static const categories = 'categories';
   static const archieve = 'archieve';

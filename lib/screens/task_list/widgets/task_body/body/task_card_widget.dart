@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/screens/task/widgets/task_body/body/gradient_boxes.dart';
+import 'package:todo/screens/task_list/widgets/task_body/body/gradient_boxes.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final TaskModel taskModel;

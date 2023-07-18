@@ -9,17 +9,15 @@ class UserConfigRepositoryImpl implements UserConfigRepository {
       : _userConfigDataSource = userConfigDataSource;
 
   @override
-  Future<void> closeBox() async => await _userConfigDataSource.closeBox();
+  Future<void> closeBox() => _userConfigDataSource.closeBox();
 
   @override
-  Future<Box> openConfigBox() async =>
-      await _userConfigDataSource.openConfigBox();
+  Future<Box> openConfigBox() => _userConfigDataSource.openConfigBox();
 
   @override
-  Future<bool> getIsFirstTime() async =>
-      await _userConfigDataSource.getIsFirstTime();
+  Future<bool> getIsFirstTime() => _userConfigDataSource.getIsFirstTime();
 
   @override
-  Future<void> putIsFirstTime(bool value) async =>
-      await _userConfigDataSource.putIsFirstTime(value);
+  Future<void> putIsFirstTime(bool value) =>
+      _userConfigDataSource.putIsFirstTime(value);
 }

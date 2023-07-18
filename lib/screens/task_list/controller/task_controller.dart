@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:todo/utils/future_type.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
-import 'package:todo/screens/task/controller/task_validator.dart';
+import 'package:todo/screens/task_list/controller/task_validator.dart';
 import 'package:todo/services/common/close_keyboard.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:todo/data/data_source/archieve/archieve_data_source_impl.dart';
 import 'package:todo/data/data_source/category/category_data_source_impl.dart';
@@ -13,7 +11,7 @@ import 'package:todo/screens/add_edit_task/add_task/widgets/category_list_widget
 import 'package:todo/screens/add_edit_task/add_task/widgets/textfield_widget.dart';
 import 'package:todo/screens/widgets/custom_app_bar_widget.dart';
 import 'package:todo/screens/widgets/unfocus_widget.dart';
-import 'package:todo/screens/task/controller/task_validator.dart';
+import 'package:todo/screens/task_list/controller/task_validator.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 
 class EditTaskPage extends StatefulWidget {
@@ -59,7 +57,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
       dateTextController: _dateTextController,
       titleTextController: _titleTextController,
     );
- 
+
     super.initState();
   }
 
@@ -114,7 +112,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
                   hintText: 'Finish time:',
                 ),
                 OutlinedButton.icon(
-                  onPressed: () async => await _editTaskController.pickTime(
+                  onPressed: () => _editTaskController.pickTime(
                       timeTextController: _timeTextController,
                       context: context),
                   icon: const Icon(Icons.schedule_outlined),
@@ -131,8 +129,8 @@ class _EditTaskPageState extends State<EditTaskPage> {
                           ? () {
                               _editTaskController.validateForm(
                                   context: context,
-                                  callback: () =>
-                                      _editTaskController.updateTask(
+                                  callback: () async =>
+                                      await _editTaskController.updateTask(
                                         selectedCategory: widget.model.category,
                                         title: _titleTextController.text,
                                         index: widget.taskIndex,

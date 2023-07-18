@@ -4,13 +4,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:timelines/timelines.dart';
 import 'package:todo/services/route_service.dart';
-import 'package:todo/screens/task/controller/task_list_controller.dart';
+import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/screens/task/widgets/task_body/connectors/connector_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/connectors/connector_not_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/icons/icon_not_done_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/body/task_card_widget.dart';
-import 'package:todo/screens/task/widgets/task_body/icons/icon_done_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/connectors/connector_done_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/connectors/connector_not_done_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/icons/icon_not_done_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/body/task_card_widget.dart';
+import 'package:todo/screens/task_list/widgets/task_body/icons/icon_done_widget.dart';
 
 class TaskList extends StatelessWidget {
   final TaskListController taskListController;

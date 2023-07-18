@@ -12,10 +12,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Box<CategoryModel> getDatabase() => _categoryDataSource.getDatabase();
 
   @override
-  Future<void> save(CategoryModel model) async =>
-      await _categoryDataSource.save(model);
+  Future<void> save(CategoryModel model) => _categoryDataSource.save(model);
 
   @override
-  Future<void> delete(int index) async =>
-      await _categoryDataSource.delete(index);
+  Future<void> delete(int index) => _categoryDataSource.delete(index);
 }

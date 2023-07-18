@@ -13,19 +13,17 @@ class TasksRepositoryImpl implements TasksRepository {
   Box<TaskModel> getDatabase() => _tasksDataSource.getDatabase();
 
   @override
-  Future<void> saveTask(TaskModel model) async =>
-      await _tasksDataSource.saveTask(model);
+  Future<void> saveTask(TaskModel model) => _tasksDataSource.saveTask(model);
 
   @override
-  Future<void> deleteTask(int index) async =>
-      await _tasksDataSource.deleteTask(index);
+  Future<void> deleteTask(int index) => _tasksDataSource.deleteTask(index);
 
   @override
   Future<void> updateTask({
     required int index,
     required TaskModel model,
-  }) async =>
-      await _tasksDataSource.updateTask(
+  }) =>
+      _tasksDataSource.updateTask(
         index: index,
         model: model,
       );
