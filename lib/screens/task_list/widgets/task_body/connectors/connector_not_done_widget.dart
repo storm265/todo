@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timelines/timelines.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 
 class ConnectorNotDoneWidget extends StatelessWidget {
   const ConnectorNotDoneWidget({super.key});

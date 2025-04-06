@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:timelines/timelines.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task_list/widgets/task_body/connectors/connector_done_widget.dart';
