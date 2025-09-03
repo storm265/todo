@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:todo/screens/settings/pick_gradient/select_gradient_item_cubit.dart';
 import 'package:todo/screens/settings/state/theme_controller.dart';
 import 'package:todo/services/common/default_category_provider.dart';
 import 'package:todo/data/database/local_storage_initializer.dart';
@@ -8,6 +9,7 @@ import 'package:todo/services/locator_service.dart';
 import 'package:todo/services/route_service/route_service.dart';
 
 final themeController = ThemeController();
+ final pickAvatarController = SelectGradientItemCubit();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(

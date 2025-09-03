@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:todo/main.dart';
 import 'package:todo/screens/settings/widgets/settings_item_widget.dart';
+import 'package:todo/services/route_service/route_service.gr.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -19,7 +21,7 @@ class SettingsPage extends StatelessWidget {
       child: SafeArea(
         left: false,
         right: false,
-        child: ListView(
+        child: Column(
           children: [
             SettingsItemWidget(
               leadingIcon: Icons.dark_mode,
@@ -36,6 +38,14 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ),
+            SettingsItemWidget(
+              leadingIcon: Icons.color_lens,
+              title: 'Calendar Color',
+              onTap: () async => await AutoRouter.of(context).push(
+                PickGradientRoute(),
+              ),
+            ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(

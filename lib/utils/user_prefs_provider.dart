@@ -14,4 +14,17 @@ class UserPrefsProvider {
     final prefs = (await _sharedPrefs);
     await prefs.setBool('isLigthMode', isLigthMode);
   }
+
+  // picked gradient
+
+  static Future<String?> getCurrentGradient() async {
+    final prefs = (await _sharedPrefs);
+    return prefs.getString('currentGradient');
+  }
+
+  static Future<void> saveCurrentGradient(
+      {required String gradientTitle}) async {
+    final prefs = (await _sharedPrefs);
+    await prefs.setString('currentGradient', gradientTitle);
+  }
 }

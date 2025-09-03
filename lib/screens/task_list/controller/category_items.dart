@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum CategoryItems {
   categories('Categories'),
   archive('Archive'),
-  themes('Themes');
+  settings('Settings');
 
   const CategoryItems(this.type);
   final String type;

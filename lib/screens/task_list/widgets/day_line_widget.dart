@@ -19,14 +19,15 @@ class DayLineWidget extends StatefulWidget {
 class _DayLineWidgetState extends State<DayLineWidget> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: widget.taskListController.calendar,
-      builder: (__, calendarList, _) => ConstrainedBox(
-        constraints: const BoxConstraints(
-          minHeight: 80,
-          maxHeight: 140,
-        ),
-        child: PageView.builder(
+    final mediaQ = MediaQuery.sizeOf(context);
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: mediaQ.height * 0.080,
+        maxHeight: mediaQ.height * 0.140,
+      ),
+      child: ValueListenableBuilder(
+        valueListenable: widget.taskListController.calendar,
+        builder: (__, calendarList, _) => PageView.builder(
           controller: widget.taskListController.pageController,
           itemCount: calendarList.length,
           scrollDirection: Axis.horizontal,

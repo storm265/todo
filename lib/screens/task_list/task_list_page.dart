@@ -11,7 +11,6 @@ import 'package:todo/main.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/screens/task_list/widgets/current_date_widget.dart';
 import 'package:todo/screens/task_list/widgets/day_line_widget.dart';
-import 'package:todo/screens/task_list/widgets/task_body/body/gradient_boxes.dart';
 import 'package:todo/screens/task_list/widgets/schedule_top_widget.dart';
 import 'package:todo/screens/task_list/widgets/task_body/dialogs/task_list_options_dialog.dart';
 import 'package:todo/screens/task_list/widgets/tasks_list.dart';
@@ -52,12 +51,23 @@ class _TaskListPageState extends State<TaskListPage> {
           children: [
             Column(
               children: [
-                ValueListenableBuilder<CupertinoThemeData>(
-                  valueListenable: themeController.currentTheme,
-                  builder: (context, theme, _) => Container(
-                    decoration: theme.brightness == Brightness.dark
-                        ? BodyColors.schreduleBodyDark
-                        : BodyColors.schreduleBodyLight,
+                ValueListenableBuilder<MapEntry>(
+                  valueListenable: pickAvatarController.selectedGradient,
+                  builder: (context, selectedGradient, _) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                        )
+                      ],
+                      gradient: LinearGradient(
+                        colors: selectedGradient.value,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
                     child: Column(
                       children: <Widget>[
                         const ScheduleTopWidget(),
