@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-enum DrawerItems {
+enum CategoryItems {
   categories('Categories'),
-  archive('Archive');
-//  themes('Themes');
+  archive('Archive'),
+  themes('Themes');
 
-  const DrawerItems(this.type);
+  const CategoryItems(this.type);
   final String type;
 }
 
 const drawerIcons = [
   Icons.category_sharp,
   Icons.archive,
-  // Icons.topic,
+  Icons.settings,
 ];

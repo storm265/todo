@@ -13,7 +13,7 @@ class TaskCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         width: 250,
         height: 85,
@@ -31,7 +31,8 @@ class TaskCardWidget extends StatelessWidget {
               maxLines: 2,
               style: TextStyle(
                 color: taskModel.isDone ? Colors.white : Colors.black87,
-                fontSize: 18,
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -39,8 +40,8 @@ class TaskCardWidget extends StatelessWidget {
               taskModel.category,
               style: TextStyle(
                 color: taskModel.isDone ? Colors.white : Colors.black87,
-                fontWeight: FontWeight.w300,
-                fontSize: 20,
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
               ),
             ),
           ],

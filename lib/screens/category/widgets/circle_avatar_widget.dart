@@ -12,7 +12,7 @@ class CircleAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
         backgroundColor: Colors.white,
-        radius: 22,
+        radius: 24,
         backgroundImage: ((imgPath.startsWith('assets')))
             ? (AssetImage(imgPath))
             : FileImage(File(imgPath)) as ImageProvider);

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/screens/task_list/widgets/task_body/dialogs/dialog_button.dart';
 import 'package:todo/services/route_service/route_service.gr.dart';
@@ -10,11 +10,11 @@ class TaskListOptionsDialog {
     required BuildContext buildContext,
     required TaskListController taskListController,
   }) async =>
-      await showDialog(
-        barrierColor: Colors.black54,
+      await showCupertinoDialog(
+        barrierDismissible: true,
         context: buildContext,
         builder: (context) {
-          return PlatformAlertDialog(
+          return CupertinoAlertDialog(
             title: const Text('Chose option'),
             actions: [
               TaskListDialogButton(
@@ -22,7 +22,7 @@ class TaskListOptionsDialog {
                   text: 'Add task',
                   onPressCallback: () async {
                     Navigator.pop(context);
-                    taskListController.isNotEmptyCategory(context)
+                    await taskListController.isNotEmptyCategory(context)
                         ? await AutoRouter.of(context)
                             .push(const AddTaskRoute())
                         : null;
@@ -35,6 +35,11 @@ class TaskListOptionsDialog {
                     await AutoRouter.of(context).push(
                       AddCategoryRoute(index: 0, isEdit: false),
                     );
+                  }),
+              TaskListDialogButton(
+                  text: 'Cancel',
+                  onPressCallback: () async {
+                    Navigator.pop(context);
                   })
             ],
           );

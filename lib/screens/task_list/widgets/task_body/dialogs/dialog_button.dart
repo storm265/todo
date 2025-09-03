@@ -1,22 +1,35 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class TaskListDialogButton extends StatelessWidget {
   final String text;
-  final IconData icon;
+  final IconData? icon;
   final VoidCallback onPressCallback;
   const TaskListDialogButton({
     super.key,
-    required this.icon,
+    this.icon,
     required this.onPressCallback,
     required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      label: Text(text),
-      icon: Icon(icon),
+    return CupertinoButton(
       onPressed: onPressCallback,
+      child: Row(
+        children: [
+          Spacer(),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 10,
+            children: [
+              if (icon != null) Icon(icon),
+              Text(text),
+            ],
+          ),
+          Spacer(),
+          SizedBox()
+        ],
+      ),
     );
   }
 }

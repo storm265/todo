@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
@@ -23,25 +23,26 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBarWidget(
-        context: context,
+    return CupertinoPageScaffold(
+      navigationBar: GradientAppBarWidget(
         title: 'Categories',
         showActions: false,
       ),
-      body: ValueListenableBuilder<Box<CategoryModel>>(
+      child: ValueListenableBuilder<Box<CategoryModel>>(
         valueListenable: _categoryController.getDataBase().listenable(),
         builder: (__, Box<CategoryModel> box, _) {
-          return ListView.builder(
-            itemCount: box.length,
-            itemBuilder: (_, i) {
-              CategoryModel categoryModel = box.getAt(i)!;
-              return CategoryCardWidget(
-                categoryController: _categoryController,
-                categoryModel: categoryModel,
-                index: i,
-              );
-            },
+          return CupertinoScrollbar(
+            child: ListView.builder(
+              itemCount: box.length,
+              itemBuilder: (_, i) {
+                CategoryModel categoryModel = box.getAt(i)!;
+                return CategoryCardWidget(
+                  categoryController: _categoryController,
+                  categoryModel: categoryModel,
+                  index: i,
+                );
+              },
+            ),
           );
         },
       ),

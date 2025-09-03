@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/data/model/category/category_model.dart';
@@ -24,7 +25,7 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
       builder: (context, Box<CategoryModel> box, _) {
         return SizedBox(
           width: double.infinity,
-          height: 90,
+          height: 95,
           child: ListView.builder(
               itemCount: box.length,
               shrinkWrap: true,
@@ -32,8 +33,9 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
               itemBuilder: (context, index) {
                 CategoryModel categoryModel = box.getAt(index)!;
 
-                return GestureDetector(
-                  onTap: () => setState(() => widget
+                return CupertinoButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () => setState(() => widget
                       .taskController.selectedCategoryIndex.value = index),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),

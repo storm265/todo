@@ -8,8 +8,8 @@ import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 import 'package:todo/services/common/category_index_provider.dart';
+import 'package:todo/utils/show_dialog.dart';
 
 class TaskListController {
   final CategoryIndexProvider _categoryIndexProvider;
@@ -145,13 +145,13 @@ class TaskListController {
     }
   }
 
-  bool isNotEmptyCategory(BuildContext context) {
+  Future<bool> isNotEmptyCategory(BuildContext context)async {
     if (_categoryRepository.getDatabase().isNotEmpty) {
       return true;
     } else {
-      CustomSnackbarWidget.showCustomSnackbar(
-        context: context,
-        message: 'No categories! Add category at first!',
+     await showSnackBar(
+        context,
+        'No categories! Add category at first!',
       );
       return false;
     }

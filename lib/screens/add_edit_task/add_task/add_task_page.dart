@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/model/category/category_model.dart';
@@ -49,17 +50,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBarWidget(
-        context: context,
+    return CupertinoPageScaffold(
+      navigationBar: GradientAppBarWidget(
         showActions: false,
         title: 'Add task',
       ),
-      body: UnfocusWidget(
+      child: UnfocusWidget(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
                 TextfieldWidget(
@@ -75,39 +74,34 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   textEditingController: _dateTextController,
                   hintText: 'Finish date:',
                 ),
-                OutlinedButton.icon(
+                CupertinoButton.filled(
                   onPressed: () => _addTaskController.pickDate(
                     context: context,
                     dateTextController: _dateTextController,
                   ),
-                  icon: const Icon(Icons.date_range_outlined),
-                  label: const Text('Pick date'),
+                  child: Row(
+                    spacing: 10,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.date_range_outlined),
+                      const Text('Pick date')
+                    ],
+                  ),
                 ),
-                TextfieldWidget(
-                  validator: (time) =>
-                      _addTaskController.taskValidator.isTimeValid(text: time),
-                  textEditingController: _timeTextController,
-                  hintText: 'Finish time:',
-                ),
-                OutlinedButton.icon(
-                  onPressed: () => _addTaskController.pickTime(
-                      timeTextController: _timeTextController,
-                      context: context),
-                  icon: const Icon(Icons.schedule_outlined),
-                  label: const Text('Pick time'),
-                ),
+                SizedBox(height: 10),
                 CategoryListWidget(
                   taskController: _addTaskController,
                 ),
+                SizedBox(height: 10),
                 ValueListenableBuilder<bool>(
                   valueListenable: _addTaskController.isSubmitActive,
                   builder: (context, value, _) {
-                    return OutlinedButton.icon(
+                    return CupertinoButton.filled(
                       onPressed: _addTaskController.isSubmitActive.value
                           ? () async {
                               await _addTaskController.validateForm(
                                 context: context,
-                                callback: () => _addTaskController.createTask(
+                                callback: () async=>await _addTaskController.createTask(
                                   context: context,
                                   title: _titleTextController.text,
                                 ),
@@ -115,8 +109,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                               );
                             }
                           : null,
-                      icon: const Icon(Icons.save),
-                      label: const Text('Add task'),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: [
+                          const Icon(Icons.save),
+                          const Text('Add task'),
+                        ],
+                      ),
                     );
                   },
                 ),

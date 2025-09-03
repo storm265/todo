@@ -1,12 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 import 'package:todo/data/model/category/category_model.dart';
-import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 import 'package:todo/services/locator_service.dart';
+import 'package:todo/utils/show_dialog.dart';
 
 // TODO fix with SRP
 
@@ -23,34 +24,32 @@ class AddEditCategoryController extends ChangeNotifier {
   bool get _isImagePicked => imageFile.value.path.isNotEmpty;
   bool get _isTextValid => titleController.text.length >= 2;
 
-  Future<void> changeButtonAddValue(bool isActive) async {
-    if (!isActive) {
-      await Future.delayed(const Duration(seconds: 1));
-    }
-
-    isDisabledAddCategoryButton.value = isActive;
-  }
-
 // TODO create validator class
   Future<void> tryValidate(
     bool isEdit,
     BuildContext context,
     int index,
   ) async {
-    await changeButtonAddValue(true);
+    isDisabledAddCategoryButton.value = true;
     if (_isTextValid && _isImagePicked) {
       isEdit ? await editCategory(index, context) : await saveCategory(context);
+      isDisabledAddCategoryButton.value = false;
     }
     if (!_isImagePicked && !_isTextValid) {
-      showSnackBar(context, 'Pick image and fill text!');
+      await showSnackBar(context, 'Pick image and fill text!');
+      isDisabledAddCategoryButton.value = false;
+      return;
     }
     if (!_isImagePicked) {
-      showSnackBar(context, 'Pick image!');
+      await showSnackBar(context, 'Pick image!');
+      isDisabledAddCategoryButton.value = false;
+      return;
     }
     if (!_isTextValid) {
-      showSnackBar(context, 'Text length must be >2');
+      await showSnackBar(context, 'Text length must be >2');
+      isDisabledAddCategoryButton.value = false;
+      return;
     }
-    await changeButtonAddValue(false);
   }
 
   Future<void> saveCategory(BuildContext context) async {
@@ -62,7 +61,6 @@ class AddEditCategoryController extends ChangeNotifier {
       ),
     );
 
-    showSnackBar(context, 'Category is saved');
     Navigator.pop(context);
   }
 
@@ -77,7 +75,6 @@ class AddEditCategoryController extends ChangeNotifier {
             title: titleController.text,
             imgPath: imageFile.value.path));
 
-    showSnackBar(context, 'Category is updated');
     Navigator.pop(context);
   }
 
@@ -88,13 +85,4 @@ class AddEditCategoryController extends ChangeNotifier {
       imageFile.notifyListeners();
     }
   }
-
-  void showSnackBar(
-    BuildContext context,
-    String message,
-  ) =>
-      CustomSnackbarWidget.showCustomSnackbar(
-        context: context,
-        message: message,
-      );
 }

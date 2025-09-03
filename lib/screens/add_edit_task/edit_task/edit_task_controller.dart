@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task_list/controller/task_controller.dart';
 import 'package:todo/data/model/category/category_model.dart';
+import 'package:todo/utils/show_dialog.dart';
 
 class EditTaskController extends TaskController {
   EditTaskController({
@@ -33,25 +34,20 @@ class EditTaskController extends TaskController {
             ),
           )
           .then(
-            (_) => showMessage(context, 'Task updated 😊 🚀.'),
+            (_) => showSnackBar(context, 'Task updated 😊 🚀.'),
           );
 
   void getEditData({
     required int index,
-    required TextEditingController timeTextController,
     required TextEditingController dateTextController,
     required TextEditingController titleTextController,
   }) {
     final taskBox = tasksRepository.getDatabase().getAt(index)!;
-    final time = TimeOfDay.fromDateTime(taskBox.deadlineDateTime);
-
-    timeTextController.text = DateFormat.jm().format(taskBox.deadlineDateTime);
-
-    pickedTime.value = TimeOfDay(hour: time.hour, minute: time.minute);
 
     convertedDateTime = taskBox.deadlineDateTime;
 
-    dateTextController.text = DateFormat.yMd().format(taskBox.deadlineDateTime);
+    dateTextController.text =
+        DateFormat('dd:mm:yyy hh:mm a').format(taskBox.deadlineDateTime);
 
     titleTextController.text = taskBox.text;
 

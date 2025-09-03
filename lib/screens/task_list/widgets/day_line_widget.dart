@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
-import 'package:todo/screens/task_list/widgets/date_line_fonts.dart';
 
 class DayLineWidget extends StatefulWidget {
   final TaskListController taskListController;
@@ -48,8 +47,16 @@ class _DayLineWidgetState extends State<DayLineWidget> {
                       DateFormat('d').format(calendarList[i]),
                       style: (widget.taskListController.selectedDate.value ==
                               calendarList[i])
-                          ? DateLineFonts.selected
-                          : DateLineFonts.unSelected,
+                          ? TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 60,
+                              color: Colors.white,
+                            )
+                          : TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 55,
+                              color: Colors.white70,
+                            ),
                     ),
                   ),
                   Flexible(

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
+import 'package:todo/utils/theme_extension.dart';
 
 class ArchieveBodyWidget extends StatelessWidget {
   final ArchieveModel archieveModel;
@@ -14,25 +16,26 @@ class ArchieveBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(12),
-        elevation: 5,
-        shadowColor: Colors.grey,
-        child: Container(
-          width: 370,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: context.isLightMode() ? Colors.black12 : Colors.white12,
+              blurRadius: 6,
+              spreadRadius: 0.6,
+            )
+          ],
+        ),
+        child: CupertinoListTile(
+          title: Text(
+            archieveModel.text,
+            maxLines: 2,
           ),
-          child: ListTile(
-            title: Text(
-              archieveModel.text,
-              maxLines: 2,
-            ),
-            trailing: Text(archieveModel.category),
-            subtitle: Text(
-                    'Finish at: ${DateFormat.yMd().format(archieveModel.deadlineDateTime)}',
-                  ),
+          trailing: Text(archieveModel.category),
+          subtitle: Text(
+            'Finish at: ${DateFormat.yMd().format(archieveModel.deadlineDateTime)}',
           ),
         ),
       ),

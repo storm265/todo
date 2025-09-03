@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
@@ -12,7 +11,6 @@ import 'package:todo/services/common/close_keyboard.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 
 class TaskController extends ChangeNotifier {
   final TaskValidator taskValidator;
@@ -36,58 +34,33 @@ class TaskController extends ChangeNotifier {
   Box<CategoryModel> getCategoryBox() => categoryRepository.getDatabase();
   DateTime? convertedDateTime;
   final pickedDate = ValueNotifier<DateTime?>(DateTime.now());
-  final pickedTime =
-      ValueNotifier<TimeOfDay?>(const TimeOfDay(hour: 1, minute: 11));
-
-  Future<void> changeIsDisabledButton(bool newValue) async {
-    if (newValue) {
-      await Future.delayed(const Duration(seconds: 1));
-    }
-    isSubmitActive.value = newValue;
-  }
 
   Future<void> validateForm({
     required BuildContext context,
     required FutureCallback callback,
     required GlobalKey<FormState> formKey,
   }) async {
-    await changeIsDisabledButton(false);
-    if (formKey.currentState!.validate()) {
-      convertedDateTime = DateTime.utc(
-        pickedDate.value!.year,
-        pickedDate.value!.month,
-        pickedDate.value!.day,
-        pickedTime.value!.hour,
-        pickedTime.value!.minute,
-      );
-      if (taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
-        await callback();
-        Navigator.pop(context);
-      } else {
-        showMessage(context, 'You cant create task is past!');
+    try {
+      isSubmitActive.value = false;
+      if (formKey.currentState!.validate()) {
+        convertedDateTime = DateTime.utc(
+          pickedDate.value!.year,
+          pickedDate.value!.month,
+          pickedDate.value!.day,
+          pickedDate.value!.hour,
+          pickedDate.value!.minute,
+        );
+        if (taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
+          await callback();
+          Navigator.pop(context);
+        } else {
+          //  showMessage(context, 'You cant create task is past!');
+        }
       }
-    }
-    await changeIsDisabledButton(true);
-  }
-
-  Future<void> pickTime({
-    required BuildContext context,
-    required TextEditingController timeTextController,
-  }) async {
-    closeKeyboard(context);
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay(
-        hour: TimeOfDay.now().hour,
-        minute: TimeOfDay.now().minute + 2,
-      ),
-    );
-
-    pickedTime.value = picked!;
-
-    if (pickedTime.value != null) {
-      timeTextController.text = DateFormat('hh:mm a').format(DateTime.utc(
-          2022, 12, 12, pickedTime.value!.hour, pickedTime.value!.minute));
+    } catch (e) {
+      isSubmitActive.value = true;
+    } finally {
+      isSubmitActive.value = true;
     }
   }
 
@@ -97,26 +70,30 @@ class TaskController extends ChangeNotifier {
   }) async {
     closeKeyboard(context);
 
-    final DateTime? picked = await showPlatformDatePicker(
+    await showCupertinoModalPopup<void>(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(DateTime.now().year),
-      lastDate: DateTime(DateTime.now().year + 50),
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        color: CupertinoTheme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+          top: false,
+          child: StatefulBuilder(
+            builder: (context, setState) => CupertinoDatePicker(
+              onDateTimeChanged: (DateTime newDateTime) {
+                setState(() => pickedDate.value = newDateTime);
+              },
+            ),
+          ),
+        ),
+      ),
     );
 
-    pickedDate.value = picked;
-
     if (pickedDate.value != null) {
-      dateTextController.text = DateFormat.yMd().format(pickedDate.value!);
+      dateTextController.text =
+          DateFormat('dd:mm:yyy hh:mm a').format(pickedDate.value!);
     }
   }
-
-  void showMessage(
-    BuildContext context,
-    String message,
-  ) =>
-      CustomSnackbarWidget.showCustomSnackbar(
-        context: context,
-        message: message,
-      );
 }

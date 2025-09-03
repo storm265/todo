@@ -26,13 +26,14 @@ class BodyColors {
       )
     ],
     gradient: LinearGradient(
-      colors: Gradients.classicGradient,
+      colors: Gradients.classicGradientLightMode,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),
   );
 
-  static const schreduleBody = BoxDecoration(
+  static const schreduleBodyLight = BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(16)),
     boxShadow: [
       BoxShadow(
         color: Colors.black26,
@@ -40,7 +41,22 @@ class BodyColors {
       )
     ],
     gradient: LinearGradient(
-      colors: Gradients.classicGradient,
+      colors: Gradients.classicGradientLightMode,
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+    ),
+  );
+
+  static const schreduleBodyDark = BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(16)),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.white24,
+        blurRadius: 10,
+      )
+    ],
+    gradient: LinearGradient(
+      colors: Gradients.classicGradientDarkMode,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
     ),

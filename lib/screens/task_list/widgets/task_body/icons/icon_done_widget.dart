@@ -12,7 +12,7 @@ class IconDoneWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
-          colors: Gradients.classicGradient,
+          colors: Gradients.classicGradientLightMode,
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),

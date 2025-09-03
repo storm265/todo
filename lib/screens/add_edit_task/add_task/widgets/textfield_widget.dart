@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class TextfieldWidget extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -18,16 +18,19 @@ class TextfieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: TextFormField(
+      child: CupertinoTextFormFieldRow(
         enabled: enabled,
         controller: textEditingController,
         validator: (value) => validator(value),
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+        keyboardType: TextInputType.text,
+        placeholder: hintText,
+        // TODO finish it
+        // decoration: InputDecoration(
+        //   hintText: hintText,
+        //   border: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(10),
+        //   ),
+        // ),
       ),
     );
   }

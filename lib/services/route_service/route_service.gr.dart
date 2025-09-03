@@ -8,9 +8,9 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i8;
-import 'package:todo/data/model/tasks/task_model.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
+import 'package:todo/data/model/tasks/task_model.dart' as _i10;
 import 'package:todo/screens/add_edit_category/add_edit_category_page.dart'
     as _i1;
 import 'package:todo/screens/add_edit_task/add_task/add_task_page.dart' as _i2;
@@ -18,70 +18,17 @@ import 'package:todo/screens/add_edit_task/edit_task/edit_task_page.dart'
     as _i5;
 import 'package:todo/screens/archieve/archieve_page.dart' as _i3;
 import 'package:todo/screens/category/category_page.dart' as _i4;
-import 'package:todo/screens/task_list/task_list_page.dart' as _i6;
-
-abstract class $RouteService extends _i7.RootStackRouter {
-  $RouteService({super.navigatorKey});
-
-  @override
-  final Map<String, _i7.PageFactory> pagesMap = {
-    AddCategoryRoute.name: (routeData) {
-      final args = routeData.argsAs<AddCategoryRouteArgs>();
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i1.AddCategoryPage(
-          key: args.key,
-          index: args.index,
-          isEdit: args.isEdit,
-        ),
-      );
-    },
-    AddTaskRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i2.AddTaskPage(),
-      );
-    },
-    ArchieveRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.ArchievePage(),
-      );
-    },
-    CategoryRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.CategoryPage(),
-      );
-    },
-    EditTaskRoute.name: (routeData) {
-      final args = routeData.argsAs<EditTaskRouteArgs>();
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i5.EditTaskPage(
-          key: args.key,
-          taskIndex: args.taskIndex,
-          model: args.model,
-        ),
-      );
-    },
-    TaskListRoute.name: (routeData) {
-      return _i7.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.TaskListPage(),
-      );
-    },
-  };
-}
+import 'package:todo/screens/settings/settings_page.dart' as _i6;
+import 'package:todo/screens/task_list/task_list_page.dart' as _i7;
 
 /// generated route for
 /// [_i1.AddCategoryPage]
-class AddCategoryRoute extends _i7.PageRouteInfo<AddCategoryRouteArgs> {
+class AddCategoryRoute extends _i8.PageRouteInfo<AddCategoryRouteArgs> {
   AddCategoryRoute({
-    _i8.Key? key,
+    _i9.Key? key,
     required int index,
     required bool isEdit,
-    List<_i7.PageRouteInfo>? children,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
           AddCategoryRoute.name,
           args: AddCategoryRouteArgs(
@@ -94,8 +41,17 @@ class AddCategoryRoute extends _i7.PageRouteInfo<AddCategoryRouteArgs> {
 
   static const String name = 'AddCategoryRoute';
 
-  static const _i7.PageInfo<AddCategoryRouteArgs> page =
-      _i7.PageInfo<AddCategoryRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<AddCategoryRouteArgs>();
+      return _i1.AddCategoryPage(
+        key: args.key,
+        index: args.index,
+        isEdit: args.isEdit,
+      );
+    },
+  );
 }
 
 class AddCategoryRouteArgs {
@@ -105,7 +61,7 @@ class AddCategoryRouteArgs {
     required this.isEdit,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final int index;
 
@@ -119,8 +75,8 @@ class AddCategoryRouteArgs {
 
 /// generated route for
 /// [_i2.AddTaskPage]
-class AddTaskRoute extends _i7.PageRouteInfo<void> {
-  const AddTaskRoute({List<_i7.PageRouteInfo>? children})
+class AddTaskRoute extends _i8.PageRouteInfo<void> {
+  const AddTaskRoute({List<_i8.PageRouteInfo>? children})
       : super(
           AddTaskRoute.name,
           initialChildren: children,
@@ -128,13 +84,18 @@ class AddTaskRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'AddTaskRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.AddTaskPage();
+    },
+  );
 }
 
 /// generated route for
 /// [_i3.ArchievePage]
-class ArchieveRoute extends _i7.PageRouteInfo<void> {
-  const ArchieveRoute({List<_i7.PageRouteInfo>? children})
+class ArchieveRoute extends _i8.PageRouteInfo<void> {
+  const ArchieveRoute({List<_i8.PageRouteInfo>? children})
       : super(
           ArchieveRoute.name,
           initialChildren: children,
@@ -142,13 +103,18 @@ class ArchieveRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'ArchieveRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.ArchievePage();
+    },
+  );
 }
 
 /// generated route for
 /// [_i4.CategoryPage]
-class CategoryRoute extends _i7.PageRouteInfo<void> {
-  const CategoryRoute({List<_i7.PageRouteInfo>? children})
+class CategoryRoute extends _i8.PageRouteInfo<void> {
+  const CategoryRoute({List<_i8.PageRouteInfo>? children})
       : super(
           CategoryRoute.name,
           initialChildren: children,
@@ -156,17 +122,22 @@ class CategoryRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'CategoryRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.CategoryPage();
+    },
+  );
 }
 
 /// generated route for
 /// [_i5.EditTaskPage]
-class EditTaskRoute extends _i7.PageRouteInfo<EditTaskRouteArgs> {
+class EditTaskRoute extends _i8.PageRouteInfo<EditTaskRouteArgs> {
   EditTaskRoute({
-    _i8.Key? key,
+    _i9.Key? key,
     required int taskIndex,
-    required _i9.TaskModel model,
-    List<_i7.PageRouteInfo>? children,
+    required _i10.TaskModel model,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
           EditTaskRoute.name,
           args: EditTaskRouteArgs(
@@ -179,8 +150,17 @@ class EditTaskRoute extends _i7.PageRouteInfo<EditTaskRouteArgs> {
 
   static const String name = 'EditTaskRoute';
 
-  static const _i7.PageInfo<EditTaskRouteArgs> page =
-      _i7.PageInfo<EditTaskRouteArgs>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<EditTaskRouteArgs>();
+      return _i5.EditTaskPage(
+        key: args.key,
+        taskIndex: args.taskIndex,
+        model: args.model,
+      );
+    },
+  );
 }
 
 class EditTaskRouteArgs {
@@ -190,11 +170,11 @@ class EditTaskRouteArgs {
     required this.model,
   });
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final int taskIndex;
 
-  final _i9.TaskModel model;
+  final _i10.TaskModel model;
 
   @override
   String toString() {
@@ -203,9 +183,28 @@ class EditTaskRouteArgs {
 }
 
 /// generated route for
-/// [_i6.TaskListPage]
-class TaskListRoute extends _i7.PageRouteInfo<void> {
-  const TaskListRoute({List<_i7.PageRouteInfo>? children})
+/// [_i6.SettingsPage]
+class SettingsRoute extends _i8.PageRouteInfo<void> {
+  const SettingsRoute({List<_i8.PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i6.SettingsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i7.TaskListPage]
+class TaskListRoute extends _i8.PageRouteInfo<void> {
+  const TaskListRoute({List<_i8.PageRouteInfo>? children})
       : super(
           TaskListRoute.name,
           initialChildren: children,
@@ -213,5 +212,10 @@ class TaskListRoute extends _i7.PageRouteInfo<void> {
 
   static const String name = 'TaskListRoute';
 
-  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      return const _i7.TaskListPage();
+    },
+  );
 }

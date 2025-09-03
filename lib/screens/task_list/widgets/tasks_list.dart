@@ -47,15 +47,15 @@ class TaskList extends StatelessWidget {
                           children: [
                             SlidableAction(
                               flex: 2,
-                              onPressed: (_) async =>
-                                  taskListController.isNotEmptyCategory(context)
-                                      ? await AutoRouter.of(context).push(
-                                          EditTaskRoute(
-                                            taskIndex: i,
-                                            model: task,
-                                          ),
-                                        )
-                                      : null,
+                              onPressed: (_) async => await taskListController
+                                      .isNotEmptyCategory(context)
+                                  ? await AutoRouter.of(context).push(
+                                      EditTaskRoute(
+                                        taskIndex: i,
+                                        model: task,
+                                      ),
+                                    )
+                                  : null,
                               backgroundColor: Colors.orange,
                               foregroundColor: Colors.white,
                               icon: Icons.edit,
@@ -92,7 +92,7 @@ class TaskList extends StatelessWidget {
                           ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.only(left: 6.0),
                           child: TimelineTile(
                             node: TimelineNode(
                               indicator: (task.isDone)
