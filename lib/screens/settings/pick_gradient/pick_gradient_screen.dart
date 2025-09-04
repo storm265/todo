@@ -22,12 +22,14 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
         child: SafeArea(
-      child: Column(
+      child: Flex(
+        direction: Axis.vertical,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child:
-                PickAvatarWidget(selectGradientItemCubit: pickAvatarController),
+            child: PickAvatarWidget(
+              selectGradientItemCubit: pickAvatarController,
+            ),
           ),
           Expanded(
             child: Stack(

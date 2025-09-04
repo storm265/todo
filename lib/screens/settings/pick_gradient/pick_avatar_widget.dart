@@ -5,7 +5,6 @@ import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/screens/settings/pick_gradient/gradient_utils.dart';
 import 'package:todo/screens/settings/pick_gradient/select_gradient_item_cubit.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 import 'package:todo/screens/task_list/widgets/current_date_widget.dart';
@@ -41,45 +40,43 @@ class _PickAvatarWidgetState extends State<PickAvatarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 12,
-      children: [
-        ValueListenableBuilder<MapEntry>(
-          valueListenable: widget.selectGradientItemCubit.selectedGradient,
-          builder: (context, selectedGradient, _) => Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                )
-              ],
-              gradient: LinearGradient(
-                colors: selectedGradient.value,
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                IgnorePointer(child: const ScheduleTopWidget()),
-                CurrentDateWidget(
-                  selectedDay: _taskListController.selectedDate.value,
-                ),
-                DayLineWidget(
-                  taskListController: _taskListController,
-                  changeDay: (value) {
-                    setState(() {
-                      _taskListController.selectedDate.value = value;
-                    });
-                  },
-                ),
-              ],
+    return SizedBox(
+      height: 200,
+      child: ValueListenableBuilder<MapEntry>(
+        valueListenable: widget.selectGradientItemCubit.selectedGradient,
+        builder: (context, selectedGradient, _) => Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+              )
+            ],
+            gradient: LinearGradient(
+              colors: selectedGradient.value,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
             ),
           ),
+          child: Column(
+            children: <Widget>[
+              IgnorePointer(child: const ScheduleTopWidget()),
+              CurrentDateWidget(
+                selectedDay: _taskListController.selectedDate.value,
+              ),
+              DayLineWidget(
+                taskListController: _taskListController,
+                changeDay: (value) {
+                  setState(() {
+                    _taskListController.selectedDate.value = value;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }

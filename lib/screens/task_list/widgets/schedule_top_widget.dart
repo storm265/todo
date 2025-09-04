@@ -12,6 +12,7 @@ class ScheduleTopWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        Spacer(),
         IconButton(
           icon: const Icon(Icons.menu),
           color: Colors.white,

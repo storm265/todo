@@ -50,8 +50,8 @@ class TaskListController {
     );
   }
 
-  Future<void> pushTaskToArchieve({required TaskModel task}) async =>
-      await archieveRepository.save(
+  Future<void> pushTaskToArchieve({required TaskModel task}) =>
+      archieveRepository.save(
         ArchieveModel(
           category: task.category,
           text: task.text,
@@ -59,8 +59,8 @@ class TaskListController {
         ),
       );
 
-  Future<void> deleteTask({required int index}) async =>
-      await _taskRepository.deleteTask(index);
+  Future<void> deleteTask({required int index}) =>
+      _taskRepository.deleteTask(index);
 
   void generateCalendarElements() {
     calendar.value = List.generate(
@@ -101,7 +101,7 @@ class TaskListController {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await pageController.animateToPage(
         index,
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.fastOutSlowIn,
       );
     });
@@ -145,11 +145,11 @@ class TaskListController {
     }
   }
 
-  Future<bool> isNotEmptyCategory(BuildContext context)async {
+  Future<bool> isNotEmptyCategory(BuildContext context) async {
     if (_categoryRepository.getDatabase().isNotEmpty) {
       return true;
     } else {
-     await showSnackBar(
+      await showSnackBar(
         context,
         'No categories! Add category at first!',
       );

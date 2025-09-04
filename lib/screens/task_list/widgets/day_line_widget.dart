@@ -19,12 +19,7 @@ class DayLineWidget extends StatefulWidget {
 class _DayLineWidgetState extends State<DayLineWidget> {
   @override
   Widget build(BuildContext context) {
-    final mediaQ = MediaQuery.sizeOf(context);
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: mediaQ.height * 0.080,
-        maxHeight: mediaQ.height * 0.140,
-      ),
+    return Expanded(
       child: ValueListenableBuilder(
         valueListenable: widget.taskListController.calendar,
         builder: (__, calendarList, _) => PageView.builder(
@@ -61,7 +56,6 @@ class _DayLineWidgetState extends State<DayLineWidget> {
                     ),
                   ),
                   Flexible(
-                    flex: 1,
                     child: Text(
                       DateFormat('EEEE')
                           .format(calendarList[i])
