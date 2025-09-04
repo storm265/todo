@@ -46,7 +46,7 @@ class SettingsItemWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Divider(
-            color: context.isLightMode() ? Colors.black12 : Colors.white10,
+            color: context.isLightMode() ? Colors.black12 : Colors.white24,
           ),
         ),
       ],

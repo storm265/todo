@@ -53,24 +53,28 @@ class _TaskListPageState extends State<TaskListPage> {
               children: [
                 SizedBox(
                   height: 200,
-                  child: ValueListenableBuilder<MapEntry>(
-                    valueListenable: pickAvatarController.selectedGradient,
-                    builder: (context, selectedGradient, _) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 10,
-                          )
-                        ],
-                        gradient: LinearGradient(
-                          colors: selectedGradient.value,
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
+                  child: Stack(
+                    children: [
+                      ValueListenableBuilder<MapEntry<String, List<Color>>>(
+                        valueListenable: pickAvatarController.selectedGradient,
+                        builder: (context, selectedGradient, _) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                              )
+                            ],
+                            gradient: LinearGradient(
+                              colors: selectedGradient.value,
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                            ),
+                          ),
                         ),
                       ),
-                      child: Column(
+                      Column(
                         children: <Widget>[
                           const ScheduleTopWidget(),
                           CurrentDateWidget(
@@ -78,23 +82,15 @@ class _TaskListPageState extends State<TaskListPage> {
                           ),
                           DayLineWidget(
                             taskListController: _taskListController,
-                            changeDay: (value) {
-                              setState(() {
-                                _taskListController.selectedDate.value = value;
-                              });
-                            },
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Flexible(
-                  flex: 1,
-                  child: TaskList(
-                    taskListController: _taskListController,
-                    selectedDate: _taskListController.selectedDate.value,
-                  ),
+                TaskList(
+                  taskListController: _taskListController,
+                  selectedDate: _taskListController.selectedDate.value,
                 ),
               ],
             ),

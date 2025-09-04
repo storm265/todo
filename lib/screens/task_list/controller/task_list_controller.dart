@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,12 +13,7 @@ import 'package:todo/data/repository/task/tasks_repository.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 import 'package:todo/utils/show_dialog.dart';
 
-class TaskListController {
-  final CategoryIndexProvider _categoryIndexProvider;
-  final TasksRepository<TaskModel> _taskRepository;
-  final ArchieveRepository<ArchieveModel> archieveRepository;
-  final CategoryRepository<CategoryModel> _categoryRepository;
-
+class TaskListController extends ChangeNotifier {
   TaskListController({
     required CategoryRepository<CategoryModel> categoryRepository,
     required TasksRepository<TaskModel> taskRepository,
@@ -26,11 +23,19 @@ class TaskListController {
         _categoryIndexProvider = categoryIndexProvider,
         _categoryRepository = categoryRepository;
 
+  final CategoryIndexProvider _categoryIndexProvider;
+  final TasksRepository<TaskModel> _taskRepository;
+  final ArchieveRepository<ArchieveModel> archieveRepository;
+  final CategoryRepository<CategoryModel> _categoryRepository;
+
   Box<TaskModel> getTaskDataBase() => _taskRepository.getDatabase();
+
+ late final tasksListenable = getTaskDataBase().listenable();
 
   final selectedDate = ValueNotifier(DateTime.now());
 
   final pageController = PageController(viewportFraction: 0.18);
+
   final calendar = ValueNotifier<List<DateTime>>([]);
 
   Future<void> markTaskAsDone({

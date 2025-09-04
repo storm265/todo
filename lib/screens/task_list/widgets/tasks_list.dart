@@ -14,19 +14,19 @@ import 'package:todo/screens/task_list/widgets/task_body/icons/icon_done_widget.
 import 'package:todo/services/route_service/route_service.gr.dart';
 
 class TaskList extends StatelessWidget {
-  final TaskListController taskListController;
-  final DateTime selectedDate;
-
   const TaskList({
     super.key,
     required this.selectedDate,
     required this.taskListController,
   });
 
+  final TaskListController taskListController;
+  final DateTime selectedDate;
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable: taskListController.getTaskDataBase().listenable(),
+        valueListenable: taskListController.tasksListenable,
         builder: (_, Box<TaskModel> box, __) {
           return box.values.isEmpty
               ? const SizedBox()

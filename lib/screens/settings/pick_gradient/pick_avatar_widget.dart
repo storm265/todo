@@ -67,11 +67,6 @@ class _PickAvatarWidgetState extends State<PickAvatarWidget> {
               ),
               DayLineWidget(
                 taskListController: _taskListController,
-                changeDay: (value) {
-                  setState(() {
-                    _taskListController.selectedDate.value = value;
-                  });
-                },
               ),
             ],
           ),

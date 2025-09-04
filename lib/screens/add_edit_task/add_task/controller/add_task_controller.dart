@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task_list/controller/task_controller.dart';
-import 'package:todo/utils/show_dialog.dart';
 
 class AddTaskController extends TaskController {
   AddTaskController({
@@ -21,19 +20,15 @@ class AddTaskController extends TaskController {
         .getAt(selectedCategoryIndex.value)!
         .title;
 
-    await tasksRepository
-        .saveTask(
-          TaskModel(
-            id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
-            isDone: false,
-            category: categoryTitle,
-            creationDate: DateTime.now(),
-            text: title,
-            deadlineDateTime: convertedDateTime!,
-          ),
-        )
-        .then(
-          (_) => showSnackBar(context, 'Task added😊 🚀.'),
-        );
+    await tasksRepository.saveTask(
+      TaskModel(
+        id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
+        isDone: false,
+        category: categoryTitle,
+        creationDate: DateTime.now(),
+        text: title,
+        deadlineDateTime: convertedDateTime!,
+      ),
+    );
   }
 }

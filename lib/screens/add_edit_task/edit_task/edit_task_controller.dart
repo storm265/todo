@@ -21,21 +21,17 @@ class EditTaskController extends TaskController {
     required int index,
     required BuildContext context,
   }) =>
-      tasksRepository
-          .updateTask(
-            index: index,
-            model: TaskModel(
-              id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
-              isDone: false,
-              category: selectedCategory,
-              creationDate: DateTime.now(),
-              text: title,
-              deadlineDateTime: convertedDateTime!,
-            ),
-          )
-          .then(
-            (_) => showSnackBar(context, 'Task updated 😊 🚀.'),
-          );
+      tasksRepository.updateTask(
+        index: index,
+        model: TaskModel(
+          id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
+          isDone: false,
+          category: selectedCategory,
+          creationDate: DateTime.now(),
+          text: title,
+          deadlineDateTime: convertedDateTime!,
+        ),
+      );
 
   void getEditData({
     required int index,

@@ -50,7 +50,7 @@ class SelectGradientItemCubit extends ChangeNotifier {
 
   late final PageController pageConroller;
 
-  late final selectedGradient = ValueNotifier<MapEntry>(
+  late final selectedGradient = ValueNotifier<MapEntry<String,List<Color>>>(
     MapEntry(
       GradientUtils.gradients.keys.first,
       GradientUtils.gradients.values.first,
