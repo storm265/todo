@@ -1,3 +1,4 @@
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _TaskListPageState extends State<TaskListPage> {
   void initState() {
     _taskListController.generateCalendarElements();
     _taskListController.scrollToSelectedIndex();
-    _taskListController.updateCalendarElements(() => setState(() {}));
+    _taskListController.updateCalendarElements();
     super.initState();
   }
 
@@ -49,48 +50,49 @@ class _TaskListPageState extends State<TaskListPage> {
         right: false,
         child: Stack(
           children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 200,
-                  child: Stack(
-                    children: [
-                      ValueListenableBuilder<MapEntry<String, List<Color>>>(
-                        valueListenable: pickAvatarController.selectedGradient,
-                        builder: (context, selectedGradient, _) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 10,
-                              )
-                            ],
-                            gradient: LinearGradient(
-                              colors: selectedGradient.value,
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+            CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 200,
+                    child: Stack(
+                      children: [
+                        ValueListenableBuilder<MapEntry<String, List<Color>>>(
+                          valueListenable: pickAvatarController.selectedGradient,
+                          builder: (context, selectedGradient, _) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(16)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                )
+                              ],
+                              gradient: LinearGradient(
+                                colors: selectedGradient.value,
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Column(
-                        children: <Widget>[
-                          const ScheduleTopWidget(),
-                          CurrentDateWidget(
-                            selectedDay: _taskListController.selectedDate.value,
-                          ),
-                          DayLineWidget(
-                            taskListController: _taskListController,
-                          ),
-                        ],
-                      ),
-                    ],
+                        Column(
+                          children: <Widget>[
+                            const ScheduleTopWidget(),
+                            CurrentDateWidget(
+                              taskListController: _taskListController,
+                            ),
+                            DayLineWidget(
+                              taskListController: _taskListController,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 TaskList(
                   taskListController: _taskListController,
-                  selectedDate: _taskListController.selectedDate.value,
                 ),
               ],
             ),
@@ -98,14 +100,36 @@ class _TaskListPageState extends State<TaskListPage> {
               padding: EdgeInsetsGeometry.all(12),
               child: Align(
                 alignment: Alignment.bottomRight,
-                child: CupertinoButton.filled(
-                  padding: EdgeInsets.all(0),
-                  onPressed: () async =>
-                      await TaskListOptionsDialog.showOptionsDialog(
-                    buildContext: context,
-                    taskListController: _taskListController,
+                child: ValueListenableBuilder<MapEntry<String, List<Color>>>(
+                  valueListenable: pickAvatarController.selectedGradient,
+                  builder: (context, selectedGradient, _) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                        )
+                      ],
+                      gradient: LinearGradient(
+                        colors: selectedGradient.value,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                    ),
+                    child: CupertinoButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () async =>
+                          await TaskListOptionsDialog.showOptionsDialog(
+                        buildContext: context,
+                        taskListController: _taskListController,
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  child: const Icon(Icons.add),
                 ),
               ),
             )

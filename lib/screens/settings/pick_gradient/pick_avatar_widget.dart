@@ -34,7 +34,7 @@ class _PickAvatarWidgetState extends State<PickAvatarWidget> {
   void initState() {
     _taskListController.generateCalendarElements();
     _taskListController.scrollToSelectedIndex();
-    _taskListController.updateCalendarElements(() => setState(() {}));
+    _taskListController.updateCalendarElements();
     super.initState();
   }
 
@@ -63,7 +63,7 @@ class _PickAvatarWidgetState extends State<PickAvatarWidget> {
             children: <Widget>[
               IgnorePointer(child: const ScheduleTopWidget()),
               CurrentDateWidget(
-                selectedDay: _taskListController.selectedDate.value,
+                taskListController: _taskListController,
               ),
               DayLineWidget(
                 taskListController: _taskListController,

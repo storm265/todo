@@ -39,7 +39,7 @@ Future<void> _showDrawerDialog({required BuildContext context}) async {
       ],
       content: SizedBox(
         width: MediaQuery.sizeOf(context).width * 0.3,
-        height: MediaQuery.sizeOf(context).height * 0.3,
+        height: 350,
         child: ListView.separated(
           itemBuilder: (context, i) {
             return GestureDetector(
@@ -70,7 +70,7 @@ Future<void> _showDrawerDialog({required BuildContext context}) async {
                 padding: const EdgeInsets.only(
                   left: 10,
                   top: 10,
-                  bottom: 10,
+                  bottom: 6,
                 ),
                 child: Row(
                   spacing: 20,

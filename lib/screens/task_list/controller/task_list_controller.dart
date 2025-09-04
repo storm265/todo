@@ -78,11 +78,11 @@ class TaskListController extends ChangeNotifier {
     );
   }
 
-  void updateCalendarElements(Function callback) {
+  void updateCalendarElements() {
     pageController.addListener(() {
       generateLastCalendarElements();
       generateFirstCalendarElements();
-      callback();
+    
     });
   }
 

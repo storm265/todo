@@ -74,7 +74,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   textEditingController: _dateTextController,
                   hintText: 'Finish date:',
                 ),
-                CupertinoButton.filled(
+                CupertinoButton(
                   onPressed: () => _addTaskController.pickDate(
                     context: context,
                     dateTextController: _dateTextController,
@@ -101,7 +101,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           ? () async {
                               await _addTaskController.validateForm(
                                 context: context,
-                                callback: () async=>await _addTaskController.createTask(
+                                callback: () async =>
+                                    await _addTaskController.createTask(
                                   context: context,
                                   title: _titleTextController.text,
                                 ),

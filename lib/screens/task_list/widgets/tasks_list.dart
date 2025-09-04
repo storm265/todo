@@ -16,12 +16,10 @@ import 'package:todo/services/route_service/route_service.gr.dart';
 class TaskList extends StatelessWidget {
   const TaskList({
     super.key,
-    required this.selectedDate,
     required this.taskListController,
   });
 
   final TaskListController taskListController;
-  final DateTime selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -29,104 +27,109 @@ class TaskList extends StatelessWidget {
         valueListenable: taskListController.tasksListenable,
         builder: (_, Box<TaskModel> box, __) {
           return box.values.isEmpty
-              ? const SizedBox()
-              : ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: box.length,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (_, i) {
-                    TaskModel? task = box.getAt(i);
-                    DateTime? deadline = task!.deadlineDateTime;
+              ? const SliverToBoxAdapter(
+                  child: SizedBox(),
+                )
+              : ValueListenableBuilder(
+                  valueListenable: taskListController.selectedDate,
+                  builder: (context, selectedDate, _) => SliverList.builder(
+                      itemCount: box.length,
+                      itemBuilder: (_, i) {
+                        TaskModel? task = box.getAt(i);
+                        DateTime? deadline = task!.deadlineDateTime;
 
-                    if (DateFormat.yMd().format(deadline) ==
-                        DateFormat.yMd().format(selectedDate)) {
-                      return Slidable(
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (_) async => await taskListController
-                                      .isNotEmptyCategory(context)
-                                  ? await AutoRouter.of(context).push(
-                                      EditTaskRoute(
-                                        taskIndex: i,
-                                        model: task,
-                                      ),
-                                    )
-                                  : null,
-                              backgroundColor: Colors.orange,
-                              foregroundColor: Colors.white,
-                              icon: Icons.edit,
-                              label: 'Edit',
-                            ),
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (task.isDone)
-                                  ? null
-                                  : (_) async => await taskListController
-                                      .markTaskAsDone(task: task, index: i),
-                              backgroundColor: Colors.green,
-                              foregroundColor: Colors.white,
-                              icon: Icons.done,
-                              label: 'Done',
-                            ),
-                          ],
-                        ),
-                        endActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              flex: 2,
-                              onPressed: (_) async {
-                                await taskListController.pushTaskToArchieve(
-                                    task: task);
-                                await taskListController.deleteTask(index: i);
-                              },
-                              backgroundColor: Colors.red,
-                              foregroundColor: Colors.white,
-                              icon: Icons.archive,
-                              label: 'Remove',
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 6.0),
-                          child: TimelineTile(
-                            node: TimelineNode(
-                              indicator: (task.isDone)
-                                  ? const IconDoneWidget()
-                                  : const IconNotDoneWidget(),
-                              startConnector: (task.isDone)
-                                  ? const ConnectorDoneWidget()
-                                  : const ConnectorNotDoneWidget(),
-                              endConnector: (task.isDone)
-                                  ? const ConnectorDoneWidget()
-                                  : const ConnectorNotDoneWidget(),
-                            ),
-                            oppositeContents: null,
-                            nodeAlign: TimelineNodeAlign.start,
-                            contents: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        if (DateFormat.yMd().format(deadline) ==
+                            DateFormat.yMd().format(selectedDate)) {
+                          return Slidable(
+                            startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
                               children: [
-                                Text(
-                                  DateFormat('hh:mm a').format(deadline),
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                                SlidableAction(
+                                  flex: 2,
+                                  onPressed: (_) async =>
+                                      await taskListController
+                                              .isNotEmptyCategory(context)
+                                          ? await AutoRouter.of(context).push(
+                                              EditTaskRoute(
+                                                taskIndex: i,
+                                                model: task,
+                                              ),
+                                            )
+                                          : null,
+                                  backgroundColor: Colors.orange,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.edit,
+                                  label: 'Edit',
                                 ),
-                                TaskCardWidget(taskModel: task),
+                                SlidableAction(
+                                  flex: 2,
+                                  onPressed: (task.isDone)
+                                      ? null
+                                      : (_) async => await taskListController
+                                          .markTaskAsDone(task: task, index: i),
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.done,
+                                  label: 'Done',
+                                ),
                               ],
                             ),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  });
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  flex: 2,
+                                  onPressed: (_) async {
+                                    await taskListController.pushTaskToArchieve(
+                                        task: task);
+                                    await taskListController.deleteTask(
+                                        index: i);
+                                  },
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.archive,
+                                  label: 'Remove',
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 6.0),
+                              child: TimelineTile(
+                                node: TimelineNode(
+                                  indicator: (task.isDone)
+                                      ? const IconDoneWidget()
+                                      : const IconNotDoneWidget(),
+                                  startConnector: (task.isDone)
+                                      ? const ConnectorDoneWidget()
+                                      : const ConnectorNotDoneWidget(),
+                                  endConnector: (task.isDone)
+                                      ? const ConnectorDoneWidget()
+                                      : const ConnectorNotDoneWidget(),
+                                ),
+                                oppositeContents: null,
+                                nodeAlign: TimelineNodeAlign.start,
+                                contents: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      DateFormat('hh:mm a').format(deadline),
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    TaskCardWidget(taskModel: task),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
+                );
         });
   }
 }
