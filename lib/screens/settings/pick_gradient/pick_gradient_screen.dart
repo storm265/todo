@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:todo/main.dart';
 import 'package:todo/screens/settings/pick_gradient/gradient_utils.dart';
 import 'package:todo/screens/settings/pick_gradient/pick_avatar_widget.dart';
-import 'package:todo/screens/settings/pick_gradient/select_gradient_item_cubit.dart';
 import 'package:todo/services/route_service/route_service.gr.dart';
 import 'package:todo/utils/user_prefs_provider.dart';
 
@@ -25,11 +24,8 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
       child: Flex(
         direction: Axis.vertical,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: PickAvatarWidget(
-              selectGradientItemCubit: pickAvatarController,
-            ),
+          PickAvatarWidget(
+            selectGradientItemCubit: pickAvatarController,
           ),
           Expanded(
             child: Stack(
@@ -37,6 +33,7 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
                 ValueListenableBuilder<MapEntry>(
                   valueListenable: pickAvatarController.selectedGradient,
                   builder: (context, selectedGradient, _) => GridView.builder(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     itemCount: GradientUtils.gradients.length,
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -49,18 +46,18 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
                       onTap: () {
                         pickAvatarController.selectedGradient.value =
                             GradientUtils.gradients.entries.elementAt(index);
-                        setState(() {});
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: pickAvatarController
-                                        .selectedGradient.value.key ==
-                                    GradientUtils.gradients.entries
-                                        .elementAt(index)
-                                        .key
-                                ? Colors.red
-                                : Colors.transparent),
+                          borderRadius: BorderRadius.circular(18),
+                          color:
+                              pickAvatarController.selectedGradient.value.key ==
+                                      GradientUtils.gradients.entries
+                                          .elementAt(index)
+                                          .key
+                                  ? Colors.redAccent
+                                  : Colors.transparent,
+                        ),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -94,15 +91,18 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: CupertinoButton.filled(
-                    child: Text('Done'),
-                    onPressed: () async {
-                      await UserPrefsProvider.saveCurrentGradient(
-                        gradientTitle:
-                            pickAvatarController.selectedGradient.value.key,
-                      );
-                      await AutoRouter.of(context).replace(TaskListRoute());
-                    },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CupertinoButton.filled(
+                      child: Text('Done'),
+                      onPressed: () async {
+                        await UserPrefsProvider.saveCurrentGradient(
+                          gradientTitle:
+                              pickAvatarController.selectedGradient.value.key,
+                        );
+                        await AutoRouter.of(context).replace(TaskListRoute());
+                      },
+                    ),
                   ),
                 ),
               ],
