@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/screens/task_list/controller/task_controller.dart';
 import 'package:todo/data/model/category/category_model.dart';
-import 'package:todo/utils/show_dialog.dart';
 
 class EditTaskController extends TaskController {
   EditTaskController({

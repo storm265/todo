@@ -20,96 +20,116 @@ class _PickGradientScreenState extends State<PickGradientScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      child: SafeArea(
+        left: false,
+        right: false,
         child: SafeArea(
-      child: Flex(
-        direction: Axis.vertical,
-        children: [
-          PickAvatarWidget(
-            selectGradientItemCubit: pickAvatarController,
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                ValueListenableBuilder<MapEntry>(
-                  valueListenable: pickAvatarController.selectedGradient,
-                  builder: (context, selectedGradient, _) => GridView.builder(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    itemCount: GradientUtils.gradients.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 110,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 2,
-                      mainAxisSpacing: 1,
-                    ),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        pickAvatarController.selectedGradient.value =
-                            GradientUtils.gradients.entries.elementAt(index);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color:
-                              pickAvatarController.selectedGradient.value.key ==
+          child: Flex(
+            direction: .vertical,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Select you calendar color',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
+                ),
+              ),
+              PickAvatarWidget(selectGradientItemCubit: pickAvatarController),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ValueListenableBuilder<MapEntry>(
+                      valueListenable: pickAvatarController.selectedGradient,
+                      builder: (context, selectedGradient, _) =>
+                          GridView.builder(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            itemCount: GradientUtils.gradients.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 110,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 2,
+                                  mainAxisSpacing: 1,
+                                ),
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                pickAvatarController.selectedGradient.value =
+                                    GradientUtils.gradients.entries.elementAt(
+                                      index,
+                                    );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  color:
+                                      pickAvatarController
+                                              .selectedGradient
+                                              .value
+                                              .key ==
+                                          GradientUtils.gradients.entries
+                                              .elementAt(index)
+                                              .key
+                                      ? Colors.redAccent
+                                      : Colors.transparent,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(height: 4.0),
+                                    Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        gradient: LinearGradient(
+                                          colors: GradientUtils.gradients.values
+                                              .elementAt(index),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
                                       GradientUtils.gradients.entries
                                           .elementAt(index)
-                                          .key
-                                  ? Colors.redAccent
-                                  : Colors.transparent,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(height: 4.0),
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                gradient: LinearGradient(
-                                  colors: GradientUtils.gradients.values
-                                      .elementAt(index),
+                                          .key,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 18,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Text(
-                              GradientUtils.gradients.entries
-                                  .elementAt(index)
+                          ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CupertinoButton.filled(
+                          child: Text('Done'),
+                          onPressed: () async {
+                            await UserPrefsProvider.saveCurrentGradient(
+                              gradientTitle: pickAvatarController
+                                  .selectedGradient
+                                  .value
                                   .key,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 18,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
-                          ],
+                            );
+                            await AutoRouter.of(
+                              context,
+                            ).replace(TaskListRoute());
+                          },
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CupertinoButton.filled(
-                      child: Text('Done'),
-                      onPressed: () async {
-                        await UserPrefsProvider.saveCurrentGradient(
-                          gradientTitle:
-                              pickAvatarController.selectedGradient.value.key,
-                        );
-                        await AutoRouter.of(context).replace(TaskListRoute());
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    ));
+    );
   }
 }
