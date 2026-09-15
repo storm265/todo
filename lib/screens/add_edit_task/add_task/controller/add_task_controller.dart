@@ -20,19 +20,15 @@ class AddTaskController extends TaskController {
         .getAt(selectedCategoryIndex.value)!
         .title;
 
-    await tasksRepository
-        .saveTask(
-          TaskModel(
-            id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
-            isDone: false,
-            category: categoryTitle,
-            creationDate: DateTime.now(),
-            text: title,
-            deadlineDateTime: convertedDateTime!,
-          ),
-        )
-        .then(
-          (_) => showMessage(context, 'Task added😊 🚀.'),
-        );
+    await tasksRepository.saveTask(
+      TaskModel(
+        id: categoryIndexerProvider.getCategoryIndex(categoryTitle),
+        isDone: false,
+        category: categoryTitle,
+        creationDate: DateTime.now(),
+        text: title,
+        deadlineDateTime: convertedDateTime!,
+      ),
+    );
   }
 }

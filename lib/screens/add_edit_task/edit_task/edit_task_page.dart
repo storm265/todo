@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/model/category/category_model.dart';
@@ -33,7 +34,6 @@ class EditTaskPage extends StatefulWidget {
 class _EditTaskPageState extends State<EditTaskPage> {
   final _titleTextController = TextEditingController();
   final _dateTextController = TextEditingController();
-  final _timeTextController = TextEditingController();
 
   final _editTaskController = EditTaskController(
     archieveRepository: serviceLocator<ArchieveRepository<ArchieveModel>>(),
@@ -49,7 +49,6 @@ class _EditTaskPageState extends State<EditTaskPage> {
   void initState() {
     _editTaskController.getEditData(
       index: widget.taskIndex,
-      timeTextController: _timeTextController,
       dateTextController: _dateTextController,
       titleTextController: _titleTextController,
     );
@@ -61,19 +60,17 @@ class _EditTaskPageState extends State<EditTaskPage> {
   void dispose() {
     _titleTextController.dispose();
     _dateTextController.dispose();
-    _timeTextController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBarWidget(
-        context: context,
+    return CupertinoPageScaffold(
+      navigationBar: GradientAppBarWidget(
         showActions: false,
         title: 'Edit task',
       ),
-      body: UnfocusWidget(
+      child: UnfocusWidget(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -93,34 +90,29 @@ class _EditTaskPageState extends State<EditTaskPage> {
                   textEditingController: _dateTextController,
                   hintText: 'Finish date:',
                 ),
-                OutlinedButton.icon(
+                SizedBox(height: 10),
+                CupertinoButton.filled(
                   onPressed: () async => await _editTaskController.pickDate(
                     context: context,
                     dateTextController: _dateTextController,
                   ),
-                  icon: const Icon(Icons.date_range_outlined),
-                  label: const Text('Pick date'),
-                ),
-                TextfieldWidget(
-                  validator: (time) =>
-                      _editTaskController.taskValidator.isTimeValid(text: time),
-                  textEditingController: _timeTextController,
-                  hintText: 'Finish time:',
-                ),
-                OutlinedButton.icon(
-                  onPressed: () => _editTaskController.pickTime(
-                      timeTextController: _timeTextController,
-                      context: context),
-                  icon: const Icon(Icons.schedule_outlined),
-                  label: const Text('Pick time'),
+                  child: Row(
+                    spacing: 10,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.date_range_outlined),
+                      const Text('Pick date')
+                    ],
+                  ),
                 ),
                 CategoryListWidget(
                   taskController: _editTaskController,
                 ),
+                SizedBox(height: 10),
                 ValueListenableBuilder<bool>(
                   valueListenable: _editTaskController.isSubmitActive,
                   builder: (context, value, _) {
-                    return OutlinedButton.icon(
+                    return CupertinoButton.filled(
                       onPressed: _editTaskController.isSubmitActive.value
                           ? () {
                               _editTaskController.validateForm(
@@ -135,8 +127,14 @@ class _EditTaskPageState extends State<EditTaskPage> {
                                   formKey: _formKey);
                             }
                           : null,
-                      icon: const Icon(Icons.add),
-                      label: const Text('Update task'),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: [
+                          const Icon(Icons.add),
+                          const Text('Update task')
+                        ],
+                      ),
                     );
                   },
                 ),

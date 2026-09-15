@@ -8,15 +8,10 @@ import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 import 'package:todo/services/common/category_index_provider.dart';
+import 'package:todo/utils/show_dialog.dart';
 
-class TaskListController {
-  final CategoryIndexProvider _categoryIndexProvider;
-  final TasksRepository<TaskModel> _taskRepository;
-  final ArchieveRepository<ArchieveModel> archieveRepository;
-  final CategoryRepository<CategoryModel> _categoryRepository;
-
+class TaskListController extends ChangeNotifier {
   TaskListController({
     required CategoryRepository<CategoryModel> categoryRepository,
     required TasksRepository<TaskModel> taskRepository,
@@ -26,11 +21,19 @@ class TaskListController {
         _categoryIndexProvider = categoryIndexProvider,
         _categoryRepository = categoryRepository;
 
+  final CategoryIndexProvider _categoryIndexProvider;
+  final TasksRepository<TaskModel> _taskRepository;
+  final ArchieveRepository<ArchieveModel> archieveRepository;
+  final CategoryRepository<CategoryModel> _categoryRepository;
+
   Box<TaskModel> getTaskDataBase() => _taskRepository.getDatabase();
+
+ late final tasksListenable = getTaskDataBase().listenable();
 
   final selectedDate = ValueNotifier(DateTime.now());
 
   final pageController = PageController(viewportFraction: 0.18);
+
   final calendar = ValueNotifier<List<DateTime>>([]);
 
   Future<void> markTaskAsDone({
@@ -50,8 +53,8 @@ class TaskListController {
     );
   }
 
-  Future<void> pushTaskToArchieve({required TaskModel task}) async =>
-      await archieveRepository.save(
+  Future<void> pushTaskToArchieve({required TaskModel task}) =>
+      archieveRepository.save(
         ArchieveModel(
           category: task.category,
           text: task.text,
@@ -59,8 +62,8 @@ class TaskListController {
         ),
       );
 
-  Future<void> deleteTask({required int index}) async =>
-      await _taskRepository.deleteTask(index);
+  Future<void> deleteTask({required int index}) =>
+      _taskRepository.deleteTask(index);
 
   void generateCalendarElements() {
     calendar.value = List.generate(
@@ -75,11 +78,11 @@ class TaskListController {
     );
   }
 
-  void updateCalendarElements(Function callback) {
+  void updateCalendarElements() {
     pageController.addListener(() {
       generateLastCalendarElements();
       generateFirstCalendarElements();
-      callback();
+    
     });
   }
 
@@ -101,7 +104,7 @@ class TaskListController {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await pageController.animateToPage(
         index,
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 350),
         curve: Curves.fastOutSlowIn,
       );
     });
@@ -145,13 +148,13 @@ class TaskListController {
     }
   }
 
-  bool isNotEmptyCategory(BuildContext context) {
+  Future<bool> isNotEmptyCategory(BuildContext context) async {
     if (_categoryRepository.getDatabase().isNotEmpty) {
       return true;
     } else {
-      CustomSnackbarWidget.showCustomSnackbar(
-        context: context,
-        message: 'No categories! Add category at first!',
+      await showSnackBar(
+        context,
+        'No categories! Add category at first!',
       );
       return false;
     }

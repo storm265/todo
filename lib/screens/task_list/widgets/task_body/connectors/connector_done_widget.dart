@@ -1,16 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/task_list/widgets/task_body/body/gradient_boxes.dart';
+import 'package:todo/main.dart';
 
 class ConnectorDoneWidget extends StatelessWidget {
   const ConnectorDoneWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BodyColors.gradientTaskBody,
-      child: const SizedBox(
-        width: 3,
-        height: 50,
+    return ValueListenableBuilder<MapEntry>(
+      valueListenable: pickAvatarController.selectedGradient,
+      builder: (context, selectedGradient, _) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+            )
+          ],
+          gradient: LinearGradient(
+            colors: selectedGradient.value,
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        ),
+        child: const SizedBox(
+          width: 3,
+          height: 50,
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
@@ -23,13 +24,12 @@ class _ArchievePageState extends State<ArchievePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBarWidget(
-        context: context,
+    return CupertinoPageScaffold(
+      navigationBar: GradientAppBarWidget(
         showActions: false,
         title: 'Archieve',
       ),
-      body: ListView.builder(
+      child: ListView.builder(
           scrollDirection: Axis.vertical,
           itemCount: _archieveController.getDatabase().length,
           itemBuilder: (context, index) {

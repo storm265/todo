@@ -20,38 +20,29 @@ class EditTaskController extends TaskController {
     required int index,
     required BuildContext context,
   }) =>
-      tasksRepository
-          .updateTask(
-            index: index,
-            model: TaskModel(
-              id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
-              isDone: false,
-              category: selectedCategory,
-              creationDate: DateTime.now(),
-              text: title,
-              deadlineDateTime: convertedDateTime!,
-            ),
-          )
-          .then(
-            (_) => showMessage(context, 'Task updated 😊 🚀.'),
-          );
+      tasksRepository.updateTask(
+        index: index,
+        model: TaskModel(
+          id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
+          isDone: false,
+          category: selectedCategory,
+          creationDate: DateTime.now(),
+          text: title,
+          deadlineDateTime: convertedDateTime!,
+        ),
+      );
 
   void getEditData({
     required int index,
-    required TextEditingController timeTextController,
     required TextEditingController dateTextController,
     required TextEditingController titleTextController,
   }) {
     final taskBox = tasksRepository.getDatabase().getAt(index)!;
-    final time = TimeOfDay.fromDateTime(taskBox.deadlineDateTime);
-
-    timeTextController.text = DateFormat.jm().format(taskBox.deadlineDateTime);
-
-    pickedTime.value = TimeOfDay(hour: time.hour, minute: time.minute);
 
     convertedDateTime = taskBox.deadlineDateTime;
 
-    dateTextController.text = DateFormat.yMd().format(taskBox.deadlineDateTime);
+    dateTextController.text =
+        DateFormat('dd:mm:yyy hh:mm a').format(taskBox.deadlineDateTime);
 
     titleTextController.text = taskBox.text;
 

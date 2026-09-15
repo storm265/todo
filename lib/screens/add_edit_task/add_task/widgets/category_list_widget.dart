@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo/data/model/category/category_model.dart';
@@ -22,9 +23,8 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
       valueListenable:
           widget.taskController.categoryRepository.getDatabase().listenable(),
       builder: (context, Box<CategoryModel> box, _) {
-        return SizedBox(
-          width: double.infinity,
-          height: 90,
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 120, minHeight: 95),
           child: ListView.builder(
               itemCount: box.length,
               shrinkWrap: true,
@@ -36,39 +36,48 @@ class _CategoryListWidgetState extends State<CategoryListWidget> {
                   onTap: () => setState(() => widget
                       .taskController.selectedCategoryIndex.value = index),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: (categoryModel.imgPath
-                                        .startsWith('assets'))
-                                    ? AssetImage(categoryModel.imgPath)
-                                        as ImageProvider
-                                    : FileImage(File(categoryModel.imgPath))),
-                            border: Border.all(
-                                color: (widget.taskController
-                                            .selectedCategoryIndex.value ==
-                                        index)
-                                    ? Colors.red
-                                    : Colors.white,
-                                width: 5),
-                            shape: BoxShape.circle,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: (widget.taskController.selectedCategoryIndex
+                                    .value ==
+                                index)
+                            ? Colors.redAccent
+                            : Colors.transparent,
+                      ),
+                      child: Column(
+                        spacing: 6.0,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: (categoryModel.imgPath
+                                          .startsWith('assets'))
+                                      ? AssetImage(categoryModel.imgPath)
+                                          as ImageProvider
+                                      : FileImage(File(categoryModel.imgPath))),
+                              shape: BoxShape.circle,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: Text(
+                          Text(
                             categoryModel.title,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: CupertinoTheme.of(context)
+                                    .textTheme
+                                    .textStyle
+                                    .color),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
