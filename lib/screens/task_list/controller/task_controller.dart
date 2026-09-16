@@ -11,6 +11,7 @@ import 'package:todo/services/common/close_keyboard.dart';
 import 'package:todo/services/common/category_index_provider.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
+import 'package:todo/screens/widgets/custom_snackbar_widget.dart';
 
 class TaskController extends ChangeNotifier {
   final TaskValidator taskValidator;
@@ -43,18 +44,17 @@ class TaskController extends ChangeNotifier {
     try {
       isSubmitActive.value = false;
       if (formKey.currentState!.validate()) {
-        convertedDateTime = DateTime.utc(
-          pickedDate.value!.year,
-          pickedDate.value!.month,
-          pickedDate.value!.day,
-          pickedDate.value!.hour,
-          pickedDate.value!.minute,
-        );
+        convertedDateTime = pickedDate.value!.toLocal();
         if (taskValidator.isNowBeforePast(pickedDate: convertedDateTime!)) {
           await callback();
-          Navigator.pop(context);
+          if (context.mounted) Navigator.pop(context);
         } else {
-          //  showMessage(context, 'You cant create task is past!');
+          if (context.mounted) {
+            CustomSnackbarWidget.show(
+              context,
+              'You can’t create a task in the past. Choose a future date and time.',
+            );
+          }
         }
       }
     } catch (e) {
@@ -75,13 +75,18 @@ class TaskController extends ChangeNotifier {
       builder: (BuildContext context) => Container(
         height: 216,
         padding: const EdgeInsets.only(top: 6.0),
-        margin:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-        child: SafeArea(
-          top: false,
+        child: Padding(
+          padding: EdgeInsetsGeometry.only(
+            top: MediaQuery.paddingOf(context).top,
+            bottom: MediaQuery.paddingOf(context).bottom,
+          ),
           child: StatefulBuilder(
             builder: (context, setState) => CupertinoDatePicker(
+              initialDateTime: pickedDate.value?.toLocal(),
               onDateTimeChanged: (DateTime newDateTime) {
                 setState(() => pickedDate.value = newDateTime);
               },
@@ -92,8 +97,9 @@ class TaskController extends ChangeNotifier {
     );
 
     if (pickedDate.value != null) {
-      dateTextController.text =
-          DateFormat('dd:mm:yyy hh:mm a').format(pickedDate.value!);
+      dateTextController.text = DateFormat(
+        'dd.MM.yyyy HH:mm',
+      ).format(pickedDate.value!);
     }
   }
 }

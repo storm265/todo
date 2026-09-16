@@ -9,7 +9,7 @@ import 'package:todo/services/locator_service.dart';
 import 'package:todo/services/route_service/route_service.dart';
 
 final themeController = ThemeController();
- final pickAvatarController = SelectGradientItemCubit();
+final pickAvatarController = SelectGradientItemCubit();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
@@ -27,6 +27,7 @@ void main() async {
   await LocalStorageInitializer.openAllBoxes();
 
   initDependencies();
+  await themeController.load();
 
   await DefaultCategoryProvider.fillDefaultCategory();
   runApp(const MyApp());
@@ -51,6 +52,18 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'ToDo',
         theme: theme,
+        builder: (context, child) => Theme(
+          data: ThemeData(
+            useMaterial3: true,
+            brightness: theme.brightness,
+            fontFamily: 'Ubuntu',
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: theme.primaryColor,
+              brightness: theme.brightness ?? Brightness.light,
+            ),
+          ),
+          child: child!,
+        ),
       ),
     );
   }

@@ -1,28 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 
 class CurrentDateWidget extends StatelessWidget {
-  const CurrentDateWidget({
-    super.key,
-    required this.taskListController,
-  });
+  const CurrentDateWidget({super.key, required this.taskListController});
+  final TaskListController taskListController;
 
-final TaskListController taskListController;
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Center(
-        child: 
-       ValueListenableBuilder(valueListenable: taskListController.selectedDate, builder: (context, selectedDate, _) =>  Text(
-          '${DateFormat("MMMM").format(selectedDate)}, ${selectedDate.year}',
-          style: const TextStyle(
-            fontSize: 23,
-            color: Colors.white,
-          ),
-        ),),
+  Widget build(BuildContext context) => ValueListenableBuilder(
+    valueListenable: taskListController.selectedDate,
+    builder: (context, date, _) => Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Text(
+        DateFormat('MMMM').format(date),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          color: CupertinoColors.white,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-    );
-  }
+    ),
+  );
 }

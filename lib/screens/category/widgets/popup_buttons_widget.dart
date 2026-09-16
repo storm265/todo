@@ -10,43 +10,35 @@ Future<void> showCategoriesActionSheet({
   required CategoryListController categoryController,
   required String categoryTitle,
 }) async {
+  final router = AutoRouter.of(context);
   await showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) => CupertinoActionSheet(
       title: Text(
         categoryTitle,
-        style: const TextStyle(
-          overflow: TextOverflow.ellipsis,
-          fontSize: 18,
-        ),
+        style: const TextStyle(overflow: TextOverflow.ellipsis, fontSize: 18),
       ),
       actions: <CupertinoActionSheetAction>[
         CupertinoActionSheetAction(
           onPressed: () async {
-            await AutoRouter.of(context).push(
-              AddCategoryRoute(index: index, isEdit: true),
-            );
+            await router.push(AddCategoryRoute(index: index, isEdit: true));
+            Navigator.pop(context);
           },
           child: Row(
             spacing: 10,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Edit"),
-              Icon(Icons.edit),
-            ],
+            children: [Text("Edit"), Icon(Icons.edit)],
           ),
         ),
         CupertinoActionSheetAction(
           onPressed: () async {
             await categoryController.removeCategory(index: index);
+            Navigator.pop(context);
           },
           child: Row(
             spacing: 10,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Remove"),
-              Icon(Icons.delete),
-            ],
+            children: [Text("Remove"), Icon(Icons.delete)],
           ),
         ),
         CupertinoActionSheetAction(

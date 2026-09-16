@@ -19,18 +19,17 @@ class EditTaskController extends TaskController {
     required String title,
     required int index,
     required BuildContext context,
-  }) =>
-      tasksRepository.updateTask(
-        index: index,
-        model: TaskModel(
-          id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
-          isDone: false,
-          category: selectedCategory,
-          creationDate: DateTime.now(),
-          text: title,
-          deadlineDateTime: convertedDateTime!,
-        ),
-      );
+  }) => tasksRepository.updateTask(
+    index: index,
+    model: TaskModel(
+      id: categoryIndexerProvider.getCategoryIndex(selectedCategory),
+      isDone: false,
+      category: selectedCategory,
+      creationDate: DateTime.now(),
+      text: title,
+      deadlineDateTime: convertedDateTime!,
+    ),
+  );
 
   void getEditData({
     required int index,
@@ -40,9 +39,11 @@ class EditTaskController extends TaskController {
     final taskBox = tasksRepository.getDatabase().getAt(index)!;
 
     convertedDateTime = taskBox.deadlineDateTime;
+    pickedDate.value = taskBox.deadlineDateTime.toLocal();
 
-    dateTextController.text =
-        DateFormat('dd:mm:yyy hh:mm a').format(taskBox.deadlineDateTime);
+    dateTextController.text = DateFormat(
+      'dd.MM.yyyy HH:mm',
+    ).format(taskBox.deadlineDateTime.toLocal());
 
     titleTextController.text = taskBox.text;
 

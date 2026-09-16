@@ -1,18 +1,13 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:todo/data/model/archieve/archieve_db.dart';
 import 'package:todo/data/model/category/category_model.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
 import 'package:todo/data/repository/archieve/archieve_repository.dart';
 import 'package:todo/data/repository/category/category_repository.dart';
 import 'package:todo/data/repository/task/tasks_repository.dart';
-import 'package:todo/main.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
-import 'package:todo/screens/task_list/widgets/current_date_widget.dart';
-import 'package:todo/screens/task_list/widgets/day_line_widget.dart';
-import 'package:todo/screens/task_list/widgets/schedule_top_widget.dart';
+import 'package:todo/screens/task_list/widgets/planner_header_widget.dart';
 import 'package:todo/screens/task_list/widgets/task_body/dialogs/task_list_options_dialog.dart';
 import 'package:todo/screens/task_list/widgets/tasks_list.dart';
 import 'package:todo/services/common/category_index_provider.dart';
@@ -21,13 +16,12 @@ import 'package:todo/services/locator_service.dart';
 @RoutePage()
 class TaskListPage extends StatefulWidget {
   const TaskListPage({super.key});
-
   @override
   State<TaskListPage> createState() => _TaskListPageState();
 }
 
 class _TaskListPageState extends State<TaskListPage> {
-  final _taskListController = TaskListController(
+  final _controller = TaskListController(
     categoryRepository: serviceLocator<CategoryRepository<CategoryModel>>(),
     archieveRepository: serviceLocator<ArchieveRepository<ArchieveModel>>(),
     categoryIndexProvider: CategoryIndexProvider(),
@@ -36,106 +30,55 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   void initState() {
-    _taskListController.generateCalendarElements();
-    _taskListController.scrollToSelectedIndex();
-    _taskListController.updateCalendarElements();
     super.initState();
+    _controller.generateCalendarElements();
+    _controller.scrollToSelectedIndex();
+    _controller.updateCalendarElements();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: SafeArea(
-        left: false,
-        right: false,
-        child: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 200,
-                    child: Stack(
-                      children: [
-                        ValueListenableBuilder<MapEntry<String, List<Color>>>(
-                          valueListenable: pickAvatarController.selectedGradient,
-                          builder: (context, selectedGradient, _) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 10,
-                                )
-                              ],
-                              gradient: LinearGradient(
-                                colors: selectedGradient.value,
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            const ScheduleTopWidget(),
-                            CurrentDateWidget(
-                              taskListController: _taskListController,
-                            ),
-                            DayLineWidget(
-                              taskListController: _taskListController,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                TaskList(
-                  taskListController: _taskListController,
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsetsGeometry.all(12),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: ValueListenableBuilder<MapEntry<String, List<Color>>>(
-                  valueListenable: pickAvatarController.selectedGradient,
-                  builder: (context, selectedGradient, _) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 10,
-                        )
-                      ],
-                      gradient: LinearGradient(
-                        colors: selectedGradient.value,
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                    child: CupertinoButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () async =>
-                          await TaskListOptionsDialog.showOptionsDialog(
-                        buildContext: context,
-                        taskListController: _taskListController,
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+  Widget build(BuildContext context) => CupertinoPageScaffold(
+    child: Padding(
+      padding: EdgeInsetsGeometry.only(
+        top: MediaQuery.paddingOf(context).top,
+        bottom: MediaQuery.paddingOf(context).bottom,
       ),
-    );
-  }
+      child: Stack(
+        clipBehavior: .none,
+        children: [
+          CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: PlannerHeaderWidget(controller: _controller),
+              ),
+              TaskList(taskListController: _controller),
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+            ],
+          ),
+          Positioned(
+            right: 20,
+            bottom: 18,
+            child: CupertinoButton.filled(
+              borderRadius: BorderRadius.circular(20),
+              onPressed: () => TaskListOptionsDialog.showOptionsDialog(
+                buildContext: context,
+                taskListController: _controller,
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(CupertinoIcons.add, size: 21),
+                  SizedBox(width: 8),
+                  Text(
+                    'New task',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

@@ -1,96 +1,44 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:todo/screens/task_list/controller/category_items.dart';
-import 'package:todo/services/route_service/route_service.gr.dart';
-import 'package:todo/utils/theme_extension.dart';
+import 'package:todo/main.dart';
+import 'package:todo/screens/task_list/controller/task_list_controller.dart';
+import 'package:todo/screens/task_list/widgets/current_date_widget.dart';
+import 'package:todo/screens/task_list/widgets/planner_menu_widget.dart';
 
 class ScheduleTopWidget extends StatelessWidget {
-  const ScheduleTopWidget({super.key});
+  const ScheduleTopWidget({super.key, required this.taskListController});
+
+  final TaskListController taskListController;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    child: Row(
       children: [
-        Spacer(),
-        IconButton(
-          icon: const Icon(Icons.menu),
-          color: Colors.white,
-          onPressed: () => _showDrawerDialog(context: context),
+        Expanded(
+          child: CurrentDateWidget(taskListController: taskListController),
         ),
-      ],
-    );
-  }
-}
 
-Future<void> _showDrawerDialog({required BuildContext context}) async {
-  return showCupertinoDialog(
-    barrierDismissible: true,
-    context: context,
-    builder: (context) => CupertinoAlertDialog(
-      actions: [
         CupertinoButton(
-          child: Text('Back'),
-          onPressed: () {
-            AutoRouter.of(context).popForced();
-          },
-        )
-      ],
-      content: SizedBox(
-        width: MediaQuery.sizeOf(context).width * 0.3,
-        height: 350,
-        child: ListView.separated(
-          itemBuilder: (context, i) {
-            return GestureDetector(
-              onTap: () async {
-                switch (i) {
-                  case 0:
-                    Navigator.pop(context);
-                    await AutoRouter.of(context).push(
-                      const CategoryRoute(),
-                    );
-
-                    break;
-                  case 1:
-                    Navigator.pop(context);
-                    await AutoRouter.of(context).push(
-                      const ArchieveRoute(),
-                    );
-                    break;
-                  case 2:
-                    Navigator.pop(context);
-                    await AutoRouter.of(context).push(
-                      const SettingsRoute(),
-                    );
-                    break;
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 10,
-                  bottom: 6,
-                ),
-                child: Row(
-                  spacing: 20,
-                  children: [
-                    Icon(drawerIcons[i]),
-                    Text(
-                      CategoryItems.values[i].type,
-                      style: const TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) => Divider(
-            color: context.isLightMode() ? Colors.black12 : Colors.white24,
+          padding: const EdgeInsets.all(10),
+          onPressed: () => themeController.switchTheme(context),
+          child: Icon(
+            CupertinoTheme.of(context).brightness == Brightness.dark
+                ? CupertinoIcons.sun_max
+                : CupertinoIcons.moon,
+            color: CupertinoColors.white,
+            size: 22,
           ),
-          itemCount: CategoryItems.values.length,
         ),
-      ),
+        CupertinoButton(
+          padding: const EdgeInsets.all(10),
+          onPressed: () => PlannerMenuWidget.show(context),
+          child: const Icon(
+            CupertinoIcons.square_grid_2x2,
+            color: CupertinoColors.white,
+            size: 22,
+          ),
+        ),
+      ],
     ),
   );
 }

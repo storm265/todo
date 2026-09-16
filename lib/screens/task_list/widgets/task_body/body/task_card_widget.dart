@@ -1,92 +1,66 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:todo/data/model/tasks/task_model.dart';
-import 'package:todo/main.dart';
 import 'package:todo/utils/theme_extension.dart';
 
 class TaskCardWidget extends StatelessWidget {
+  const TaskCardWidget({super.key, required this.taskModel});
   final TaskModel taskModel;
 
-  const TaskCardWidget({
-    super.key,
-    required this.taskModel,
-  });
-
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ValueListenableBuilder<MapEntry<String, List<Color>>>(
-        valueListenable: pickAvatarController.selectedGradient,
-        builder: (context, selectedGradient, _) => Container(
-          width: 250,
-          height: 85,
-          padding: EdgeInsets.all(8.0),
-          decoration: taskModel.isDone
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                    )
-                  ],
-                  gradient: LinearGradient(
-                    colors: selectedGradient.value,
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                )
-              : BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: context.isLightMode()
-                          ? Colors.black26
-                          : Colors.white30,
-                      blurRadius: 10,
-                    )
-                  ],
-                  color: context.isLightMode() ? Colors.white : Colors.black87,
-                ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                taskModel.text,
-                maxLines: 2,
-                style: TextStyle(
-                  color: taskModel.isDone
-                      ? Colors.white
-                      : context.isLightMode()
-                          ? Colors.black87
-                          : Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Text(
-                taskModel.category,
-                style: TextStyle(
-                  color: taskModel.isDone
-                      ? Colors.white
-                      : context.isLightMode()
-                          ? Colors.black87
-                          : Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(18),
+    decoration: BoxDecoration(
+      color: context.cardColor,
+      borderRadius: BorderRadius.circular(22),
+      border: Border.all(
+        color: context.secondaryTextColor.withValues(alpha: 0.08),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          taskModel.text,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: taskModel.isDone
+                ? context.secondaryTextColor
+                : CupertinoTheme.of(context).textTheme.textStyle.color,
+            decoration: taskModel.isDone ? TextDecoration.lineThrough : null,
           ),
         ),
-      ),
-    );
-  }
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                taskModel.category,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: context.secondaryTextColor,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(CupertinoIcons.clock, size: 13, color: context.accentColor),
+            const SizedBox(width: 4),
+            Text(
+              DateFormat('HH:mm').format(taskModel.deadlineDateTime.toLocal()),
+              style: TextStyle(
+                fontSize: 13,
+                color: context.accentColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

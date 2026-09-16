@@ -1,92 +1,90 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show DateUtils;
 import 'package:intl/intl.dart';
 import 'package:todo/screens/task_list/controller/task_list_controller.dart';
 
-class DayLineWidget extends StatefulWidget {
+class DayLineWidget extends StatelessWidget {
+  const DayLineWidget({super.key, required this.taskListController});
   final TaskListController taskListController;
 
-  const DayLineWidget({
-    super.key,
-    required this.taskListController,
-  });
-
   @override
-  State<DayLineWidget> createState() => _DayLineWidgetState();
-}
-
-class _DayLineWidgetState extends State<DayLineWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ValueListenableBuilder(
-        valueListenable: widget.taskListController.tasksListenable,
-        builder: (__, tasksListenable, _) => ValueListenableBuilder(
-          valueListenable: widget.taskListController.selectedDate,
-          builder: (__, selectedDate, _) => ValueListenableBuilder(
-            valueListenable: widget.taskListController.calendar,
-            builder: (__, calendarList, _) => PageView.builder(
-              controller: widget.taskListController.pageController,
-              itemCount: calendarList.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (_, i) => GestureDetector(
+  Widget build(BuildContext context) => ValueListenableBuilder(
+    valueListenable: taskListController.tasksListenable,
+    builder: (context, tasks, _) => ValueListenableBuilder(
+      valueListenable: taskListController.selectedDate,
+      builder: (context, selectedDate, _) => ValueListenableBuilder(
+        valueListenable: taskListController.calendar,
+        builder: (context, calendar, _) => PageView.builder(
+          controller: taskListController.pageController,
+          itemCount: calendar.length,
+          itemBuilder: (context, index) {
+            final day = calendar[index];
+            final selected = DateUtils.isSameDay(day, selectedDate);
+            final hasTasks = tasks.values.any(
+              (task) =>
+                  DateUtils.isSameDay(day, task.deadlineDateTime.toLocal()),
+            );
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: GestureDetector(
                 onTap: () {
-                  widget.taskListController.selectedDate.value =
-                      calendarList[i];
-
-                  widget.taskListController.scrollToSelectedIndex();
+                  taskListController.selectedDate.value = day;
+                  taskListController.scrollToSelectedIndex();
                 },
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: Text(
-                        DateFormat('d').format(calendarList[i]),
-                        style: (selectedDate == calendarList[i])
-                            ? TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 60,
-                                color: Colors.white,
-                              )
-                            : TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 55,
-                                color: Colors.white70,
-                              ),
-                      ),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.white.withValues(
+                      alpha: selected ? 0.25 : 0.08,
                     ),
-                    Flexible(
-                      child: Text(
-                        DateFormat('EEEE')
-                            .format(calendarList[i])
-                            .substring(0, 3),
+                    borderRadius: BorderRadius.circular(20),
+                    border: selected
+                        ? Border.all(
+                            color: CupertinoColors.white.withValues(alpha: 0.5),
+                          )
+                        : null,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        DateFormat('EEE').format(day),
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                          color: CupertinoColors.white,
+                          fontSize: 11,
                         ),
                       ),
-                    ),
-                    if (tasksListenable.values
-                            .where(
-                              (element) =>
-                                  DateFormat.yMd().format(calendarList[i]) ==
-                                  DateFormat.yMd()
-                                      .format(element.deadlineDateTime),
-                            )
-                            .firstOrNull !=
-                        null)
-                      CircleAvatar(
-                        radius: 6,
-                        backgroundColor: Colors.white,
+                      const SizedBox(height: 7),
+                      Text(
+                        '${day.day}',
+                        style: const TextStyle(
+                          color: CupertinoColors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                  ],
+                      const SizedBox(height: 6),
+                      Semantics(
+                        label: hasTasks ? 'В этот день есть задачи' : null,
+                        child: Container(
+                          width: 6,
+                          height: 6,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: hasTasks
+                                ? CupertinoColors.white
+                                : CupertinoColors.transparent,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
-    );
-  }
+    ),
+  );
 }

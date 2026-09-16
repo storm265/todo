@@ -1,7 +1,7 @@
 name: todo
 description: A new Flutter project.
 publish_to: 'none'
-version: 1.1.9+2
+version: 2.0.0+3
 
 environment:
   sdk: '>=3.10.0 <4.0.0'
@@ -35,13 +35,6 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
 
-flutter_launcher_icons:
-  android: true
-  ios: false
-  image_path: "assets/app_icon/todo.png"
-  min_sdk_android: 21
-
-
 flutter:
   uses-material-design: true
 
@@ -55,9 +48,13 @@ flutter:
     - family: Ubuntu
       fonts:
         - asset: assets/fonts/Ubuntu/Ubuntu-Bold.ttf
-        - asset: assets/fonts/Ubuntu/Ubuntu-Light.ttf     
-        - asset: assets/fonts/Ubuntu/Ubuntu-Medium.ttf      
+          weight: 700
+        - asset: assets/fonts/Ubuntu/Ubuntu-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Ubuntu/Ubuntu-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Ubuntu/Ubuntu-Regular.ttf
+          weight: 400
      
     
         # - asset: fonts/Schyler-Italic.ttf
@@ -67,4 +64,3 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-
