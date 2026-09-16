@@ -2,7 +2,7 @@
     package="com.nevoapps.todo">  
     
    <application
-        android:label="Todo"
+        android:label="TaskRibbon"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
